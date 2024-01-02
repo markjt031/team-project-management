@@ -4,9 +4,11 @@ import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 
+import java.util.Set;
+
 public interface UserService {
 
-    List<FullUserDto> getAllUsers()
+    Set<FullUserDto> getAllUsers();
 
 	FullUserDto login(CredentialsDto credentialsDto);
 

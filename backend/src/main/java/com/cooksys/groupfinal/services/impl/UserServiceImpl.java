@@ -1,6 +1,7 @@
 package com.cooksys.groupfinal.services.impl;
 
 import java.util.Optional;
+import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,8 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
 
-    public List<FullUserDto> getAllUsers() {
-        return fullUserMapper.entitiesToFullUserDtos(userRepository.findAllByDeletedFalse);
+    public Set<FullUserDto> getAllUsers() {
+        return fullUserMapper.entitiesToFullUserDtos(userRepository.findAllByDeletedFalse());
     }
 
 	private User findUser(String username) {

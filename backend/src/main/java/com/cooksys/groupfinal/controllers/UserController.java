@@ -14,6 +14,8 @@ import com.cooksys.groupfinal.services.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -23,8 +25,8 @@ public class UserController {
 
     @GetMapping
     @CrossOrigin(origins="*")
-    public List<FullUserDto> getAllUsers() {
-        return userService.getAllUsers()
+    public Set<FullUserDto> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 	@PostMapping("/login")
