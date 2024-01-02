@@ -27,7 +27,10 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
 
-	
+    public List<FullUserDto> getAllUsers() {
+        return fullUserMapper.entitiesToFullUserDtos(userRepository.findAllByDeletedFalse);
+    }
+
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
         if (user.isEmpty()) {

@@ -6,10 +6,10 @@ import com.cooksys.groupfinal.dtos.UserRequestDto;
 
 public interface UserService {
 
+    List<FullUserDto> getAllUsers()
+
 	FullUserDto login(CredentialsDto credentialsDto);
 
-
     FullUserDto create(UserRequestDto userRequestDto);
-
 
 }

@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.controllers;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
-	
+
+    @GetMapping
+    @CrossOrigin(origins="*")
+    public List<FullUserDto> getAllUsers() {
+        return userService.getAllUsers()
+    }
+
 	@PostMapping("/login")
 	@CrossOrigin(origins="*")
     public FullUserDto login(@RequestBody CredentialsDto credentialsDto) {
