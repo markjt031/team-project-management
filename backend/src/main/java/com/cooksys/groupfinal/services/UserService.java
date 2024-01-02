@@ -6,10 +6,13 @@ import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.ProfileDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 
+import java.util.Set;
+
 public interface UserService {
 
-	FullUserDto login(CredentialsDto credentialsDto);
+    Set<FullUserDto> getAllUsers();
 
+	FullUserDto login(CredentialsDto credentialsDto);
 
     FullUserDto create(UserRequestDto userRequestDto);
 
@@ -18,6 +21,5 @@ public interface UserService {
 
 
 	ProfileDto updateUser(UserRequestDto userRequestDto, Long id);
-
 
 }
