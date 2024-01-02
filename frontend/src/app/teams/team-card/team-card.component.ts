@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import Project from 'src/app/models/Project';
 import Team from 'src/app/models/Team';
 import { fetchData } from 'src/app/services/api';
@@ -19,6 +20,7 @@ numberOfProjects: number=0
 companyId: number = 6
 projects: Project[]=[]
 
+constructor(private router: Router){}
 ngOnInit(){
   this.getProjects()
 }
@@ -37,5 +39,7 @@ getProjects=async()=>{
       this.numberOfProjects=this.projects.length
     })
 } 
-
+navigateToProjects(){
+  this.router.navigate(['teams', this.team.id, 'projects', {projects: this.projects}])
+}
 }

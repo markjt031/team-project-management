@@ -12,6 +12,7 @@ export class TeamsComponent {
   //will be pulled from UserService when implemented
   companyId: number = 6
   teams: Team[]|undefined= undefined
+  showModal: boolean = false
 
   ngOnInit(){
     this.fetchTeams()
@@ -25,5 +26,13 @@ export class TeamsComponent {
         console.log(this.teams)
       })
     }
-    
+
+    toggleCreateModal(){
+      this.showModal=!this.showModal
+      console.log(this.showModal)
+    }
+    closeModal(){
+      console.log("closing again")
+      this.showModal=false;
+    }
 }

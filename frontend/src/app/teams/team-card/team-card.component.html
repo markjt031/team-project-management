@@ -1,12 +1,14 @@
-<div class="card" *ngIf="team">
-    <div class="card-header">
-        <h1>{{team.name}}</h1>
-        <h2 *ngIf="projects"># of Projects: {{numberOfProjects}}</h2>
-    </div>
-    <div class="member-name">
-        <h2>Members</h2>
-        <div *ngFor="let member of team.teammates">
-            {{member.profile.firstName}} {{member.profile.lastName.charAt(0)}}.
+<div class="card" *ngIf="team" (click)="navigateToProjects()">
+        <div class="card-header">
+            <h1 class="heading">{{team.name}}</h1>
+            <h2 *ngIf="projects" class="projects"># of Projects: {{numberOfProjects}}</h2>
+        </div>
+        <div class="divider"></div>
+        <h2 class="team-members-header">Members</h2>
+        <div class="member-names">
+            <div class="member-name" *ngFor="let member of team.teammates">
+                {{member.profile.firstName}} {{member.profile.lastName.charAt(0)}}.
+            </div>
         </div>
     </div>
-</div>
+

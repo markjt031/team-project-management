@@ -1,0 +1,12 @@
+.header{
+    color: var(--off);
+    text-align: center;
+    font-size: 48;
+}
+.grid{
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 0 auto;
+    gap: 50px;
+}

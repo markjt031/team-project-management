@@ -1,0 +1,16 @@
+.add-team{
+    border: solid 1px var(--highlight);
+    width: 313px;
+    height: 241px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.plus{
+   margin-top: 75px;
+}
+.button-text{
+    color: var(--highlight);
+}

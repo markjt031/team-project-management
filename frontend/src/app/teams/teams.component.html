@@ -1,7 +1,8 @@
 <h1 class="header">Teams</h1>
-<div class="grid">
-    <div *ngIf="teams">
+<div>
+    <div class="grid">
         <app-team-card *ngFor="let team of teams" [team]="team"></app-team-card>
+        <div (click)="toggleCreateModal()"><app-add-team-button></app-add-team-button></div>
     </div>
-    <app-add-team-button></app-add-team-button>
 </div>
+<app-add-team-modal [hidden]="!showModal" (close)="toggleCreateModal()"></app-add-team-modal>

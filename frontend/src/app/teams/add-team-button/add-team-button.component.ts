@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-team-button.component.css']
 })
 export class AddTeamButtonComponent {
-
+   
 }

@@ -1,3 +1,45 @@
 .card{
+    background-color: var(--background-card);
+    width: 313px;
+    height: 241px;
+    border-radius: 20px;
+    box-sizing: border-box;
     
+}
+.heading{
+    color: white;
+    font-size: 24px;
+}
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 20px;
+}
+.projects{
+    color:rgba(255,255,255, .75);
+    font-size: 16px;
+}
+
+.divider{
+    border: solid 1px var(--highlight);
+}
+.team-members-header{
+    text-align: center;
+    font-size: 16px;
+    color:rgba(255,255,255, .75);
+}
+.member-names{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+    width: 75%;
+    gap: 15px
+}
+.member-name{
+    width: 103px;
+    background-color: var(--off);
+    border-radius: 10.29px;
+    text-align: center;
+    color: rgba(255,255,255, .75);
+    padding: 8px 0px;
 }

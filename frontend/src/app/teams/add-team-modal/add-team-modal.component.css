@@ -1,0 +1,77 @@
+label{
+    color: var(--highlight);
+    font-size: 16px;
+}
+input[type=text]{
+    background: none;
+    border: none;
+    border-bottom: solid 1px var(--highlight);
+    margin: 20px 0 20px 0;
+}
+select{
+    padding: 5px;
+    color: #5533FF;
+    border-radius: 10px;
+    margin: 20px 0px;
+}
+.background{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.30);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.x{
+    border-radius: 50px;
+    color: red;
+    border: solid 2px red;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    cursor: pointer;
+}
+.modal-container{
+    position: relative;
+    width: 768px;
+    height: 600px;
+    background-color: var(--background-card);
+    border-radius: 20px;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 80px auto 10px auto;
+}
+
+
+.dropdown-label{
+    font-size: 26px;
+    text-align: center;
+    margin: 15px 0px;
+}
+.select-section{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.button{
+    background-color: var(--off);
+    border-radius: 10px;
+    color: rgba(255,255,255, .75);
+    border: none;
+    padding: 15px;
+    width: 200px;
+}
