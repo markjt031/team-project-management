@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.services.impl;
 
 import java.util.Optional;
 
+import com.cooksys.groupfinal.dtos.UserRequestDto;
 import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
@@ -23,8 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
-  private final FullUserMapper fullUserMapper;
+    private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
+
 	
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -50,11 +52,18 @@ public class UserServiceImpl implements UserService {
         }
         return fullUserMapper.entityToFullUserDto(userToValidate);
 	}
-	
-	
-	
-	
-	
-	
+
+    @Override
+    public FullUserDto create(UserRequestDto userRequestDto) {
+        if (userRequestDto == null || userRequestDto.getCredentials() == null || userRequestDto.getProfile() == null) {
+            throw new BadRequestException("User request data is incomplete.");
+        }
+        User user = fullUserMapper.requestDtoToEntity(userRequestDto);
+        user.setActive(true);
+        User savedUser = userRepository.saveAndFlush(user);
+        return fullUserMapper.entityToFullUserDto(savedUser);
+    }
+
+
 
 }
