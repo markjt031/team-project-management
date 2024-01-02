@@ -155,7 +155,34 @@
 			  }
 			},
 			"response": []
-		  }
-		
+		  },
+		  {
+			"name": "PUT /users/update/id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"credentials\": {\n        \"username\": \"cousingreg\",\n        \"password\": \"mosteligiblebachelor\"\n    },\n    \"profile\": {\n        \"email\": \"newemail@example.com\",\n        \"firstName\": \"Geralt\",\n        \"lastName\": \"of Rivia\",\n        \"phone\": \"+1234567890\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/update/1",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["users", "update", "2"]
+				}
+			},
+			"response": []
+		}
 	]
 }
