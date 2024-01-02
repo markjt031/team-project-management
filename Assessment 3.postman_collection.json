@@ -141,7 +141,21 @@
 				}
 			},
 			"response": []
-		}
+		},
+		{
+			"name": "Delete /user/id",
+			"request": {
+			  "method": "DELETE",
+			  "header": [],
+			  "url": {
+				"raw": "http://localhost:8080/users/1",  
+				"host": ["localhost"],
+				"port": "8080",
+				"path": ["users", "1"]  
+			  }
+			},
+			"response": []
+		  }
 		
 	]
 }

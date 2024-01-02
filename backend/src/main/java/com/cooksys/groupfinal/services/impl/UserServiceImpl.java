@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import org.springframework.stereotype.Service;
 
+import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.entities.Credentials;
@@ -12,11 +13,13 @@ import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
+import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +29,7 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
+	private final BasicUserMapper basicUserMapper;
 
 	
 	private User findUser(String username) {
@@ -63,6 +67,19 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.saveAndFlush(user);
         return fullUserMapper.entityToFullUserDto(savedUser);
     }
+
+	@Override
+	public BasicUserDto deleteUser(Long id) {
+		@SuppressWarnings("deprecation")
+		User user = userRepository.getById(id);
+		
+		if (user == null) {
+	        throw new EntityNotFoundException("User not found with ID: " + id);
+	    }
+	    
+		user.setActive(false);
+		return basicUserMapper.entityToBasicUserDto(user);
+	}
 
 
 
