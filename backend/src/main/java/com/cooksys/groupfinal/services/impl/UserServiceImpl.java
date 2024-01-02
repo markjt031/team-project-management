@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.cooksys.groupfinal.dtos.BasicUserDto;
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.ProfileDto;
 import com.cooksys.groupfinal.entities.Credentials;
+import com.cooksys.groupfinal.entities.Profile;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
@@ -16,6 +18,7 @@ import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.CredentialsMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.mappers.ProfileMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
 
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
 	private final BasicUserMapper basicUserMapper;
+	private final ProfileMapper profileMapper;
 
 	
 	private User findUser(String username) {
@@ -39,6 +43,15 @@ public class UserServiceImpl implements UserService {
         }
         return user.get();
     }
+	
+	 public boolean checkCredentials(String username) {
+		    Optional<User> optionalUser = userRepository.findByCredentialsUsernameAndActiveTrue(username);
+		    if (username == null || optionalUser.isEmpty()) {
+		      throw new NotFoundException("credentials do not match existing user");
+		    }
+		    return true;
+		  }
+
 	
 	@Override
 	public FullUserDto login(CredentialsDto credentialsDto) {
@@ -79,6 +92,38 @@ public class UserServiceImpl implements UserService {
 	    
 		user.setActive(false);
 		return basicUserMapper.entityToBasicUserDto(user);
+	}
+
+	@Override
+	public ProfileDto updateUser(UserRequestDto userRequestDto, Long id) {
+		@SuppressWarnings("deprecation")
+		User foundUser = userRepository.getById(id);
+		
+		if (foundUser == null) {
+	        throw new EntityNotFoundException("User not found with ID: " + id);
+	    }
+		
+		if (!checkCredentials(userRequestDto.getCredentials().getUsername())) {
+	        throw new NotAuthorizedException("Invalid credentials provided for the user.");
+	    }
+		
+		Profile updatedProfile = profileMapper.dtoToEntity(userRequestDto.getProfile());
+		
+		if (updatedProfile.getEmail() != null) {
+	          foundUser.getProfile().setEmail(updatedProfile.getEmail());
+	        }
+	        if (updatedProfile.getFirstName() != null) {
+	          foundUser.getProfile().setFirstName(updatedProfile.getFirstName());
+	        }
+	        if (updatedProfile.getLastName() != null) {
+	          foundUser.getProfile().setLastName(updatedProfile.getLastName());
+	        }
+	        if (updatedProfile.getPhone() != null) {
+	          foundUser.getProfile().setPhone(updatedProfile.getPhone());
+	        }
+		
+		userRepository.saveAndFlush(foundUser);
+		return profileMapper.entityToDto(foundUser.getProfile());
 	}
 
 
