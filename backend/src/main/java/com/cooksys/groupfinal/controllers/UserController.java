@@ -37,10 +37,10 @@ public class UserController {
         return userService.create(userRequestDto);
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @CrossOrigin(origins="*")
-    public BasicUserDto deleteUser(@PathVariable Long id) {
-    	return userService.deleteUser(id);
+    public BasicUserDto deleteUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
+    	return userService.deleteUser(id, userRequestDto);
     }
     
     @PutMapping("/update/{id}")

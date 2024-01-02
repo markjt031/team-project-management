@@ -82,13 +82,21 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public BasicUserDto deleteUser(Long id) {
+	public BasicUserDto deleteUser(Long id, UserRequestDto userRequestDto) {
 		@SuppressWarnings("deprecation")
 		User user = userRepository.getById(id);
-		
+		System.out.println(userRequestDto);
 		if (user == null) {
 	        throw new EntityNotFoundException("User not found with ID: " + id);
 	    }
+		
+		if (!checkCredentials(userRequestDto.getCredentials().getUsername())) {
+	        throw new NotAuthorizedException("Invalid credentials provided for the user.");
+	    }
+		
+		if(userRequestDto.isAdmin() == false) {
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
 	    
 		user.setActive(false);
 		return basicUserMapper.entityToBasicUserDto(user);
