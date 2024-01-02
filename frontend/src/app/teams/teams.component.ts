@@ -10,7 +10,7 @@ import { fetchData } from '../services/api';
 export class TeamsComponent {
   //company id should be based on the company from the use that is logged in.
   //will be pulled from UserService when implemented
-  companyId: number = 6
+  companyId: number = 1
   teams: Team[]|undefined= undefined
   showModal: boolean = false
 

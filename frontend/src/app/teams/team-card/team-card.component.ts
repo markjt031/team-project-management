@@ -17,7 +17,7 @@ export class TeamCardComponent {
   teammates: []
 }
 numberOfProjects: number=0
-companyId: number = 6
+companyId: number = 1
 projects: Project[]=[]
 
 constructor(private router: Router){}
