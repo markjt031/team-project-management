@@ -64,4 +64,10 @@ public class CompanyController {
     public CompanyDto getCompanyById(@PathVariable Long companyId) {
     	return companyService.getCompanyById(companyId);
     }
+    
+    @PutMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyResponseDto updateCompany(@PathVariable Long companyId, @RequestBody CompanyRequestDto companyRequestDto) {
+    	return companyService.updateCompany(companyId, companyRequestDto);
+    }
 }

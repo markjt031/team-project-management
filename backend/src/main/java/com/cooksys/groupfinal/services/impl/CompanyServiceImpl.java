@@ -130,7 +130,8 @@ public class CompanyServiceImpl implements CompanyService {
 		if(!user.isAdmin()){
 			throw new NotAuthorizedException("Restricted action, contact administraor.");
 		}
-		return companyMapper.entityToDto(companyRepository.saveAndFlush(newCompany));
+		Company company = companyRepository.saveAndFlush(newCompany);
+		return companyMapper.entityToDto(company);
 		
 	}
 
@@ -141,6 +142,19 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new NotFoundException("Company does not exist.");
 		}
 		return companyMapper.entityToDto(company);
+	}
+
+	@Override
+	public CompanyResponseDto updateCompany(Long companyId, CompanyRequestDto companyRequestDto) {
+		Company company = companyRepository.getById(companyId);
+		Company updateCompany = companyMapper.requestDtoToEntity(companyRequestDto);
+		User user = authorizationService.userIsAdmin(companyRequestDto.getValidation());
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		company.setName(updateCompany.getName());
+		company.setDescription(updateCompany.getDescription());
+		return companyMapper.entityResponseToDto(companyRepository.saveAndFlush(company));
 	}
 
 
