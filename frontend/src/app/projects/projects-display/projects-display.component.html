@@ -1,0 +1,11 @@
+<div class="project" *ngFor="let project of projects">
+    <div class="container">
+        <h2>{{project.name}}</h2>
+        <span class="active" [ngClass]="project.active ? 'green' : 'red'">{{project.active ? 'Active' : 'Inactive'}}</span>
+    </div>
+    <div class="flex">
+        <p class="description">{{project.description}}</p>
+        <button class="button-yellow" (click)="toggleEditModal()">Edit</button>
+    </div>
+    <app-edit-project-modal *ngIf="editModalShown" (close)="toggleEditModal()" [project]="project"></app-edit-project-modal>
+</div>

@@ -1,0 +1,41 @@
+.project{
+    border-top: solid var(--highlight);
+    border-bottom: solid var(--highlight);
+    color: white;
+    width: 80%;
+    margin: 20px auto;
+}
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.active{
+    margin: 25px 0px;
+    font-size: 14px;
+}
+.green{
+    color: rgba(34, 221, 42, .75);
+}
+.red{
+    color: rgba(223, 15, 15, .75);
+}
+.button-yellow{
+    background: var(--highlight);
+    border-radius: 10px;
+    color: rgba(0, 0, 0 .75);
+    border: none;
+    padding: 8px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    display: block;
+    
+}
+.flex{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.description{
+    width: 80%;
+}
