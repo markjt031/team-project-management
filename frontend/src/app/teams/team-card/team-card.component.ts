@@ -37,6 +37,13 @@ getProjects=async()=>{
     })
 } 
 navigateToProjects(){
-  this.router.navigate(['teams', this.team.id, 'projects', {projects: this.projects}])
+  console.log(this.team.name)
+  this.router.navigate(['teams', this.team.id, 'projects'], {
+    state: {
+      projects: this.projects,
+      team: this.team,
+      name: this.team.name
+    }
+  })
 }
 }
