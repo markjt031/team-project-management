@@ -21,10 +21,19 @@ export class ProjectsComponent {
   addModalShown= false
   currentUser: User | undefined = undefined
 
-  constructor(private route: ActivatedRoute, private location: LocationStrategy, private userService: UserService){}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: LocationStrategy,
+    private userService: UserService){}
+
+    
   ngOnInit(){
     this.userService.currentUser.subscribe((user)=>{
       this.currentUser=user
+      if (this.currentUser.id===-1){
+        this.router.navigateByUrl('login')
+      }
     })
     const state= this.location.getState()
     if (state && typeof state=== 'object'){

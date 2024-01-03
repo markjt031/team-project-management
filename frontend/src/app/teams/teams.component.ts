@@ -6,6 +6,7 @@ import { UserService } from '../user.service';
 import BasicUser from '../models/BasicUser';
 import { CompanySelectComponent } from '../company-select/company-select.component';
 import { CompanyService } from '../company.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teams',
@@ -20,10 +21,13 @@ export class TeamsComponent {
   showModal: boolean = false
   currentUser: User | undefined = undefined
 
-  constructor(private userService: UserService, private companyService: CompanyService){}
+  constructor(private router: Router, private userService: UserService, private companyService: CompanyService){}
   ngOnInit(){
     this.userService.currentUser.subscribe((user: User)=>{
       this.currentUser=user
+      if (this.currentUser.id===-1){
+        this.router.navigateByUrl('login')
+      }
     })
     //assuming non-admins only have one company
     if (!this.currentUser?.admin){
