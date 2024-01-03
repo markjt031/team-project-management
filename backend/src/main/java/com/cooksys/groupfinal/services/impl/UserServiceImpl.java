@@ -139,6 +139,16 @@ public class UserServiceImpl implements UserService {
 		return profileMapper.entityToDto(foundUser.getProfile());
 	}
 
+	@Override
+	public ProfileDto getUserProfile(Long userId) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			return fullUserMapper.entityToFullUserDto(user).getProfile();
+		} else {
+			return null;
+		}
+	}
 
 
 }
