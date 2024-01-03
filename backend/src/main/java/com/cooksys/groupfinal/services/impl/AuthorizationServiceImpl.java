@@ -30,7 +30,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new NotFoundException("User by that id does not exist.");}
 
         if(existingUser.get().getCredentials().getPassword().equals(requestingUser.getCredentials().getPassword())){
-            if (existingUser.get().isAdmin() == true){
+            if (existingUser.get().isAdmin()){
                 return existingUser.get();
             }
         }
