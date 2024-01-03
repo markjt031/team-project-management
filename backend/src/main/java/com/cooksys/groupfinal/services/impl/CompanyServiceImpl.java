@@ -126,11 +126,21 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public CompanyDto createCompany(CompanyRequestDto companyRequestDto) {
 		Company newCompany = companyMapper.requestDtoToEntity(companyRequestDto);
-		if(!authorizationService.userIsAdmin(companyRequestDto.getValidation())){
+		User user = authorizationService.userIsAdmin(companyRequestDto.getValidation());
+		if(!user.isAdmin()){
 			throw new NotAuthorizedException("Restricted action, contact administraor.");
 		}
 		return companyMapper.entityToDto(companyRepository.saveAndFlush(newCompany));
 		
+	}
+
+	@Override
+	public CompanyDto getCompanyById(Long companyId) {
+		Company company = companyRepository.getById(companyId);
+		if(company == null) {
+			throw new NotFoundException("Company does not exist.");
+		}
+		return companyMapper.entityToDto(company);
 	}
 
 

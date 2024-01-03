@@ -58,4 +58,10 @@ public class CompanyController {
     public CompanyDto createCompany(@RequestBody CompanyRequestDto companyRequestDto) {
     	return companyService.createCompany(companyRequestDto);
     }
+    
+    @GetMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyDto getCompanyById(@PathVariable Long companyId) {
+    	return companyService.getCompanyById(companyId);
+    }
 }
