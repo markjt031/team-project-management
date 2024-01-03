@@ -45,8 +45,9 @@
                     ],
                     "port": "8080",
                     "path": [
-                        "users",
-                        "13"
+                        "company",
+                        "6",
+                        "users"
                     ]
                 }
             },
@@ -64,9 +65,8 @@
                     ],
                     "port": "8080",
                     "path": [
-                        "company",
-                        "6",
-                        "users"
+                        "users",
+                        "13"
                     ]
                 }
             },
