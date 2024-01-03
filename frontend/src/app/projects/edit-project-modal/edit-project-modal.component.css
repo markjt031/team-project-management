@@ -1,0 +1,125 @@
+label{
+    color: var(--highlight);
+    font-size: 16px;
+}
+input[type=text]{
+    background: none;
+    border: none;
+    border-bottom: solid 1px var(--highlight);
+    margin: 20px 0 20px 0;
+    color: white;
+}
+input[type=text]:focus{
+    outline: none;
+}
+
+.background{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.30);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.x{
+    border-radius: 50px;
+    color: red;
+    border: solid 2px red;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    cursor: pointer;
+}
+.modal-container{
+    position: relative;
+    width: 488px;
+    
+    background-color: var(--background-card);
+    border-radius: 20px;
+}
+.dropdown-label{
+    font-size: 26px;
+    text-align: center;
+    margin: 15px 0px;
+    color: var(--highlight);
+    
+}
+.select-section{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 80px auto 10px auto;
+}
+.error{
+    color: red;
+    margin-bottom: 5px;
+}
+.button{
+    background-color: var(--off);
+    border-radius: 10px;
+    color: rgba(255,255,255, .75);
+    border: none;
+    padding: 15px;
+    width: 200px;
+    cursor: pointer;
+}
+
+.icon{
+    height: 10px;
+  }
+
+  .dropdown {
+    position: relative;
+    /* display: inline-block; */
+    margin: 20px 0px;
+    
+  }
+  
+  .dropdown-button {
+    padding: 10px;
+    cursor: pointer;
+    padding: 10px 10px;
+    color: #5533FF;
+    border-radius: 10px;
+    margin: 20px 0px;
+    margin: 0 auto;
+    width: 150px;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  
+  .option {
+    cursor: pointer;
+    padding: 5px;
+    color: #000;
+  }
+  .option:hover{
+    color: #5533FF;
+  }
