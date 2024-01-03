@@ -109,6 +109,26 @@
             "response": []
         },
         {
+            "name": "GET /teams/{teamId}/users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/teams/7/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "teams",
+                        "7",
+                        "users"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
             "name": "GET /company/id/teams",
             "request": {
                 "method": "GET",
