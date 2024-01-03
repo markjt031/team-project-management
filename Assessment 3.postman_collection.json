@@ -225,6 +225,35 @@
                 }
             },
             "response": []
+        },
+        {
+            "name": "POST /teams/7/users",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"admin\": {\n    \"credentials\": {\n      \"username\": \"thisismycompany\",\n      \"password\": \"getyourowncompany\"\n    },\n    \"profile\": {\n      \"firstName\": \"Logan\",\n      \"lastName\": \"Roy\",\n      \"email\": \"admin@example.com\",\n      \"phone\": \"123-456-7890\"\n    },\n    \"admin\": true\n  },\n  \"newTeammate\": {\n    \"credentials\": {\n      \"username\": \"mrsiobhanroy\",\n      \"password\": \"idontwanttogotojail\"\n    },\n    \"profile\": {\n      \"firstName\": \"New\",\n      \"lastName\": \"Teammate\",\n      \"email\": \"new.teammate@example.com\",\n      \"phone\": \"098-765-4321\"\n    },\n    \"admin\": false\n  }\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/team/7/users",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "7", "users"]
+                }
+            },
+            "response": []
         }
+        
     ]
 }

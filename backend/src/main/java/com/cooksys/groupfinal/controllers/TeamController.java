@@ -1,17 +1,26 @@
 package com.cooksys.groupfinal.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
+import com.cooksys.groupfinal.entities.Team;
+import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.services.TeamService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/team")
+@RequestMapping("/teams")
 @RequiredArgsConstructor
 public class TeamController {
 	
 	private final TeamService teamService;
+
+	@PostMapping("/{teamId}/users")
+	public TeamDto addUserToTeam(@PathVariable Long teamId, @RequestBody UserTeamRequestDto userTeamRequestDto){
+		return teamService.addUserToTeam(userTeamRequestDto, teamId);
+	}
 
 }
