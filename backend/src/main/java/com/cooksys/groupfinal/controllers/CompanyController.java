@@ -76,4 +76,10 @@ public class CompanyController {
     public CompanyTeamResponseDto createTeam(@PathVariable Long companyId, @RequestBody TeamRequestDto teamRequestDto) {
     	return companyService.createTeam(companyId, teamRequestDto);
     }
+    
+    @PutMapping("/{companyId}/teams/{teamId}")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto updateTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody TeamRequestDto teamRequestDto) {
+    	return companyService.updateTeam(companyId, teamId, teamRequestDto);
+    }
 }
