@@ -308,7 +308,36 @@
                 }
             },
             "response": []
+        },
+        {
+            "name": "POST /teams/7projects",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"projectDto\": {\n    \"name\": \"A New Project To Add\",\n    \"description\": \"Description of the new project\",\n    \"active\": true,\n    \"team\": {\n      \"id\": 7, \n      \"name\": \"Team Name\"\n    }\n  },\n  \"admin\": {\n    \"credentials\": {\n      \"username\": \"thisismycompany\", \n      \"password\": \"getyourowncompany\"\n    },\n    \"profile\": {\n      \"firstName\": \"Admin\",\n      \"lastName\": \"User\",\n      \"email\": \"admin@example.com\",\n      \"phone\": \"123-456-7890\"\n    },\n    \"admin\": true\n  }\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/teams/7/projects", 
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "7", "projects"] 
+                }
+            },
+            "response": []
         }
+        
         
     ]
 }
