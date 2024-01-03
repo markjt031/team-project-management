@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CompanySelectComponent } from './company-select/company-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     CompanySelectComponent,
     NavbarComponent,
     LoginComponent,
+    AnnouncementsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
