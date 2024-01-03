@@ -143,5 +143,19 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entityToDto(company);
 	}
 
+//	@Override
+//	public CompanyResponseDto updateCompany(Long companyId, CompanyRequestDto companyRequestDto) {
+//		Company company = companyRepository.getById(companyId);
+//		Company updateCompany = companyMapper.requestDtoToEntity(companyRequestDto);
+//		System.out.println(companyRequestDto.getName());
+//		User user = authorizationService.userIsAdmin(companyRequestDto.getValidation());
+//		if(!user.isAdmin()){
+//			throw new NotAuthorizedException("Restricted action, contact administraor.");
+//		}
+//		company.setName(updateCompany.getName());
+//		company.setDescription(updateCompany.getDescription());
+//		return companyMapper.entityResponseToDto(companyRepository.saveAndFlush(company));
+//	}
+
 
 }

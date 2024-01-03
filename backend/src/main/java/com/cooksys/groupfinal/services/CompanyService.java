@@ -23,4 +23,6 @@ public interface CompanyService {
 
 	CompanyDto getCompanyById(Long companyId);
 
+//	CompanyResponseDto updateCompany(Long companyId, CompanyRequestDto companyRequestDto);
+
 }
