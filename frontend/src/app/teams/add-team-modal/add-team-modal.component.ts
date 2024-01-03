@@ -12,7 +12,7 @@ import { fetchData } from 'src/app/services/api';
 export class AddTeamModalComponent {
   @Output() close= new EventEmitter<void>()
   companyId: number = 1
-  fullUserList: FullUser[]=[]
+  availableUserList: FullUser[]=[]
   selectedOptions: FullUser[]=[]
   
   isError: boolean=false
@@ -39,8 +39,10 @@ export class AddTeamModalComponent {
 
   addUser(user: FullUser) {
     const index = this.selectedOptions.findIndex((option) => option.id === user.id);
+    const optionIndex=this.availableUserList.findIndex((option)=>option.id===user.id)
     if (index === -1) {
       this.selectedOptions.push(user);
+      this.availableUserList.splice(optionIndex, 1)
     }
     this.toggleDropdown() 
   }
@@ -55,7 +57,7 @@ export class AddTeamModalComponent {
     let response=await fetchData(`company/${this.companyId}/users`)
     .then((users)=>{
       console.log(users)
-      this.fullUserList=users
+      this.availableUserList=users
     })
   }
 

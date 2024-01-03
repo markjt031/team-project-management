@@ -35,7 +35,7 @@ input[type=text]:focus{
     text-align: center;
     font-size: 18px;
     position: absolute;
-    right: 30px;
+    right: 10px;
     top: 10px;
     cursor: pointer;
 }

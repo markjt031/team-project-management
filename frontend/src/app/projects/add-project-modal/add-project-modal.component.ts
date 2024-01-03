@@ -9,6 +9,7 @@ import Team from 'src/app/models/Team';
 })
 export class AddProjectModalComponent {
   @Output() close= new EventEmitter<void>()
+  @Output() updateProjectsList= new EventEmitter<void>()
   @Input() team: Team | undefined = undefined
 
   formData: FormGroup = new FormGroup({
@@ -31,6 +32,7 @@ export class AddProjectModalComponent {
       }
       console.log(project)
       this.close.emit()
+      this.updateProjectsList.emit()
       //add code to submit project to api
     }
     else {

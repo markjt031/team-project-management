@@ -23,7 +23,7 @@
                         Pick an option <img class="icon" src="../../../assets/down.svg">
                         </button>
                         <div *ngIf="isDropdownOpen" class="dropdown-menu">
-                        <div *ngFor="let user of fullUserList" class="option" (click)="addUser(user)">
+                        <div *ngFor="let user of availableUserList" class="option" (click)="addUser(user)">
                             {{ user.profile.firstName }} {{user.profile.lastName.charAt(0)}}.
                         </div>
                         </div>

@@ -9,3 +9,6 @@
     </div>
     <app-edit-project-modal *ngIf="editModalShown" (close)="toggleEditModal()" [project]="project"></app-edit-project-modal>
 </div>
+<div *ngIf="!projects || projects.length===0" class="project">
+    <h2>No Projects for this team</h2>
+</div>

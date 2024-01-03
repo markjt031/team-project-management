@@ -1,6 +1,7 @@
-import { Company } from './Company';
-import { Profile } from './Profile';
-import { Team } from './Team';
+import Company from "./Company";
+import Profile from "./Profile";
+import Team from "./Team";
+
 
 export interface User {
   id: number;

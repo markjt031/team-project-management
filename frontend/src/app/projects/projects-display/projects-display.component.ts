@@ -13,5 +13,8 @@ export class ProjectsDisplayComponent {
   toggleEditModal(){
     this.editModalShown=!this.editModalShown
   }
+  ngOnInit(){
+    console.log(this.projects)
+  }
 
 }
