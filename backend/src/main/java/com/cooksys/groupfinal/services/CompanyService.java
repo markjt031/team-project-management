@@ -19,4 +19,6 @@ public interface CompanyService {
 
 	Set<CompanyDto> getAllCompanies();
 
+	CompanyDto createCompany(CompanyRequestDto companyRequestDto);
+
 }

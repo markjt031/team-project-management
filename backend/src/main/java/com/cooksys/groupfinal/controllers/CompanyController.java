@@ -6,10 +6,6 @@ import java.util.Set;
 import com.cooksys.groupfinal.dtos.*;
 import org.springframework.web.bind.annotation.*;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -57,4 +53,9 @@ public class CompanyController {
     	return companyService.getAllCompanies();
     }
 
+    @PostMapping
+    @CrossOrigin(origins="*")
+    public CompanyDto createCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+    	return companyService.createCompany(companyRequestDto);
+    }
 }

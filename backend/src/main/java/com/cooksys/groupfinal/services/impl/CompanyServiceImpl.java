@@ -122,5 +122,13 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entitiesToDtos(allCompanies);
 	}
 
+	@Override
+	public CompanyDto createCompany(CompanyRequestDto companyRequestDto) {
+		Company newCompany = companyMapper.requestDtoToEntity(companyRequestDto);
+		
+		return companyMapper.entityToDto(companyRepository.saveAndFlush(newCompany));
+		
+	}
+
 
 }
