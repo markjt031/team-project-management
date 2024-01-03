@@ -70,4 +70,10 @@ public class CompanyController {
     public CompanyResponseDto updateCompany(@PathVariable Long companyId, @RequestBody CompanyRequestDto companyRequestDto) {
     	return companyService.updateCompany(companyId, companyRequestDto);
     }
+    
+    @PostMapping("/{companyId}/teams")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto createTeam(@PathVariable Long companyId, @RequestBody TeamRequestDto teamRequestDto) {
+    	return companyService.createTeam(companyId, teamRequestDto);
+    }
 }

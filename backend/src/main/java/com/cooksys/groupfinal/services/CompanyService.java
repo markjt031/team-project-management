@@ -25,4 +25,6 @@ public interface CompanyService {
 
 	CompanyResponseDto updateCompany(Long companyId, CompanyRequestDto companyRequestDto);
 
+	CompanyTeamResponseDto createTeam(Long companyId, TeamRequestDto teamRequestDto);
+
 }
