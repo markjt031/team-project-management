@@ -1,9 +1,10 @@
 package com.cooksys.groupfinal.services;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.entities.User;
 
 public interface AuthorizationService {
 
 
-    public boolean userIsAdmin(UserRequestDto userRequestDto);
+    public User userIsAdmin(UserRequestDto userRequestDto);
 }
