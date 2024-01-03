@@ -5,6 +5,7 @@ import java.util.Set;
 import org.mapstruct.Mapper;
 
 import com.cooksys.groupfinal.dtos.TeamDto;
+import com.cooksys.groupfinal.dtos.TeamRequestDto;
 import com.cooksys.groupfinal.entities.Team;
 
 @Mapper(componentModel = "spring", uses = { BasicUserMapper.class })
@@ -14,4 +15,5 @@ public interface TeamMapper {
 
   Set<TeamDto> entitiesToDtos(Set<Team> teams);
 
+  Team requestToEntityDto(TeamRequestDto teamRequestDto);
 }
