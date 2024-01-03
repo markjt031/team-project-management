@@ -1,5 +1,5 @@
 <h1 class="header">Teams</h1>
-<div>
+<div class="flex">
     <div class="grid">
         <app-team-card *ngFor="let team of teams" [team]="team"></app-team-card>
         <div [hidden]="!currentUser?.admin" (click)="toggleCreateModal()"><app-add-team-button></app-add-team-button></div>
