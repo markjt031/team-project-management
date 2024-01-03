@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Project from 'src/app/models/Project';
+import { User } from 'src/app/models/User';
+import { UserService } from 'src/app/user.service';
 
 interface Option{
   value: boolean | undefined,
@@ -15,7 +17,10 @@ interface Option{
 
 export class EditProjectModalComponent {
   @Output() close= new EventEmitter<void>()
+  @Output() updateProjectsList= new EventEmitter<void>()
+
   @Input() project: Project | undefined = undefined
+  currentUser: User | undefined = undefined
   
   isDropdownOpen: boolean= false
   selectOptions=[
@@ -30,7 +35,11 @@ export class EditProjectModalComponent {
   });
   isError: boolean= false;
 
+  constructor(private userService: UserService){}
   ngOnInit(){
+    this.userService.currentUser.subscribe((user)=>{
+      this.currentUser=user
+    })
     this.formData.setValue({name: this.project?.name, description: this.project?.description })
   }
 
@@ -56,8 +65,9 @@ export class EditProjectModalComponent {
         team: this.project?.team
       }
       console.log(project)
-      this.close.emit()
       //add code to submit project to api
+      this.updateProjectsList.emit()
+      this.close.emit()
     }
     else this.isError=true
   }

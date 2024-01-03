@@ -3,5 +3,5 @@
 <div class="button-container">
     <button class="button" (click)="toggleModal()">New</button>
 </div>
-<app-projects-display [projects]=projects></app-projects-display>
+<app-projects-display [projects]=projects (passUpdateProjectEvent)="getProjects()"></app-projects-display>
 <app-add-project-modal *ngIf="addModalShown" [team]=team (close)="toggleModal()" (updateProjectsList)="getProjects()"></app-add-project-modal>

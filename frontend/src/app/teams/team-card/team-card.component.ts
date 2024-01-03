@@ -35,6 +35,8 @@ ngOnInit(){
     }
     else{
       //set companyID from companyService
+      //temporarily setting this manually for now. 
+      this.companyId=this.currentUser.companies[0].id
     }
   })
   this.getProjects()

@@ -33,6 +33,7 @@ export class TeamsComponent {
       //this doesn't work yet because the company select isn't fully implemented yet
       //it is meant to set the company id to the current selected company for admins
     //  this.companyService.currentCompany.subscribe((company)=>this.companyId=company.id)
+      this.companyId=this.currentUser.companies[0].id
     }
     this.fetchTeams()
   }

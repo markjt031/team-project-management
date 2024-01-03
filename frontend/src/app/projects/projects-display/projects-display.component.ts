@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import Project from 'src/app/models/Project';
 
 @Component({
@@ -8,6 +8,8 @@ import Project from 'src/app/models/Project';
 })
 export class ProjectsDisplayComponent {
   @Input() projects: Project[]=[]
+  @Output() updateProjectsList= new EventEmitter<void>()
+  
   editModalShown: boolean=false
 
   toggleEditModal(){
@@ -16,5 +18,9 @@ export class ProjectsDisplayComponent {
   ngOnInit(){
     console.log(this.projects)
   }
-
+  passUpdateProjectEvent(){
+    this.updateProjectsList.emit()
+  }
 }
+
+

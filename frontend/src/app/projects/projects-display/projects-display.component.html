@@ -1,4 +1,4 @@
-<div class="project" *ngFor="let project of projects">
+<div class="project" *ngFor="let project of projects" (updateProjectList)="passUpdateProjectEvent()">
     <div class="container">
         <h2>{{project.name}}</h2>
         <span class="active" [ngClass]="project.active ? 'green' : 'red'">{{project.active ? 'Active' : 'Inactive'}}</span>

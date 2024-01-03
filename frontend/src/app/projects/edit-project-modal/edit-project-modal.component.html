@@ -15,10 +15,11 @@
                 <div *ngIf="formData.controls['description'].errors['required']" class="error">Description is a required field</div>
             </div>
             <div class="select-section">
+                <div *ngIf="currentUser?.admin">
                     <h2 class="dropdown-label">Active?</h2>
                     <div class="dropdown">
                         <button type="button" class="dropdown-button" (click)="toggleDropdown()">
-                        {{selectedOption.label}} <img class="icon" src="../../../assets/down.svg">
+                            {{selectedOption.label}} <img class="icon" src="../../../assets/down.svg">
                         </button>
                         <div *ngIf="isDropdownOpen" class="dropdown-menu">
                             <div *ngFor="let option of selectOptions" class="option" (click)="selectOption(option)">
@@ -26,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+                 </div>
                 <button type="submit" class="button">Submit</button>
             </div>
         </form>
