@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="header-container">
+    <h1 class="header">COOK SYSTEMS</h1>
+    <h3 class="sub-header">A FINAL APP</h3>
+  </div>
+  <form>
+    <div class="form-container">
+      <div class="input-container">
+        <img src="assets/login.png" alt="login" class="login-image" />
+        <div class="username-input">
+          <input
+            type="text"
+            [(ngModel)]="username"
+            name="username"
+            placeholder="username"
+            class="input-field"
+            (keyup)="checkLoginButtonDisabled()"
+            required
+          />
+          <div class="input-underline"></div>
+        </div>
+        <div class="password-input">
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="password"
+            class="input-field"
+            (keyup)="checkLoginButtonDisabled()"
+            [required]="true"
+          />
+          <div class="input-underline"></div>
+        </div>
+      </div>
+      <div>
+        <button
+          class="login-button"
+          type="submit"
+          (click)="login()"
+          [disabled]="isLoginButtonDisabled"
+        >
+          LOGIN
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
