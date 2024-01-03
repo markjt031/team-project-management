@@ -1,14 +1,15 @@
 package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.mappers.TeamMapper;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
@@ -29,7 +30,7 @@ public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
     private final UserRepository userRepository;
-    private final BasicUserMapper userMapper;
+    private final ProjectMapper projectMapper;
     private final FullUserMapper fullUserMapper;
 
     private final AuthorizationService authorizationService;
@@ -40,6 +41,13 @@ public class TeamServiceImpl implements TeamService {
                 .map(team -> team.getTeammates().stream()
                         .map(fullUserMapper::entityToFullUserDto)
                         .collect(Collectors.toSet()))
+                .orElse(Collections.emptySet());
+    }
+
+    @Override
+    public Set<ProjectDto> getTeamProjects(Long teamId) {
+        return teamRepository.findById(teamId)
+                .map(team -> projectMapper.entitiesToDtos(team.getProjects()))
                 .orElse(Collections.emptySet());
     }
 

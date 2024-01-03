@@ -1,6 +1,7 @@
 package com.cooksys.groupfinal.controllers;
 
 import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
 import com.cooksys.groupfinal.services.TeamService;
@@ -19,6 +20,11 @@ public class TeamController {
 	@GetMapping("/{teamId}/users")
 	public Set<FullUserDto> getTeamUsers(@PathVariable Long teamId) {
 		return teamService.getTeamUsers(teamId);
+	}
+
+	@GetMapping("/{teamId}/projects")
+	public Set<ProjectDto> getTeamProjects(@PathVariable Long teamId) {
+		return teamService.getTeamProjects(teamId);
 	}
 
 	@PostMapping("/{teamId}/users")
