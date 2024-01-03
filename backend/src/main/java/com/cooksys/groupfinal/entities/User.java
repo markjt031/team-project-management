@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -45,7 +46,7 @@ public class User {
 	@EqualsAndHashCode.Exclude
 	private Set<Company> companies = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "teammates")
+	@ManyToMany(fetch = FetchType.EAGER,mappedBy = "teammates")
 	@EqualsAndHashCode.Exclude
 	private Set<Team> teams = new HashSet<>();
 

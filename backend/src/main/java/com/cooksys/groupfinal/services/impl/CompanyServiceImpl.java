@@ -199,5 +199,23 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 
+	@Override
+	public CompanyTeamResponseDto deletTeam(Long companyId, Long teamId, UserRequestDto userRequestDto) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		
+		User user = authorizationService.userIsAdmin(userRequestDto);
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		
+		teamRepository.deleteById(teamId);
+		return companyMapper.entityTeamResponseDto(company);
+	}
+
 
 }
