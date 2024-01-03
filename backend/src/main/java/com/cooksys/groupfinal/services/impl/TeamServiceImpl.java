@@ -1,7 +1,7 @@
 package com.cooksys.groupfinal.services.impl;
 
+import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
@@ -13,14 +13,14 @@ import com.cooksys.groupfinal.mappers.TeamMapper;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.AuthorizationService;
+import com.cooksys.groupfinal.services.TeamService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.cooksys.groupfinal.services.TeamService;
-
-import lombok.RequiredArgsConstructor;
-
-import java.util.Optional;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +30,18 @@ public class TeamServiceImpl implements TeamService {
     private final TeamMapper teamMapper;
     private final UserRepository userRepository;
     private final BasicUserMapper userMapper;
+    private final FullUserMapper fullUserMapper;
 
     private final AuthorizationService authorizationService;
+
+    @Override
+    public Set<FullUserDto> getTeamUsers(Long teamId) {
+        return teamRepository.findById(teamId)
+                .map(team -> team.getTeammates().stream()
+                        .map(fullUserMapper::entityToFullUserDto)
+                        .collect(Collectors.toSet()))
+                .orElse(Collections.emptySet());
+    }
 
     @Transactional
     @Override
