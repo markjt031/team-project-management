@@ -45,6 +45,25 @@
                     ],
                     "port": "8080",
                     "path": [
+                        "users",
+                        "13"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /users/{userId}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/users/13",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
                         "company",
                         "6",
                         "users"
