@@ -82,4 +82,10 @@ public class CompanyController {
     public CompanyTeamResponseDto updateTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody TeamRequestDto teamRequestDto) {
     	return companyService.updateTeam(companyId, teamId, teamRequestDto);
     }
+    
+    @DeleteMapping("{companyId}/teams/{teamId}")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto deleteTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody UserRequestDto userRequestDto) {
+    	return companyService.deletTeam(companyId, teamId, userRequestDto);
+    }
 }
