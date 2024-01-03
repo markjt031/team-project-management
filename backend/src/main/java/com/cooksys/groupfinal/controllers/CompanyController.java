@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.controllers;
 
 import java.util.Set;
 
+import com.cooksys.groupfinal.dtos.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
@@ -42,5 +43,11 @@ public class CompanyController {
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
 	}
+
+    @DeleteMapping("/{companyId}")
+    @CrossOrigin(origins="*")
+    public void deleteCompanyById(@PathVariable Long companyId, @RequestBody UserRequestDto userRequestDto){
+       companyService.deleteCompanyById(companyId, userRequestDto);
+    }
 
 }

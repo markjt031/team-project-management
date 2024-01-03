@@ -7,6 +7,6 @@ import com.cooksys.groupfinal.entities.Announcement;
 
 @Repository
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long> {
-
+        public void deleteAnnouncementsByCompanyId(Long companyId);
 
 }

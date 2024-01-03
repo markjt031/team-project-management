@@ -141,7 +141,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "DELETE /company/1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"credentials\": {\n    \"username\": \"temporaryceoofwaystar\",\n    \"password\": \"idontgetpaidenoughforthis\"\n  },\n  \"admin\": true\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/company/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"company/1"
+					]
+				}
+			},
+			"response": []
 		}
+		
 		
 	]
 }

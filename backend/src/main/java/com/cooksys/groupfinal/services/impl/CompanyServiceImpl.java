@@ -7,25 +7,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.mappers.*;
+import com.cooksys.groupfinal.repositories.*;
+import com.cooksys.groupfinal.services.AuthorizationService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.AnnouncementMapper;
-import com.cooksys.groupfinal.mappers.ProjectMapper;
-import com.cooksys.groupfinal.mappers.TeamMapper;
-import com.cooksys.groupfinal.mappers.FullUserMapper;
-import com.cooksys.groupfinal.repositories.CompanyRepository;
-import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,10 +32,16 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	private final CompanyRepository companyRepository;
 	private final TeamRepository teamRepository;
+	private final ProjectRepository projectRepository;
+	private final UserRepository userRepository;
+	private final AnnouncementRepository announcementRepository;
+
 	private final FullUserMapper fullUserMapper;
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
+
+	private final AuthorizationService authorizationService;
 	
 	private Company findCompany(Long id) {
         Optional<Company> company = companyRepository.findById(id);
@@ -93,5 +95,23 @@ public class CompanyServiceImpl implements CompanyService {
 		filteredProjects.removeIf(project -> !project.isActive());
 		return projectMapper.entitiesToDtos(filteredProjects);
 	}
+
+	@Override
+	@Transactional
+	public void deleteCompanyById(Long companyId, UserRequestDto userRequestDto) {
+		Company companyToDelete = findCompany(companyId);
+		if(!authorizationService.userIsAdmin(userRequestDto)){return;}
+		announcementRepository.deleteAnnouncementsByCompanyId(companyId);
+		List<Long> teamIds = companyToDelete.getTeams().stream()
+				.map(Team::getId)
+				.toList();
+		teamIds.forEach(teamId -> {
+			projectRepository.deleteByTeamId(teamId);
+			teamRepository.unlinkAllUsersFromTeam(teamId);
+			teamRepository.deleteById(teamId);
+		});
+		companyRepository.deleteById(companyId);
+	}
+
 
 }
