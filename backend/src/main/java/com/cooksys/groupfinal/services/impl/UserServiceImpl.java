@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	private final ProfileMapper profileMapper;
 
     public Set<FullUserDto> getAllUsers() {
-        return fullUserMapper.entitiesToFullUserDtos(userRepository.findAllByDeletedFalse());
+        return fullUserMapper.entitiesToFullUserDtos(userRepository.findAllByActiveTrue());
     }
 
 	private User findUser(String username) {
