@@ -40,6 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
 	private final AnnouncementMapper announcementMapper;
 	private final TeamMapper teamMapper;
 	private final ProjectMapper projectMapper;
+	private final CompanyMapper companyMapper;
 
 	private final AuthorizationService authorizationService;
 	
@@ -111,6 +112,14 @@ public class CompanyServiceImpl implements CompanyService {
 			teamRepository.deleteById(teamId);
 		});
 		companyRepository.deleteById(companyId);
+	}
+
+	@Override
+	public Set<CompanyDto> getAllCompanies() {
+		List<Company> companies = new ArrayList<>();
+		companies.addAll(companyRepository.findAll());
+		Set<Company> allCompanies = new HashSet<Company>(companies);
+		return companyMapper.entitiesToDtos(allCompanies);
 	}
 
 

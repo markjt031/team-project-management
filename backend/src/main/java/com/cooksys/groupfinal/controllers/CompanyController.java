@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.controllers;
 
+import java.util.List;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
@@ -48,6 +49,12 @@ public class CompanyController {
     @CrossOrigin(origins="*")
     public void deleteCompanyById(@PathVariable Long companyId, @RequestBody UserRequestDto userRequestDto){
        companyService.deleteCompanyById(companyId, userRequestDto);
+    }
+    
+    @GetMapping
+    @CrossOrigin(origins = "*")
+    public Set<CompanyDto> getAllCompanies(){
+    	return companyService.getAllCompanies();
     }
 
 }

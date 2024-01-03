@@ -1,5 +1,6 @@
 package com.cooksys.groupfinal.services;
 
+import java.util.List;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
@@ -15,4 +16,7 @@ public interface CompanyService {
 	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
 
     void deleteCompanyById(Long companyId, UserRequestDto userRequestDto);
+
+	Set<CompanyDto> getAllCompanies();
+
 }
