@@ -2,6 +2,9 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.User;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
+import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
+import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.AuthorizationService;
@@ -16,19 +19,21 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final BasicUserMapper basicUserMapper;
     private final UserRepository userRepository;
     @Override
-    public boolean userIsAdmin(UserRequestDto userRequestDto) {
+    public User userIsAdmin(UserRequestDto userRequestDto) {
         User requestingUser = basicUserMapper.requestDtoToEntity(userRequestDto);
         if(requestingUser.getCredentials() == null || requestingUser.getCredentials().getUsername() == null || requestingUser.getCredentials().getPassword() == null){
-            return false;
+            throw new BadRequestException("Credentials must be supplied.");
         }
 
         Optional<User> existingUser = userRepository.findByCredentialsUsernameAndActiveTrue(requestingUser.getCredentials().getUsername());
         if(existingUser.isEmpty()){
-            return false;}
+            throw new NotFoundException("User by that id does not exist.");}
 
         if(existingUser.get().getCredentials().getPassword().equals(requestingUser.getCredentials().getPassword())){
-            return existingUser.get().isAdmin() == true;
+            if (existingUser.get().isAdmin() == true){
+                return existingUser.get();
+            }
         }
-        return false;
+        throw new NotAuthorizedException("You are not an admin.");
     }
 }

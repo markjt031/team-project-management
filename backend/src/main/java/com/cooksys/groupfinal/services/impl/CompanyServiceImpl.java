@@ -100,7 +100,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Transactional
 	public void deleteCompanyById(Long companyId, UserRequestDto userRequestDto) {
 		Company companyToDelete = findCompany(companyId);
-		if(!authorizationService.userIsAdmin(userRequestDto)){return;}
+		User requestingUser = authorizationService.userIsAdmin(userRequestDto);
 		announcementRepository.deleteAnnouncementsByCompanyId(companyId);
 		List<Long> teamIds = companyToDelete.getTeams().stream()
 				.map(Team::getId)
