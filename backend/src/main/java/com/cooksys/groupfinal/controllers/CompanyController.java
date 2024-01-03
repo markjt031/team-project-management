@@ -65,9 +65,9 @@ public class CompanyController {
     	return companyService.getCompanyById(companyId);
     }
     
-//    @PutMapping("/{companyId}")
-//    @CrossOrigin(origins = "*")
-//    public CompanyResponseDto updateCompany(@PathVariable Long companyId, @RequestBody CompanyRequestDto companyRequestDto) {
-//    	return companyService.updateCompany(companyId, companyRequestDto);
-//    }
+    @PutMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyResponseDto updateCompany(@PathVariable Long companyId, @RequestBody CompanyRequestDto companyRequestDto) {
+    	return companyService.updateCompany(companyId, companyRequestDto);
+    }
 }
