@@ -20,6 +20,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/{userId}")
+    @CrossOrigin(origins="*")
+    public ProfileDto getUserProfile(@PathVariable Long userId) {
+        return userService.getUserProfile(userId);
+    }
+
 	@PostMapping("/login")
 	@CrossOrigin(origins="*")
     public FullUserDto login(@RequestBody CredentialsDto credentialsDto) {

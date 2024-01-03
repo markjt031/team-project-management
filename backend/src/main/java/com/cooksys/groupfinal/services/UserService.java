@@ -18,4 +18,5 @@ public interface UserService {
 
 	ProfileDto updateUser(UserRequestDto userRequestDto, Long id);
 
+	ProfileDto getUserProfile(Long userId);
 }
