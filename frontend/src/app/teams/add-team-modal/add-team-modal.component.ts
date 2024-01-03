@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import BasicUser from 'src/app/models/BasicUser';
 import FullUser from 'src/app/models/FullUser';
 import { fetchData } from 'src/app/services/api';
 
@@ -71,7 +70,7 @@ export class AddTeamModalComponent {
       console.log(team)
       //add code to submit team once the create path exists
 
-      //redirect to same page and reload to reflect changes
+      //redirect to same page and reload to reflect changes. may not be necessary
       this.router.navigateByUrl('teams')
         .then(() => {
           window.location.reload();
