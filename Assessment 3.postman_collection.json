@@ -54,6 +54,22 @@
             "response": []
         },
         {
+            "name": "GET /users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": "users"
+                }
+            },
+            "response": []
+        },
+        {
             "name": "GET /users/{userId}",
             "request": {
                 "method": "GET",
