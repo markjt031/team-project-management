@@ -52,7 +52,8 @@ export class EditProjectModalComponent {
       let project={
         name: this.formData.controls['name'].value,
         description: this.formData.controls['description'].value,
-        active: this.selectedOption.value
+        active: this.selectedOption.value,
+        team: this.project?.team
       }
       console.log(project)
       this.close.emit()
