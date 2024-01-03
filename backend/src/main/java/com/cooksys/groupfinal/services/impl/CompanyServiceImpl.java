@@ -176,5 +176,28 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyMapper.entityTeamResponseDto(updatedCompany);
 	}
 
+	@Override
+	public CompanyTeamResponseDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+		Team newTeam = teamMapper.requestToEntityDto(teamRequestDto);
+		
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		
+		User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		
+		team.setName(newTeam.getName());
+		team.setDescription(newTeam.getDescription());
+		teamRepository.saveAndFlush(team);
+		
+		return companyMapper.entityTeamResponseDto(company);
+		
+	}
+
 
 }
