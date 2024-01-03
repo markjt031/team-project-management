@@ -1,0 +1,84 @@
+.form-holder {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form {
+    width: 20%;
+    top: 150px;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.company-select {
+    height: 40px;
+    width: 250px;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    background-color: #ffdfdff3;
+    border-radius: 10px;
+    color: #5533FF;
+    cursor: pointer;
+    z-index: 1000;
+
+}
+
+.inner-select {
+    position: relative;
+    height: 100%;
+    margin-top: -12px;
+}
+
+.carrot {
+    position: relative;
+    color: black;
+    top: -12px;
+    height: 100%;
+    transition: .2s;
+}
+
+.options {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.option {
+    height: 40px;
+    text-align: left;
+    padding-left: 37px;
+    border: none;
+    cursor: pointer;
+}
+
+.option:hover {
+    color: #5533FF;
+}
+
+.option h3 {
+    top: -7px;
+    position: relative;
+}
+
+.blocker {
+    height: 100%;
+    bottom: 0px;
+    width: 180%;
+    position: absolute;
+    z-index: 999;
+}
+
