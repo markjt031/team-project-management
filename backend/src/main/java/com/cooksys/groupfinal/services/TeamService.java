@@ -6,6 +6,7 @@ import com.cooksys.groupfinal.dtos.ProjectRequestDto;
 
 import com.cooksys.groupfinal.dtos.FullUserDto;
 
+import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
 
@@ -20,4 +21,6 @@ public interface TeamService {
 
     Set<FullUserDto> getTeamUsers(Long teamId);
 
+
+    Set<ProjectDto> getTeamProjects(Long teamId);
 }

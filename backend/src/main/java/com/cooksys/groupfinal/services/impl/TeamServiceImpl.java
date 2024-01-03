@@ -1,6 +1,7 @@
 package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.entities.Project;
 
 import com.cooksys.groupfinal.entities.Team;
@@ -48,6 +49,13 @@ public class TeamServiceImpl implements TeamService {
                 .map(team -> team.getTeammates().stream()
                         .map(fullUserMapper::entityToFullUserDto)
                         .collect(Collectors.toSet()))
+                .orElse(Collections.emptySet());
+    }
+
+    @Override
+    public Set<ProjectDto> getTeamProjects(Long teamId) {
+        return teamRepository.findById(teamId)
+                .map(team -> projectMapper.entitiesToDtos(team.getProjects()))
                 .orElse(Collections.emptySet());
     }
 
