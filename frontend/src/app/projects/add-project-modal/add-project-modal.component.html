@@ -1,0 +1,20 @@
+<div class="background">
+    <div class="modal-container">
+        <div class="x" (click)="onModalClose()">
+            X
+        </div>
+        <form class="form" (ngSubmit)="onSubmit()" [formGroup]="formData">
+            <label for="name">Project Name</label>
+            <input type="text" name="name" formControlName="name">
+            <div *ngIf="isError && formData.controls['name'].errors">
+                <div *ngIf="formData.controls['name'].errors['required']" class="error">Name is a required field</div>
+            </div>
+            <label>Description</label>
+            <input type="text" name="description" formControlName="description">
+            <div *ngIf="isError && formData.controls['description'].errors">
+                <div *ngIf="formData.controls['description'].errors['required']" class="error">Description is a required field</div>
+            </div>
+            <button type="submit" class="button">Submit</button>
+        </form>
+    </div>
+</div>
