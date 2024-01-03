@@ -13,4 +13,5 @@ public class CompanyRequestDto {
     
     private String description;
     
+    private UserRequestDto validation;
 }
