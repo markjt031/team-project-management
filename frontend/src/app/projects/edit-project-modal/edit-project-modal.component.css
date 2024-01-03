@@ -82,6 +82,8 @@ input[type=text]:focus{
 
 .icon{
     height: 10px;
+    position: absolute;
+    right: 5px;
   }
 
   .dropdown {
@@ -100,6 +102,7 @@ input[type=text]:focus{
     margin: 20px 0px;
     margin: 0 auto;
     width: 150px;
+    position: relative;
   }
   
   .dropdown-menu {
