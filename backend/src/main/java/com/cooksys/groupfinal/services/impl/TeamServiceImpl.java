@@ -7,7 +7,6 @@ import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
-import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.mappers.TeamMapper;
@@ -38,7 +37,6 @@ public class TeamServiceImpl implements TeamService {
     private final ProjectMapper projectMapper;
     private final ProjectRepository projectRepository;
 
-    private final BasicUserMapper userMapper;
     private final FullUserMapper fullUserMapper;
 
 
@@ -80,7 +78,7 @@ public class TeamServiceImpl implements TeamService {
         if(teamToUpdate.isEmpty()){
             throw new NotFoundException("Team with this ID can't be found.");
         }
-        User admin = authorizationService.userIsAdmin(projectRequestDto.getAdmin());
+        authorizationService.userIsAdmin(projectRequestDto.getAdmin());
         Project newProject = projectMapper.DtoToEntity(
                 projectRequestDto.getProjectDto()
         );
