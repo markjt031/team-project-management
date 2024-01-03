@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Project from '../models/Project';
 import { LocationStrategy } from '@angular/common';
 import Team from '../models/Team';
+import { fetchData } from '../services/api';
 
 @Component({
   selector: 'app-projects',
@@ -14,6 +15,7 @@ export class ProjectsComponent {
   projects: Project[]=[]
   name: string | null=''
   team: any
+  companyId: number = 0
   addModalShown= false
 
   constructor(private route: ActivatedRoute, private location: LocationStrategy){}
@@ -29,6 +31,9 @@ export class ProjectsComponent {
       if ('team' in state && typeof state.team==='object'){
         this.team=state.team
       }
+      if ('companyId' in state && typeof state.companyId==='number'){
+        this.companyId=state.companyId
+      }
     }
     this.route.queryParams.subscribe(params => {
       this.id = this.route.snapshot.params['id']
@@ -37,5 +42,12 @@ export class ProjectsComponent {
   }
   toggleModal(){
     this.addModalShown=!this.addModalShown
+  }
+  getProjects=async()=>{
+    console.log(`company/${this.companyId}/teams/${this.team.id}/projects`)
+    let response = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
+      .then((projects)=>{
+        this.projects=projects
+      })
   }
 }

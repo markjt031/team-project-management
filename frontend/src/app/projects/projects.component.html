@@ -4,4 +4,4 @@
     <button class="button" (click)="toggleModal()">New</button>
 </div>
 <app-projects-display [projects]=projects></app-projects-display>
-<app-add-project-modal *ngIf="addModalShown" [team]=team (close)="toggleModal()"></app-add-project-modal>
+<app-add-project-modal *ngIf="addModalShown" [team]=team (close)="toggleModal()" (updateProjectsList)="getProjects()"></app-add-project-modal>

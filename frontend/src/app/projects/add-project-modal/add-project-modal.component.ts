@@ -31,9 +31,10 @@ export class AddProjectModalComponent {
         team: this.team
       }
       console.log(project)
-      this.close.emit()
-      this.updateProjectsList.emit()
+      
       //add code to submit project to api
+      this.updateProjectsList.emit()
+      this.close.emit()
     }
     else {
       this.isError=true

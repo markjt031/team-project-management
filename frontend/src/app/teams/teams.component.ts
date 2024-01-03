@@ -4,6 +4,8 @@ import { fetchData } from '../services/api';
 import { User } from '../models/User';
 import { UserService } from '../user.service';
 import BasicUser from '../models/BasicUser';
+import { CompanySelectComponent } from '../company-select/company-select.component';
+import { CompanyService } from '../company.service';
 
 @Component({
   selector: 'app-teams',
@@ -13,23 +15,25 @@ import BasicUser from '../models/BasicUser';
 export class TeamsComponent {
   //company id should be based on the company from the use that is logged in.
   //will be pulled from UserService when implemented
-  companyId: number | undefined = 1
+  companyId: number | undefined = undefined
   teams: Team[] = []
   showModal: boolean = false
   currentUser: User | undefined = undefined
 
-  constructor(private userService: UserService){}
+  constructor(private userService: UserService, private companyService: CompanyService){}
   ngOnInit(){
     this.userService.currentUser.subscribe((user: User)=>{
       this.currentUser=user
-      //assuming non-admins only have one company
-      if (!user.admin){
-        this.companyId=this.currentUser.companies[0].id
-      }
-      else{
-        //set companyID from companyService
-      }
     })
+    //assuming non-admins only have one company
+    if (!this.currentUser?.admin){
+      this.companyId=this.currentUser?.companies[0]?.id
+    }
+    else{
+      //this doesn't work yet because the company select isn't fully implemented yet
+      //it is meant to set the company id to the current selected company for admins
+    //  this.companyService.currentCompany.subscribe((company)=>this.companyId=company.id)
+    }
     this.fetchTeams()
   }
 
