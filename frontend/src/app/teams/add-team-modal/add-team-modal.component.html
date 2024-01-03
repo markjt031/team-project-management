@@ -20,7 +20,7 @@
                     <div class="dropdown">
                         
                         <button type="button" class="dropdown-button" (click)="toggleDropdown()">
-                        Pick an option <img class="icon" src="../../../assets/down.svg">
+                        Pick an option <img class="icon" src="../../../assets/down.svg" [style]="{'transform': isDropdownOpen ? 'rotateX(0deg)': 'rotateX(180deg)'}">
                         </button>
                         <div *ngIf="isDropdownOpen" class="dropdown-menu">
                         <div *ngFor="let user of availableUserList" class="option" (click)="addUser(user)">

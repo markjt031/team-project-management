@@ -49,7 +49,9 @@ export class AddTeamModalComponent {
 
   removeUser(user: FullUser){
     const index=this.selectedOptions.findIndex((option) => option.id === user.id);
+    let removed=this.selectedOptions[index]
     this.selectedOptions.splice(index, 1)
+    this.availableUserList.push(removed)
   }
 
   //this can be moved to a service

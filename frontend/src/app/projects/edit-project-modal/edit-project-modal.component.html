@@ -19,7 +19,7 @@
                     <h2 class="dropdown-label">Active?</h2>
                     <div class="dropdown">
                         <button type="button" class="dropdown-button" (click)="toggleDropdown()">
-                            {{selectedOption.label}} <img class="icon" src="../../../assets/down.svg">
+                            {{selectedOption.label}} <img class="icon" src="../../../assets/down.svg"  [style]="{'transform': isDropdownOpen ? 'rotateX(0deg)': 'rotateX(180deg)'}">
                         </button>
                         <div *ngIf="isDropdownOpen" class="dropdown-menu">
                             <div *ngFor="let option of selectOptions" class="option" (click)="selectOption(option)">
