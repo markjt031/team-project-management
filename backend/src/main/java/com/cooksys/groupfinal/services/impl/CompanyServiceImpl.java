@@ -21,6 +21,7 @@ import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
+import com.cooksys.groupfinal.exceptions.NotAuthorizedException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.services.CompanyService;
 
@@ -125,7 +126,9 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public CompanyDto createCompany(CompanyRequestDto companyRequestDto) {
 		Company newCompany = companyMapper.requestDtoToEntity(companyRequestDto);
-		
+		if(!authorizationService.userIsAdmin(companyRequestDto.getValidation())){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
 		return companyMapper.entityToDto(companyRepository.saveAndFlush(newCompany));
 		
 	}
