@@ -3,12 +3,19 @@
         <div class="x" (click)="onModalClose()">
             X
         </div>
-        <form class="form">
+        <form (ngSubmit)="onSubmit()" [formGroup]="formData" autocomplete="off" class=form>>
             <label for="name">Team Name</label>
-            <input type="text" name="name">
-            <label for="description">Description</label>
-            <input type="text" name="description">
-                <div class="select-section">
+            <input type="text" name="name" formControlName="name">
+            <div *ngIf="isError && formData.controls['name'].errors">
+                <div *ngIf="formData.controls['name'].errors['required']" class="error">Name is a required field</div>
+            </div>
+            <label for="description" >Description</label>
+            
+            <input type="text" formControlName="description" name="description">
+            <div *ngIf="isError && formData.controls['description'].errors">
+                <div *ngIf="formData.controls['description'].errors['required']" class="error">Description is a required field</div>
+            </div>
+            <div class="select-section">
                     <h2 class="dropdown-label">Select Members</h2>
                     <div class="dropdown">
                         

@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import BasicUser from 'src/app/models/BasicUser';
 import FullUser from 'src/app/models/FullUser';
 import { fetchData } from 'src/app/services/api';
@@ -13,16 +15,23 @@ export class AddTeamModalComponent {
   companyId: number = 1
   fullUserList: FullUser[]=[]
   selectedOptions: FullUser[]=[]
-
-  isDropdownOpen = false;
-
   
+  isError: boolean=false
+  isDropdownOpen: boolean = false;
+
+  formData: FormGroup = new FormGroup({
+    name: new FormControl<string>('', [Validators.required]),
+    description: new FormControl<string>('', [Validators.required]),
+  });
+
+  constructor(private router: Router){}
   ngOnInit(){
     this.fetchUsers()
 
   }
   onModalClose(){
     console.log("closing")
+    this.selectedOptions=[]
     this.close.emit()
   }
   toggleDropdown() {
@@ -49,5 +58,27 @@ export class AddTeamModalComponent {
       console.log(users)
       this.fullUserList=users
     })
+  }
+
+  onSubmit(){
+    if (this.formData.valid){
+      this.isError=false
+      let team={
+        name: this.formData.controls['name'].value,
+        description: this.formData.controls['description'].value,
+        teammates: [...this.selectedOptions]
+      }
+      console.log(team)
+      //add code to submit team once the create path exists
+
+      //redirect to same page and reload to reflect changes
+      this.router.navigateByUrl('teams')
+        .then(() => {
+          window.location.reload();
+      });
+    }
+    else{
+      this.isError=true;
+    }
   }
 }

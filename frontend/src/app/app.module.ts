@@ -10,6 +10,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { AddTeamModalComponent } from './teams/add-team-modal/add-team-modal.component';
 import { CompanySelectComponent } from './company-select/company-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
