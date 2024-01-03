@@ -1,15 +1,16 @@
 package com.cooksys.groupfinal.services.impl;
 
-import com.cooksys.groupfinal.dtos.TeamDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
-import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
+import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.entities.Project;
 import com.cooksys.groupfinal.entities.Team;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.BasicUserMapper;
 import com.cooksys.groupfinal.mappers.FullUserMapper;
+import com.cooksys.groupfinal.mappers.ProjectMapper;
 import com.cooksys.groupfinal.mappers.TeamMapper;
+import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.AuthorizationService;
@@ -28,8 +29,11 @@ public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
+
     private final UserRepository userRepository;
-    private final BasicUserMapper userMapper;
+
+    private final ProjectMapper projectMapper;
+    private final ProjectRepository projectRepository;
 
     private final AuthorizationService authorizationService;
 
@@ -52,6 +56,20 @@ public class TeamServiceImpl implements TeamService {
             throw new BadRequestException("User is already part of the team.");
         }
         return teamMapper.entityToDto(team);
+    }
+
+    @Override
+    public ProjectDto addNewProjectToTeam(Long teamId, ProjectRequestDto projectRequestDto) {
+        Optional<Team> teamToUpdate = teamRepository.findById(teamId);
+        if(teamToUpdate.isEmpty()){
+            throw new NotFoundException("Team with this ID can't be found.");
+        }
+        User admin = authorizationService.userIsAdmin(projectRequestDto.getAdmin());
+        Project newProject = projectMapper.DtoToEntity(
+                projectRequestDto.getProjectDto()
+        );
+        newProject.setTeam(teamToUpdate.get());
+        return projectMapper.entityToDto(projectRepository.saveAndFlush(newProject));
     }
 
 }
