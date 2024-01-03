@@ -11,6 +11,9 @@ import { AddTeamModalComponent } from './teams/add-team-modal/add-team-modal.com
 import { CompanySelectComponent } from './company-select/company-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProjectsDisplayComponent } from './projects/projects-display/projects-display.component';
+import { AddProjectModalComponent } from './projects/add-project-modal/add-project-modal.component';
+import { EditProjectModalComponent } from './projects/edit-project-modal/edit-project-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TeamCardComponent,
     AddTeamButtonComponent,
     ProjectsComponent,
-    AddTeamModalComponent
+    AddTeamModalComponent,
+    ProjectsDisplayComponent,
+    AddProjectModalComponent,
+    EditProjectModalComponent
   ],
   imports: [
     BrowserModule,
