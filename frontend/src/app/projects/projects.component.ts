@@ -4,6 +4,8 @@ import Project from '../models/Project';
 import { LocationStrategy } from '@angular/common';
 import Team from '../models/Team';
 import { fetchData } from '../services/api';
+import { User } from '../models/User';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-projects',
@@ -17,9 +19,13 @@ export class ProjectsComponent {
   team: any
   companyId: number = 0
   addModalShown= false
+  currentUser: User | undefined = undefined
 
-  constructor(private route: ActivatedRoute, private location: LocationStrategy){}
+  constructor(private route: ActivatedRoute, private location: LocationStrategy, private userService: UserService){}
   ngOnInit(){
+    this.userService.currentUser.subscribe((user)=>{
+      this.currentUser=user
+    })
     const state= this.location.getState()
     if (state && typeof state=== 'object'){
       if ('name' in state && typeof state.name==='string'){
