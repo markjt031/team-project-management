@@ -7,13 +7,12 @@ input[type=text]{
     border: none;
     border-bottom: solid 1px var(--highlight);
     margin: 20px 0 20px 0;
+    color: white;
 }
-select{
-    padding: 5px;
-    color: #5533FF;
-    border-radius: 10px;
-    margin: 20px 0px;
+input[type=text]:focus{
+    outline: none;
 }
+
 .background{
     height: 100%;
     width: 100%;
@@ -40,10 +39,22 @@ select{
     top: 10px;
     cursor: pointer;
 }
+.smaller-x{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    font-size: 15px;
+    border-radius: 50px;
+    color: red;
+    border: solid 2px red;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+}
 .modal-container{
     position: relative;
     width: 768px;
-    height: 600px;
+    
     background-color: var(--background-card);
     border-radius: 20px;
 }
@@ -59,6 +70,8 @@ select{
     font-size: 26px;
     text-align: center;
     margin: 15px 0px;
+    color: var(--highlight);
+    
 }
 .select-section{
     
@@ -74,4 +87,64 @@ select{
     border: none;
     padding: 15px;
     width: 200px;
+    cursor: pointer;
 }
+.dropdown {
+    position: relative;
+    /* display: inline-block; */
+    margin: 20px 0px;
+    
+  }
+  
+  .dropdown-button {
+    padding: 10px;
+    cursor: pointer;
+    padding: 10px 10px;
+    color: #5533FF;
+    border-radius: 10px;
+    margin: 20px 0px;
+    margin: 0 auto;
+    width: 150px;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+  
+  .option {
+    cursor: pointer;
+    padding: 5px;
+  }
+  .option:hover{
+    color: #5533FF;
+  }
+  
+  .selected-options {
+    margin: 10px 0px 50px 0px;
+    position: relative;
+  }
+  .selected-name-container{
+    display: flex;
+    gap: 4px;
+  }
+  .selected-user{
+    width: 103px;
+    background-color: var(--off);
+    border-radius: 10.29px;
+    text-align: center;
+    color: rgba(255,255,255, .75);
+    padding: 8px 0px;
+    margin: 10px 0px;
+  }
+  .icon{
+    height: 10px;
+  }

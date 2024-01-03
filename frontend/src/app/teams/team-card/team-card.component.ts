@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Project from 'src/app/models/Project';
 import Team from 'src/app/models/Team';
@@ -20,6 +21,8 @@ numberOfProjects: number=0
 companyId: number = 1
 projects: Project[]=[]
 
+
+
 constructor(private router: Router){}
 ngOnInit(){
   this.getProjects()
@@ -29,13 +32,7 @@ getProjects=async()=>{
   console.log(`company/${this.companyId}/teams/${this.team.id}/projects`)
   let response = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
     .then((projects)=>{
-      console.log(projects)
-      for (let project of projects){
-        console.log(project)
-        this.projects.push(project)
-      }
-      console.log(this.projects)
-      console.log(this.projects.length)
+      this.projects=projects
       this.numberOfProjects=this.projects.length
     })
 } 

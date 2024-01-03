@@ -8,15 +8,27 @@
             <input type="text" name="name">
             <label for="description">Description</label>
             <input type="text" name="description">
-            <div class="select-section">
-                <label class="dropdown-label">Select Members</label>
-                <select>
-                    <option>Pick an option</option>
-                    <option></option>
-                    <option></option>
-                </select>
-                <button type="submit" class="button">Submit</button>
-            </div>
+                <div class="select-section">
+                    <h2 class="dropdown-label">Select Members</h2>
+                    <div class="dropdown">
+                        
+                        <button type="button" class="dropdown-button" (click)="toggleDropdown()">
+                        Pick an option <img class="icon" src="../../../assets/down.svg">
+                        </button>
+                        <div *ngIf="isDropdownOpen" class="dropdown-menu">
+                        <div *ngFor="let user of fullUserList" class="option" (click)="addUser(user)">
+                            {{ user.profile.firstName }} {{user.profile.lastName.charAt(0)}}.
+                        </div>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedOptions.length > 0" class="selected-options">
+                        <div *ngFor="let user of selectedOptions" class="selected-name-container">
+                            <div  class="selected-user">{{ user.profile.firstName }} {{user.profile.lastName.charAt(0)}}.</div>
+                            <div class="smaller-x" (click)="removeUser(user)">X</div>
+                        </div>  
+                    </div>
+                    <button type="submit" class="button">Submit</button>
+                </div>
         </form>
     </div>
 </div>
