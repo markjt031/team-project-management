@@ -54,6 +54,41 @@
             "response": []
         },
         {
+            "name": "GET /users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": "users"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /users/{userId}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/users/13",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        "13"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
             "name": "GET /company/id/announcements",
             "request": {
                 "method": "GET",
@@ -68,6 +103,26 @@
                         "company",
                         "6",
                         "announcements"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /teams/{teamId}/users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/teams/7/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "teams",
+                        "7",
+                        "users"
                     ]
                 }
             },

@@ -64,4 +64,28 @@ public class CompanyController {
     public CompanyDto getCompanyById(@PathVariable Long companyId) {
     	return companyService.getCompanyById(companyId);
     }
+    
+    @PutMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyResponseDto updateCompany(@PathVariable Long companyId, @RequestBody CompanyRequestDto companyRequestDto) {
+    	return companyService.updateCompany(companyId, companyRequestDto);
+    }
+    
+    @PostMapping("/{companyId}/teams")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto createTeam(@PathVariable Long companyId, @RequestBody TeamRequestDto teamRequestDto) {
+    	return companyService.createTeam(companyId, teamRequestDto);
+    }
+    
+    @PutMapping("/{companyId}/teams/{teamId}")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto updateTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody TeamRequestDto teamRequestDto) {
+    	return companyService.updateTeam(companyId, teamId, teamRequestDto);
+    }
+    
+    @DeleteMapping("{companyId}/teams/{teamId}")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto deleteTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody UserRequestDto userRequestDto) {
+    	return companyService.deletTeam(companyId, teamId, userRequestDto);
+    }
 }

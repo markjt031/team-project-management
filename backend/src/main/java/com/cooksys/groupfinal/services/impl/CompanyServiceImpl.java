@@ -130,7 +130,8 @@ public class CompanyServiceImpl implements CompanyService {
 		if(!user.isAdmin()){
 			throw new NotAuthorizedException("Restricted action, contact administraor.");
 		}
-		return companyMapper.entityToDto(companyRepository.saveAndFlush(newCompany));
+		Company company = companyRepository.saveAndFlush(newCompany);
+		return companyMapper.entityToDto(company);
 		
 	}
 
@@ -141,6 +142,79 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new NotFoundException("Company does not exist.");
 		}
 		return companyMapper.entityToDto(company);
+	}
+
+	@Override
+	public CompanyResponseDto updateCompany(Long companyId, CompanyRequestDto companyRequestDto) {
+		Company company = companyRepository.getById(companyId);
+		Company updateCompany = companyMapper.requestDtoToEntity(companyRequestDto);
+		User user = authorizationService.userIsAdmin(companyRequestDto.getValidation());
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		company.setName(updateCompany.getName());
+		company.setDescription(updateCompany.getDescription());
+		return companyMapper.entityResponseToDto(companyRepository.saveAndFlush(company));
+	}
+
+	@Override
+	public CompanyTeamResponseDto createTeam(Long companyId, TeamRequestDto teamRequestDto) {
+		Company company = companyRepository.getById(companyId);
+		Team newTeam = teamMapper.requestToEntityDto(teamRequestDto);
+		User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		
+		newTeam.setCompany(company);
+		teamRepository.saveAndFlush(newTeam);
+		company.getTeams().add(newTeam);
+		Company updatedCompany = companyRepository.saveAndFlush(company);
+		
+		
+		
+		return companyMapper.entityTeamResponseDto(updatedCompany);
+	}
+
+	@Override
+	public CompanyTeamResponseDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+		Team newTeam = teamMapper.requestToEntityDto(teamRequestDto);
+		
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		
+		User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		
+		team.setName(newTeam.getName());
+		team.setDescription(newTeam.getDescription());
+		teamRepository.saveAndFlush(team);
+		
+		return companyMapper.entityTeamResponseDto(company);
+		
+	}
+
+	@Override
+	public CompanyTeamResponseDto deletTeam(Long companyId, Long teamId, UserRequestDto userRequestDto) {
+		Company company = findCompany(companyId);
+		Team team = findTeam(teamId);
+
+		if (!company.getTeams().contains(team)) {
+			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
+		}
+		
+		User user = authorizationService.userIsAdmin(userRequestDto);
+		if(!user.isAdmin()){
+			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		}
+		
+		teamRepository.deleteById(teamId);
+		return companyMapper.entityTeamResponseDto(company);
 	}
 
 

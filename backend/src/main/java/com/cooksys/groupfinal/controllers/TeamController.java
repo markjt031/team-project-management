@@ -1,17 +1,17 @@
 package com.cooksys.groupfinal.controllers;
 
+
 import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.dtos.ProjectRequestDto;
+import com.cooksys.groupfinal.dtos.FullUserDto;
+
 import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
-import com.cooksys.groupfinal.entities.Team;
+import com.cooksys.groupfinal.services.TeamService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import com.cooksys.groupfinal.services.TeamService;
-
-import lombok.RequiredArgsConstructor;
-
-import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/teams")
@@ -19,6 +19,11 @@ import java.util.Optional;
 public class TeamController {
 	
 	private final TeamService teamService;
+
+	@GetMapping("/{teamId}/users")
+	public Set<FullUserDto> getTeamUsers(@PathVariable Long teamId) {
+		return teamService.getTeamUsers(teamId);
+	}
 
 	@PostMapping("/{teamId}/users")
 	public TeamDto addUserToTeam(@PathVariable Long teamId, @RequestBody UserTeamRequestDto userTeamRequestDto){

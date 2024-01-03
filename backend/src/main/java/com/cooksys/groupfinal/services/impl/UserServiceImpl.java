@@ -1,15 +1,6 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.Optional;
-import java.util.Set;
-
-import com.cooksys.groupfinal.dtos.UserRequestDto;
-import org.springframework.stereotype.Service;
-
-import com.cooksys.groupfinal.dtos.BasicUserDto;
-import com.cooksys.groupfinal.dtos.CredentialsDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProfileDto;
+import com.cooksys.groupfinal.dtos.*;
 import com.cooksys.groupfinal.entities.Credentials;
 import com.cooksys.groupfinal.entities.Profile;
 import com.cooksys.groupfinal.entities.User;
@@ -22,23 +13,34 @@ import com.cooksys.groupfinal.mappers.FullUserMapper;
 import com.cooksys.groupfinal.mappers.ProfileMapper;
 import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.UserService;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-	
+
+	@Autowired
 	private final UserRepository userRepository;
+	@Autowired
     private final FullUserMapper fullUserMapper;
 	private final CredentialsMapper credentialsMapper;
 	private final BasicUserMapper basicUserMapper;
 	private final ProfileMapper profileMapper;
 
-    public Set<FullUserDto> getAllUsers() {
-        return fullUserMapper.entitiesToFullUserDtos(userRepository.findAllByActiveTrue());
-    }
+	@Override
+	public Set<FullUserDto> getAllUsers() {
+		List<User> userList = userRepository.findAll();
+		Set<User> users = new HashSet<>(userList);
+		return fullUserMapper.entitiesToFullUserDtos(users);
+	}
 
 	private User findUser(String username) {
         Optional<User> user = userRepository.findByCredentialsUsernameAndActiveTrue(username);
@@ -56,7 +58,6 @@ public class UserServiceImpl implements UserService {
 		    return true;
 		  }
 
-	
 	@Override
 	public FullUserDto login(CredentialsDto credentialsDto) {
 		if (credentialsDto == null || credentialsDto.getUsername() == null || credentialsDto.getPassword() == null) {
@@ -138,6 +139,16 @@ public class UserServiceImpl implements UserService {
 		return profileMapper.entityToDto(foundUser.getProfile());
 	}
 
+	@Override
+	public ProfileDto getUserProfile(Long userId) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			return fullUserMapper.entityToFullUserDto(user).getProfile();
+		} else {
+			return null;
+		}
+	}
 
 
 }
