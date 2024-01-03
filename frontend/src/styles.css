@@ -1,8 +1,8 @@
 :root {
-    --background-primary: #051622;
-    --background-card: #0B2D45;
-    --off: #1BA098;
-    --highlight: #DEB992;
+  --background-primary: #051622;
+  --background-card: #0b2d45;
+  --off: #1ba098;
+  --highlight: #deb992;
 }
 html, body{
     margin: 0;
@@ -10,7 +10,8 @@ html, body{
     box-sizing: border-box;
 }
 body {
-    background-color: var(--background-primary);
-    font-family: mulish;
+  background-color: var(--background-primary);
+  font-family: mulish;
+  margin: 0;
 }
 
