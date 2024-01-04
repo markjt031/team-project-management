@@ -1,0 +1,82 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  padding: 20px;
+  margin: auto;
+  width: 450px;
+  min-height: 450px;
+  height: fit-content;
+  border-radius: 15px;
+  background-color: var(--background-card);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  color: var(--highlight);
+}
+
+.modal-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+.modal-input {
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  height: 30px;
+  text-wrap: wrap;
+  border: none;
+  background: none;
+  resize: none;
+}
+
+.modal-input:focus {
+  outline: none;
+}
+
+.input-bottom-border {
+  border-bottom: 1px solid var(--highlight);
+}
+
+.modal-button {
+  width: 200px;
+  height: 45px;
+  border: none;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: var(--off);
+  cursor: pointer;
+}
+
+.modal-button:disabled {
+  border: 2px solid #cbcbcb;
+  background-color: #0b2d45;
+  color: #cbcbcb;
+  cursor: not-allowed;
+}

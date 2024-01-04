@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { CompanySelectComponent } from './company-select/company-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
+import { PostModalComponent } from './announcements/post-modal/post-modal.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
     NavbarComponent,
     LoginComponent,
     AnnouncementsComponent,
+    AnnouncementComponent,
+    PostModalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
