@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class UserTeamRequestDto {
 
     private UserRequestDto admin;
-    private UserRequestDto newTeammate;
+    private BasicUserDto newTeammate;
 }
