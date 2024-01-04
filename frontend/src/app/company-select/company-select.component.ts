@@ -28,13 +28,7 @@ export class CompanySelectComponent {
   }
 
   selectCompany(company: Company) {
-    if (company.id && company.name){
-      let addedCompany={
-        id: company.id,
-        name: company.name
-      }
-      this.companyData.updateCompany(addedCompany)
-    }
+    this.companyData.updateCompany(company)
     this.router.navigateByUrl('/announcements')
   }
   

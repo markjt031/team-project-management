@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { fetchData } from '../services/api';
-import { User, BasicUser, Team } from '../models/';
+import {  Component } from '@angular/core';
+import { User, Team, Company } from '../models/';
 import { UserService } from '../user.service';
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
@@ -14,7 +13,7 @@ import { TeamService } from '../services/teamsService';
 export class TeamsComponent {
   //company id should be based on the company from the use that is logged in.
   //will be pulled from UserService when implemented
-  companyId: number | undefined = undefined
+  company: Company | undefined = undefined
   teams: Team[] = []
   showModal: boolean = false
   currentUser: User | undefined = undefined
@@ -29,19 +28,22 @@ export class TeamsComponent {
     })
     
     //assuming non-admins only have one company
-    if (!this.currentUser?.admin){
-      this.companyId=this.currentUser?.companies[0]?.id
+    if (this.currentUser){
+      if (!this.currentUser?.admin){
+        this.company=this.currentUser.companies[0]
+        if (this.company){
+          this.companyService.updateCompany(this.company)
+        }
+      }
+      else{
+        this.companyService.currentCompany.subscribe((company)=>this.company=company)
+       }
     }
-    else{
-      //this doesn't work yet because the company select isn't fully implemented yet
-      //it is meant to set the company id to the current selected company for admins
-    //  this.companyService.currentCompany.subscribe((company)=>this.companyId=company.id)
-      this.companyId=this.currentUser.companies[0].id
+    if (this.company){
+      this.teamService.fetchTeams(this.company.id, this.currentUser).subscribe((teams) => {
+        this.teamService.updateTeam(teams)
+      })
     }
-    this.teamService.fetchTeams(this.companyId, this.currentUser).subscribe((teams) => {
-      this.teamService.updateTeam(teams)
-    })
-    // this.teamService.fetchTeams(this.companyId, this.currentUser)
     this.teamService.currentTeamList.subscribe((teams)=>{
       this.teams=teams
       

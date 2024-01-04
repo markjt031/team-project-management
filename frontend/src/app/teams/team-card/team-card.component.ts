@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User, Project, Team } from 'src/app/models';
+import { CompanyService } from 'src/app/company.service';
+import { User, Project, Team, Company } from 'src/app/models';
 import { fetchData } from 'src/app/services/api';
 import { UserService } from 'src/app/user.service';
 
@@ -18,43 +19,47 @@ export class TeamCardComponent {
   teammates: []
 }
 numberOfProjects: number=0
-companyId: number | undefined= undefined
+company: Company | undefined= undefined
 projects: Project[]=[]
 currentUser: User | undefined = undefined
 
 
-constructor(private router: Router, private userService: UserService){}
+constructor(private router: Router, private userService: UserService, private companyService: CompanyService){}
 ngOnInit(){
   this.userService.currentUser.subscribe((user: User)=>{
     this.currentUser=user
     //assuming non-admins only have one company
     if (!user.admin){
-      this.companyId=this.currentUser.companies[0].id
+      this.company=this.currentUser.companies[0]
     }
     else{
       //set companyID from companyService
       //temporarily setting this manually for now. 
-      this.companyId=this.currentUser.companies[0].id
+      this.companyService.currentCompany.subscribe((company)=>this.company=company)
     }
   })
   this.getProjects()
 }
 
 getProjects=async()=>{
-  let response = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
+  if (this.company){
+  let response = await fetchData(`company/${this.company.id}/teams/${this.team.id}/projects`)
     .then((projects)=>{
       this.projects=projects
       this.numberOfProjects=this.projects.length
     })
+  }
 } 
 navigateToProjects(){
-  this.router.navigate(['teams', this.team.id, 'projects'], {
-    state: {
-      projects: this.projects,
-      team: this.team,
-      companyId: this.companyId,
-      name: this.team.name
-    }
-  })
+  if (this.company){
+    this.router.navigate(['teams', this.team.id, 'projects'], {
+      state: {
+        projects: this.projects,
+        team: this.team,
+        companyId: this.company.id,
+        name: this.team.name
+      }
+    })
+  }
 }
 }

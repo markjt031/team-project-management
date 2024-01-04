@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User, Credentials } from 'src/app/models/';
+import { CompanyService } from 'src/app/company.service';
+import { User, Credentials, Company, BasicUser } from 'src/app/models/';
 import { fetchData } from 'src/app/services/api';
 import { TeamService } from 'src/app/services/teamsService';
 import { UserService } from 'src/app/user.service';
@@ -14,9 +15,10 @@ import { UserService } from 'src/app/user.service';
 export class AddTeamModalComponent {
   @Output() close= new EventEmitter<void>()
   @Output() submitting= new EventEmitter<void>()
-  companyId: number = 1
-  availableUserList: User[]=[]
-  selectedOptions: User[]=[]
+
+  company: Company | undefined = undefined
+  availableUserList: BasicUser[]=[]
+  selectedOptions: BasicUser[]=[]
   
   isError: boolean=false
   isDropdownOpen: boolean = false
@@ -29,7 +31,11 @@ export class AddTeamModalComponent {
   });
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private userService: UserService, private teamService: TeamService){}
+  constructor(
+    private router: Router,
+    private userService: UserService, 
+    private teamService: TeamService,
+    private companyService: CompanyService){}
 
   ngOnInit(){
     this.userService.currentUser.subscribe((user: User)=>{
@@ -38,7 +44,11 @@ export class AddTeamModalComponent {
     this.userService.currentUserCredentials.subscribe((credentials : Credentials)=>{
       this.credentials=credentials
     })
+    this.companyService.currentCompany.subscribe((company)=>{
+      this.company=company
+    })
     this.fetchUsers()
+    
   }
   onModalClose(){
     console.log("closing")
@@ -49,7 +59,7 @@ export class AddTeamModalComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  addUser(user: User) {
+  addUser(user: BasicUser) {
     const index = this.selectedOptions.findIndex((option) => option.id === user.id);
     const optionIndex=this.availableUserList.findIndex((option)=>option.id===user.id)
     if (index === -1) {
@@ -59,7 +69,7 @@ export class AddTeamModalComponent {
     this.toggleDropdown() 
   }
 
-  removeUser(user: User){
+  removeUser(user: BasicUser){
     const index=this.selectedOptions.findIndex((option) => option.id === user.id);
     let removed=this.selectedOptions[index]
     this.selectedOptions.splice(index, 1)
@@ -68,11 +78,13 @@ export class AddTeamModalComponent {
 
   //this can be moved to a service
   fetchUsers=async()=>{
-    let response=await fetchData(`company/${this.companyId}/users`)
-    .then((users)=>{
-      console.log(users)
-      this.availableUserList=users
-    })
+    if (this.company){
+      let response=await fetchData(`company/${this.company.id}/users`)
+      .then((users)=>{
+        console.log(users)
+        this.availableUserList=users
+      })
+    }
   }
   
   resetForm(){
@@ -93,8 +105,8 @@ export class AddTeamModalComponent {
           admin: this.currentUser.admin
         }
       }
-      if (this.credentials){
-        this.teamService.createTeam(team, this.companyId, this.selectedOptions,this.currentUser, this.credentials).then((response)=>{
+      if (this.credentials && this.company && this.company.id){
+        this.teamService.createTeam(team, this.company.id, this.selectedOptions,this.currentUser, this.credentials).then((response)=>{
           this.resetForm()
         })
       }

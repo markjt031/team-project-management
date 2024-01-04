@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { fetchData } from "./api";
-import { Credentials, User, Team } from "../models/";
+import { Credentials, User, Team, BasicUser } from "../models/";
 
 
 @Injectable({
@@ -58,7 +58,7 @@ import { Credentials, User, Team } from "../models/";
         });
       }
 
-      postTeammate=async(userAdded: User, currentUser: User, credentials: Credentials, teamId: number)=>{
+      postTeammate=async(userAdded: BasicUser, currentUser: User, credentials: Credentials, teamId: number)=>{
         if (currentUser){
         let body={
           admin: {
@@ -81,7 +81,7 @@ import { Credentials, User, Team } from "../models/";
         }
       }
 
-      createTeam = async (team: any, companyId: number, selectedOptions: User[], currentUser: User, credentials: Credentials) => {
+      createTeam = async (team: any, companyId: number, selectedOptions: BasicUser[], currentUser: User, credentials: Credentials) => {
         try {
           const options = {
             method: 'POST',

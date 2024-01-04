@@ -1,21 +1,23 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-
-interface company {
-    id: number,
-    name: string
-}
+import { Company } from "./models";
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class CompanyService {
-    private company = new BehaviorSubject<company>({id: -1, name: 'null'})
+    private company = new BehaviorSubject<Company>({
+        id: -1, 
+        name: '',
+        description:'',
+        users: [],
+        teams: [],
+    })
 
     currentCompany = this.company.asObservable();
 
-    updateCompany(company: company) {
+    updateCompany(company: Company) {
         this.company.next(company)
     }
 }

@@ -40,6 +40,10 @@ export class UserService {
     if (user) {
       this.updateUser(JSON.parse(user));
     }
+    const credentials= localStorage.getItem('credentials')
+    if (credentials){
+      this.updateCredentials(JSON.parse(credentials))
+    }
   }
   
   updateUser = (user: User) => {
@@ -61,6 +65,7 @@ export class UserService {
       this.updateUser(userData);
       this.updateCredentials(credentials)
       localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('credentials', JSON.stringify(credentials))
     } catch (error) {
       console.error(error);
     }
@@ -82,6 +87,7 @@ export class UserService {
       teams: [],
     });
     localStorage.removeItem('user');
+    localStorage.removeItem('credentials')
     this.router.navigate(['/login']);
   };
 }
