@@ -1,5 +1,5 @@
-//root url for fetches
-const rootUrl = 'http://localhost:8080/';
+//root url for fetches from proxy server. Use npm start instead of ng serve to run it
+const rootUrl = 'api/';
 
 const checkStatus = (response: any) => {
   if (response.status >= 200 && response.status < 300) {
