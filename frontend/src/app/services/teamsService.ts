@@ -50,11 +50,11 @@ import { User } from "../models/User";
                   containsUser && tempTeams.push(team)
                 }
                 observer.next(tempTeams)
-                observer.complete();
+                observer.complete()
               }
             })
             .catch((error) => {
-              observer.error(error);
+              observer.error(error)
             });
         });
       }

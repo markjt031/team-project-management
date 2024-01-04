@@ -110,25 +110,25 @@ export class AddTeamModalComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(team),
-      };
+      }
   
-      const createdTeam = await fetchData(`company/${this.companyId}/teams`, options);
+      const createdTeam = await fetchData(`company/${this.companyId}/teams`, options)
   
       if (createdTeam && createdTeam.id) {
         // Individually add all the team mates
         for (let teammate of this.selectedOptions) {
-          await this.postTeammate(teammate, createdTeam.id);
+          await this.postTeammate(teammate, createdTeam.id)
         }
   
         // Fetch teams and update
-        const teams = await this.teamService.fetchTeams(this.companyId, this.currentUser);
+        const teams = await this.teamService.fetchTeams(this.companyId, this.currentUser)
         this.teamService.updateTeam(teams);
-        
+
       } else {
-        console.error('Error creating team: Team ID is undefined');
+        console.error('Error creating team: Team ID is undefined')
       }
     } catch (error) {
-      console.error('Error creating team:', error);
+      console.error('Error creating team:', error)
     } 
   }
   resetForm(){
@@ -158,7 +158,7 @@ export class AddTeamModalComponent {
 
       //reload page without a window reload
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigateByUrl('/teams');
+        this.router.navigateByUrl('/teams')
       });
     }
     else{

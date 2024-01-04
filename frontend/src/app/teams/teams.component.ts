@@ -56,6 +56,6 @@ export class TeamsComponent {
     }
     closeModal(){
       console.log("closing again")
-      this.showModal=false;
+      this.showModal=false
     }
 }

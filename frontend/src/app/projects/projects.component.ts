@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import Project from '../models/Project';
-import { LocationStrategy } from '@angular/common';
-import Team from '../models/Team';
-import { fetchData } from '../services/api';
-import { User } from '../models/User';
-import { UserService } from '../user.service';
+import { Component, EventEmitter, Output } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import Project from '../models/Project'
+import { LocationStrategy } from '@angular/common'
+import Team from '../models/Team'
+import { fetchData } from '../services/api'
+import { User } from '../models/User'
+import { UserService } from '../user.service'
 
 @Component({
   selector: 'app-projects',
@@ -13,6 +13,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent {
+  @Output() updateProjectsList = new EventEmitter<void>()
   id: number = 0
   projects: Project[]=[]
   name: string | null=''
@@ -27,7 +28,7 @@ export class ProjectsComponent {
     private location: LocationStrategy,
     private userService: UserService){}
 
-    
+
   ngOnInit(){
     this.userService.currentUser.subscribe((user)=>{
       this.currentUser=user
@@ -52,17 +53,21 @@ export class ProjectsComponent {
     }
     this.route.queryParams.subscribe(params => {
       this.id = this.route.snapshot.params['id']
-      
+    })
+    this.updateProjectsList.subscribe(() => {
+      this.getProjects()
     })
   }
   toggleModal(){
     this.addModalShown=!this.addModalShown
   }
   getProjects=async()=>{
-    console.log(`company/${this.companyId}/teams/${this.team.id}/projects`)
-    let response = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
-      .then((projects)=>{
-        this.projects=projects
-      })
+    try {
+      const projects = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
+      this.projects = projects
+    } 
+    catch (error) {
+      console.error('Error fetching projects:', error)
+    }
   }
 }
