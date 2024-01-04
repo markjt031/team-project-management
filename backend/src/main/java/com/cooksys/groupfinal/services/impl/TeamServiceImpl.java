@@ -59,6 +59,20 @@ public class TeamServiceImpl implements TeamService {
                 .orElse(Collections.emptySet());
     }
 
+    @Override
+    public ProjectDto getProjectByTeamId(Long teamId, Long projectId) {
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+        if (teamOptional.isPresent()) {
+            Team team = teamOptional.get();
+            for (Project project : team.getProjects()) {
+                if (project.getId().equals(projectId)) {
+                    return projectMapper.entityToDto(project);
+                }
+            }
+        }
+        return null;
+    }
+
     @Transactional
     @Override
     public TeamDto addUserToTeam(UserTeamRequestDto userTeamRequestDto, Long teamId) {

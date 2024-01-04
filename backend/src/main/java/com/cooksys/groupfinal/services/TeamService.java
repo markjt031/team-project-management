@@ -1,14 +1,7 @@
 package com.cooksys.groupfinal.services;
 
 
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.ProjectRequestDto;
-
-import com.cooksys.groupfinal.dtos.FullUserDto;
-
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
-import com.cooksys.groupfinal.dtos.UserTeamRequestDto;
+import com.cooksys.groupfinal.dtos.*;
 
 import java.util.Set;
 
@@ -23,4 +16,6 @@ public interface TeamService {
 
 
     Set<ProjectDto> getTeamProjects(Long teamId);
+
+    ProjectDto getProjectByTeamId(Long teamId, Long projectId);
 }
