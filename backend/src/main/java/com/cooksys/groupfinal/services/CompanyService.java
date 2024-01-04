@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
+import jakarta.transaction.Transactional;
 
 public interface CompanyService {
 
@@ -31,4 +32,6 @@ public interface CompanyService {
 
 	CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId, UserRequestDto userRequestDto);
 
+	@Transactional
+	FullUserDto addUserToCompany(Long companyId, UserCompanyRequestDto userCompanyRequestDto);
 }

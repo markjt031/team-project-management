@@ -87,4 +87,12 @@ public class CompanyController {
     public CompanyTeamResponseDto deleteTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody UserRequestDto userRequestDto) {
     	return companyService.deleteTeam(companyId, teamId, userRequestDto);
     }
+
+    @PostMapping("/{companyId}/users")
+    @CrossOrigin(origins="*")
+    public FullUserDto addUserToCompany(@PathVariable Long companyId, @RequestBody UserCompanyRequestDto userCompanyRequestDto) {
+        return companyService.addUserToCompany(companyId, userCompanyRequestDto);
+    }
+
+
 }
