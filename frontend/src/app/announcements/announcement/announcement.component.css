@@ -35,12 +35,25 @@
   margin: 0;
 }
 
+.announcement-title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  font-style: italic;
+  text-align: left;
+  margin: 0;
+  width: 100%;
+}
+
 .announcement-message {
   color: #fff;
+  text-align: left;
   font-size: 18px;
   font-weight: 400;
   line-height: 32px;
   margin: 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 768px) {
