@@ -18,4 +18,6 @@ public interface TeamService {
     Set<ProjectDto> getTeamProjects(Long teamId);
 
     ProjectDto getProjectByTeamId(Long teamId, Long projectId);
+
+    FullUserDto deleteUserByTeam(Long teamId, Long userId);
 }

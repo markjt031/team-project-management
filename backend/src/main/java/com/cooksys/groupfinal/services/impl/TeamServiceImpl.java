@@ -73,6 +73,26 @@ public class TeamServiceImpl implements TeamService {
         return null;
     }
 
+    @Override
+    public FullUserDto deleteUserByTeam(Long teamId, Long userId) {
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (teamOptional.isPresent() && userOptional.isPresent()) {
+            Team team = teamOptional.get();
+            User user = userOptional.get();
+
+            team.getTeammates().remove(user);
+            teamRepository.saveAndFlush(team);
+
+            user.getTeams().remove(team);
+            userRepository.saveAndFlush(user);
+
+            return fullUserMapper.entityToFullUserDto(user);
+        }
+        return null;
+    }
+
     @Transactional
     @Override
     public TeamDto addUserToTeam(UserTeamRequestDto userTeamRequestDto, Long teamId) {
