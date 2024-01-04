@@ -1,0 +1,191 @@
+.title {
+    justify-content: center;
+    text-align: center;
+    padding: 30px 0px 40px 0px;
+    color: var(--off)
+}
+
+.table-holder {
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 16% 16% 16% 5% 16% 16% 16%;
+    text-align: center;
+    border-left: 2px solid var(--highlight); 
+    border-bottom: 1px solid var(--highlight);
+    border-right: 2px solid var(--highlight);
+    color: var(--highlight);
+}
+
+.header-row {
+    border: 1px solid var(--highlight);
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    color: white;
+}
+
+.data-row {
+    padding: 15px 0px 15px 0px;
+    max-height: 55px;
+}
+
+.last-row {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.email {
+    text-decoration: underline;
+}
+
+.affirmative {
+    color: #00B11C;
+}
+
+.negative {
+    color: #FF0000;
+}
+
+.name-col {
+    text-align: left;
+    padding-left: 50px;
+}
+
+.user-button {
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--off);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.card-backdrop {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 999;
+    
+    animation: darken 1s forwards;
+}
+
+@keyframes darken {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.212);
+    }
+}
+
+.add-user-card {
+    background-color: var(--background-card);
+    width: 700px;
+    height: 650px;
+    position: fixed;
+    top: 200px;
+    left: calc(50% - 350px);
+    border-radius: 20px;
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+ 
+    /*
+      Introduced in IE 10.
+      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 1000;
+    transition: 1s;
+}
+
+.button-holder {
+    position: relative;
+    height: 50px;
+}
+
+.exit-button {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #F24E1E;
+    color: #F24E1E;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.inner-info-holder {   
+    height: 500px;
+    margin: auto;
+    width: 55%;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.text-input {
+    background: none;
+    color: var(--highlight);
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--highlight);
+    text-decoration: none;
+    height: 30px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 30px;
+    font-size: 16px;
+    width: 45%;
+}
+
+.email-input {
+    width: 94%;
+}
+
+.text-input::placeholder {
+    color: var(--highlight);
+    opacity: .8;
+}
+
+.admin-select {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color: var(--highlight);
+    font-size: 18px;
+}
+
+.admin-selection {
+    display: flex;
+    justify-content: center;
+    column-gap: 50px;
+    color: var(--off);
+    cursor: pointer;
+}
+
+.submit-holder {
+    display: flex;
+    justify-content: center;
+}
