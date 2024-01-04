@@ -20,4 +20,7 @@ public interface TeamService {
     ProjectDto getProjectByTeamId(Long teamId, Long projectId);
 
     FullUserDto deleteUserByTeam(Long teamId, Long userId);
+
+    ProjectDto updateProjectById(Long teamId, Long projectId, ProjectRequestDto projectRequestDto);
+
 }

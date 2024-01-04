@@ -93,6 +93,34 @@ public class TeamServiceImpl implements TeamService {
         return null;
     }
 
+    @Override
+    public ProjectDto updateProjectById(Long teamId, Long projectId, ProjectRequestDto projectRequestDto) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new NotFoundException("Team with ID " + teamId + " not found."));
+
+        Project projectToUpdate = team.getProjects().stream()
+                .filter(project -> project.getId().equals(projectId))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Project with ID " + projectId + " not found in team " + teamId));
+
+        authorizationService.userIsAdmin(projectRequestDto.getAdmin());
+
+        // Update project details here
+        ProjectDto projectDto = projectRequestDto.getProjectDto();
+        if (projectDto.getName() != null) {
+            projectToUpdate.setName(projectDto.getName());
+        }
+        if (projectDto.getDescription() != null) {
+            projectToUpdate.setDescription(projectDto.getDescription());
+        }
+        projectToUpdate.setActive(projectDto.isActive());
+
+        projectRepository.saveAndFlush(projectToUpdate);
+
+        return projectMapper.entityToDto(projectToUpdate);
+    }
+
+
     @Transactional
     @Override
     public TeamDto addUserToTeam(UserTeamRequestDto userTeamRequestDto, Long teamId) {
