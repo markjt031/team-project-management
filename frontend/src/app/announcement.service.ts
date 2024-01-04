@@ -27,30 +27,35 @@ export class AnnouncementService {
         `company/${companyId}/announcements`,
         options
       );
-      this.updateAnnouncements(announcements);
+      this.updateAnnouncements(
+        announcements.sort((a, b) =>
+          new Date(a.date) > new Date(b.date) ? -1 : 1
+      )
+      );
     } catch (error) {
       console.error(error);
     }
   };
 
-  // postAnnouncement = async (
-  //   user: User,
-  //   announcement: Announcement,
-  //   companyId: number
-  // ) => {
-  //   try {
-  //     const options = {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ announcement }),
-  //     };
+  postAnnouncement = async (
+    authorId: number,
+    title: string,
+    message: string,
+    companyId: number
+  ) => {
+    try {
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ authorId, title, message, companyId }),
+      };
 
-  //     await fetchData(`company/${companyId}/announcements`, options);
-  //     this.fetchAnnouncements(companyId);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+      await fetchData(`announcements`, options);
+      this.fetchAnnouncements(companyId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }

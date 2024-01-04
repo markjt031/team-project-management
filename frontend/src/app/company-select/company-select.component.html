@@ -1,18 +1,26 @@
 <div class="form-holder">
-    <div class="form">
-        <h1 style="color: var(--off)">Select Company</h1>
-        <br>
-        <div class="company-select" (click)="openSelect()">
-            <div class="inner-select"><h3>Pick an option</h3></div>
-            <div class="carrot" 
-                [style]="{'transform': open ? 'rotateX(0deg)': 'rotateX(180deg)'}"
-            ><h3>&#9650;</h3></div>
-        </div>
-        <br>
-        <div *ngIf="!open" class="blocker"></div>
-        <div [style]="{'opacity': open ? '100%' : '0%'}" class="options">
-            <button class="option" (click)="selectCompany(company)" *ngFor="let company of companyOptions"><h3>{{company.name}}</h3></button>
-        </div>
+  <div class="form">
+    <h1 style="color: var(--off)">Select Company</h1>
+    <br />
+    <div class="company-select" (click)="openSelect()">
+      <div class="inner-select"><h3>Pick an option</h3></div>
+      <div
+        class="carrot"
+        [style]="{ transform: open ? 'rotateX(0deg)' : 'rotateX(180deg)' }"
+      >
+        <h3>&#9650;</h3>
+      </div>
     </div>
+    <br />
+    <div *ngIf="!open" class="blocker"></div>
+    <div [style]="{ opacity: open ? '100%' : '0%' }" class="options">
+      <button
+        *ngFor="let company of companies"
+        class="option"
+        (click)="selectCompany(company)"
+      >
+        <h3>{{ company.name }}</h3>
+      </button>
+    </div>
+  </div>
 </div>
-

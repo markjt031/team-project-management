@@ -3,9 +3,8 @@ import { BehaviorSubject } from "rxjs";
 import { Company } from "./models";
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-
 export class CompanyService {
     private company = new BehaviorSubject<Company>({
         id: -1, 

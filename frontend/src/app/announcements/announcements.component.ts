@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AnnouncementService } from '../announcement.service';
 import { CompanyService } from '../company.service';
-import { Announcement, Company} from '../models';
-
+import { Announcement, Company } from '../models';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-announcements',
@@ -13,10 +13,12 @@ export class AnnouncementsComponent {
   announcements: Announcement[] = [];
   company: Partial<Company> = { id: -1, name: 'null' };
   showPostModal: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private announcementService: AnnouncementService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -26,10 +28,17 @@ export class AnnouncementsComponent {
     this.companyService.currentCompany.subscribe(
       (company) => (this.company = company)
     );
+    this.userService.currentUser.subscribe((user) => {
+      this.isAdmin = user.admin;
+    });
     if (this.company.id && this.company.id > -1)
       this.announcementService.fetchAnnouncements(this.company.id);
-    this.announcementService.fetchAnnouncements(1);
   }
+
+  fetchAnnouncements = () => {
+    if (this.company.id)
+      this.announcementService.fetchAnnouncements(this.company.id);
+  };
 
   openPostModal = () => {
     this.showPostModal = true;

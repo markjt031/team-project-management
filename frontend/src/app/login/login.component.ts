@@ -17,13 +17,21 @@ export class LoginComponent {
   hasAttemptedLogin: boolean = false;
   user: User | undefined = undefined;
 
-  constructor(private userService: UserService, private companyService: CompanyService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private companyService: CompanyService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userService.currentUser.subscribe((user) => {
       this.user = user;
-      this.isInvalidLogin = user.id === -1 ? true : false;
+      this.isInvalidLogin = user.id === -1;
     });
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.redirectIfLoggedIn();
+    }
   }
 
   checkLoginButtonDisabled = () => {
@@ -41,15 +49,7 @@ export class LoginComponent {
       password: this.password,
     }).then(()=>{
       if (!this.isInvalidLogin) {
-        if (this.user?.admin){
-          this.router.navigate(['/company'])
-        }
-        else{
-          if (this.user){
-            this.companyService.updateCompany(this.user.companies[0])
-            this.router.navigate(['/announcements']);
-          }
-        }
+        this.redirectIfLoggedIn()
       }
     })
     
@@ -58,5 +58,22 @@ export class LoginComponent {
 
   logout = () => {
     this.userService.logOutUser();
+  };
+
+  redirectIfLoggedIn = () => {
+    if (this.user?.admin) {
+      this.router.navigate(['/company']);
+    } else {
+      this.companyService.updateCompany(
+          this.user?.companies[0] || 
+          {id: -1, 
+          name: '',
+          description:'',
+          users: [],
+          teams: [],
+        }
+      );
+      this.router.navigate(['/announcements']);
+    }
   };
 }
