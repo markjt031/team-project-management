@@ -33,14 +33,16 @@ import { UsersComponent } from './users/users.component';
     AddTeamModalComponent,
     ProjectsDisplayComponent,
     AddProjectModalComponent,
-    EditProjectModalComponent,
+    EditProjectModalComponent
     AnnouncementsComponent,
     AnnouncementComponent,
     PostModalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule, ReactiveFormsModule, FormsModule],
+    ReactiveFormsModule, FormsModule],
+  ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

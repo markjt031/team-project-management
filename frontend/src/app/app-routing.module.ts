@@ -9,7 +9,12 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: "/login", pathMatch: 'full'},
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {path: 'teams', component: TeamsComponent},
+  {path: 'teams/:id/projects', component: ProjectsComponent},
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'company', component: CompanySelectComponent },
   {path: 'teams', component: TeamsComponent},
