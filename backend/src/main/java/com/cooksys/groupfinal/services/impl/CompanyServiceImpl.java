@@ -71,12 +71,12 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Set<AnnouncementDto> getAllAnnouncements(Long id) {
+	public Set<AnnouncementResponseDto> getAllAnnouncements(Long id) {
 		Company company = findCompany(id);
 		List<Announcement> sortedList = new ArrayList<Announcement>(company.getAnnouncements());
 		sortedList.sort(Comparator.comparing(Announcement::getDate).reversed());
 		Set<Announcement> sortedSet = new HashSet<Announcement>(sortedList);
-		return announcementMapper.entitiesToDtos(sortedSet);
+		return announcementMapper.entitiesToResponseDtos(sortedSet);
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public CompanyTeamResponseDto deletTeam(Long companyId, Long teamId, UserRequestDto userRequestDto) {
+	public CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId, UserRequestDto userRequestDto) {
 		Company company = findCompany(companyId);
 		Team team = findTeam(teamId);
 

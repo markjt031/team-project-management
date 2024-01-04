@@ -7,12 +7,16 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class AnnouncementDto {
+public class AnnouncementResponseDto {
+
+    private Long id;
+
+    private Timestamp date;
 
     private String title;
-    
+
     private String message;
-    
+
     private BasicUserDto author;
 
 }

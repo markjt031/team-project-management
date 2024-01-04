@@ -7,8 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class AnnouncementRequestDto {
 
-    private UserRequestDto userRequest;
-    private AnnouncementDto announcement;
+    private Long authorId;
+
     private Long companyId;
+
+    private String title;
+
+    private String message;
 
 }

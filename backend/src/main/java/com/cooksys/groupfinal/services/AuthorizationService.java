@@ -7,4 +7,6 @@ public interface AuthorizationService {
 
 
     public User userIsAdmin(UserRequestDto userRequestDto);
+
+    User userIdIsAdmin(Long authorId);
 }
