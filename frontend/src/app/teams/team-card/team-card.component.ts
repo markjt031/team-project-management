@@ -43,7 +43,6 @@ ngOnInit(){
 }
 
 getProjects=async()=>{
-  console.log(`company/${this.companyId}/teams/${this.team.id}/projects`)
   let response = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
     .then((projects)=>{
       this.projects=projects
@@ -51,7 +50,6 @@ getProjects=async()=>{
     })
 } 
 navigateToProjects(){
-  console.log(this.team.name)
   this.router.navigate(['teams', this.team.id, 'projects'], {
     state: {
       projects: this.projects,
