@@ -11,9 +11,7 @@
         <br>
         <div *ngIf="!open" class="blocker"></div>
         <div [style]="{'opacity': open ? '100%' : '0%'}" class="options">
-            <button class="option" (click)="selectCompany()"><h3>Company One</h3></button>
-            <button class="option"><h3>Company Two</h3></button>
-            <button class="option"><h3>Company Three</h3></button>
+            <button class="option" (click)="selectCompany(company)" *ngFor="let company of companyOptions"><h3>{{company.name}}</h3></button>
         </div>
     </div>
 </div>
