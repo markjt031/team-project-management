@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable } from "rxjs";
 import Team from "../models/Team";
 import { fetchData } from "./api";
 import { User } from "../models/User";
+import FullUser from "../models/FullUser";
+import { Credentials } from "../models/Credentials";
 
 
 @Injectable({
@@ -57,6 +59,60 @@ import { User } from "../models/User";
               observer.error(error)
             });
         });
+      }
+
+      postTeammate=async(userAdded: User, currentUser: User, credentials: Credentials, teamId: number)=>{
+        if (currentUser){
+        let body={
+          admin: {
+            credentials: credentials,
+            profile: currentUser.profile,
+            admin:currentUser.admin
+          },
+          newTeammate: userAdded
+        }
+        const options = {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        };
+        await fetchData(`teams/${teamId}/users`, options).then(()=>{
+        })
+        }
+      }
+
+      createTeam = async (team: any, companyId: number, selectedOptions: User[], currentUser: User, credentials: Credentials) => {
+        try {
+          const options = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(team),
+          }
+      
+        const createdTeam = await fetchData(`company/${companyId}/teams`, options)
+      
+        if (createdTeam && createdTeam.id) {
+            // Individually add all the team mates
+            for (let teammate of selectedOptions) {
+              await this.postTeammate(teammate, currentUser, credentials, createdTeam.id)
+            }
+      
+            // Fetch teams and update
+            const teams = await this.fetchTeams(companyId, currentUser)
+            this.updateTeam(teams);
+    
+          } else {
+            console.error('Error creating team: Team ID is undefined')
+          }
+        } catch (error) {
+          console.error('Error creating team:', error)
+        } 
       }
       
 

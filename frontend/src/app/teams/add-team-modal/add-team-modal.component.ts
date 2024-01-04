@@ -18,8 +18,8 @@ export class AddTeamModalComponent {
   @Output() close= new EventEmitter<void>()
   @Output() submitting= new EventEmitter<void>()
   companyId: number = 1
-  availableUserList: FullUser[]=[]
-  selectedOptions: FullUser[]=[]
+  availableUserList: User[]=[]
+  selectedOptions: User[]=[]
   
   isError: boolean=false
   isDropdownOpen: boolean = false
@@ -52,7 +52,7 @@ export class AddTeamModalComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  addUser(user: FullUser) {
+  addUser(user: User) {
     const index = this.selectedOptions.findIndex((option) => option.id === user.id);
     const optionIndex=this.availableUserList.findIndex((option)=>option.id===user.id)
     if (index === -1) {
@@ -62,7 +62,7 @@ export class AddTeamModalComponent {
     this.toggleDropdown() 
   }
 
-  removeUser(user: FullUser){
+  removeUser(user: User){
     const index=this.selectedOptions.findIndex((option) => option.id === user.id);
     let removed=this.selectedOptions[index]
     this.selectedOptions.splice(index, 1)
@@ -77,60 +77,58 @@ export class AddTeamModalComponent {
       this.availableUserList=users
     })
   }
-  postTeammate=async(user: FullUser, teamId: number)=>{
-    if (this.currentUser){
-      console.log("we're posting")
-    let body={
-      admin: {
-        credentials: this.credentials,
-        profile: this.currentUser.profile,
-        admin: this.currentUser.admin
-      },
-      newTeammate: user
-    }
-    const options = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    };
-    await fetchData(`teams/${teamId}/users`, options).then(()=>{
-      console.log("teammate posted")
-    })
-    }
-  }
-  createTeam = async (team: any) => {
-    try {
-      const options = {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(team),
-      }
+  // postTeammate=async(user: User, teamId: number)=>{
+  //   if (this.currentUser){
+  //   let body={
+  //     admin: {
+  //       credentials: this.credentials,
+  //       profile: this.currentUser.profile,
+  //       admin: this.currentUser.admin
+  //     },
+  //     newTeammate: user
+  //   }
+  //   const options = {
+  //     method: 'POST',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(body),
+  //   };
+  //   await fetchData(`teams/${teamId}/users`, options).then(()=>{
+  //   })
+  //   }
+  // }
+  // createTeam = async (team: any) => {
+  //   try {
+  //     const options = {
+  //       method: 'POST',
+  //       mode: 'cors',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(team),
+  //     }
   
-      const createdTeam = await fetchData(`company/${this.companyId}/teams`, options)
+  //     const createdTeam = await fetchData(`company/${this.companyId}/teams`, options)
   
-      if (createdTeam && createdTeam.id) {
-        // Individually add all the team mates
-        for (let teammate of this.selectedOptions) {
-          await this.postTeammate(teammate, createdTeam.id)
-        }
+  //     if (createdTeam && createdTeam.id) {
+  //       // Individually add all the team mates
+  //       for (let teammate of this.selectedOptions) {
+  //         await this.teamService.postTeammate(teammate, this.currentUser, this.credentials, createdTeam.id)
+  //       }
   
-        // Fetch teams and update
-        const teams = await this.teamService.fetchTeams(this.companyId, this.currentUser)
-        this.teamService.updateTeam(teams);
+  //       // Fetch teams and update
+  //       const teams = await this.teamService.fetchTeams(this.companyId, this.currentUser)
+  //       this.teamService.updateTeam(teams);
 
-      } else {
-        console.error('Error creating team: Team ID is undefined')
-      }
-    } catch (error) {
-      console.error('Error creating team:', error)
-    } 
-  }
+  //     } else {
+  //       console.error('Error creating team: Team ID is undefined')
+  //     }
+  //   } catch (error) {
+  //     console.error('Error creating team:', error)
+  //   } 
+  // }
   resetForm(){
      //add the users back into the list and clear out form
      this.fetchUsers()
@@ -149,10 +147,11 @@ export class AddTeamModalComponent {
           admin: this.currentUser.admin
         }
       }
-      this.createTeam(team).then((response)=>{
-        this.resetForm()
-      })
-      
+      if (this.credentials){
+        this.teamService.createTeam(team, this.companyId, this.selectedOptions,this.currentUser, this.credentials).then((response)=>{
+          this.resetForm()
+        })
+      }
       //emit events to parent
       this.close.emit()
 
