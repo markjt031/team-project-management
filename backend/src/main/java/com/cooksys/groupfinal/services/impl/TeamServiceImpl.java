@@ -68,7 +68,7 @@ public class TeamServiceImpl implements TeamService {
         authorizationService.userIsAdmin(userTeamRequestDto.getAdmin());
 
         // Assuming you have a method to check if the user exists or fetches the user from the database
-        User newTeammate = userRepository.findByCredentialsUsernameAndActiveTrue(userTeamRequestDto.getNewTeammate().getCredentials().getUsername())
+        User newTeammate = userRepository.findById(userTeamRequestDto.getNewTeammate().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         if (!team.getTeammates().contains(newTeammate)) {

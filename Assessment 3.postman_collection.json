@@ -313,7 +313,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n  \"admin\": {\n    \"credentials\": {\n      \"username\": \"thisismycompany\",\n      \"password\": \"getyourowncompany\"\n    },\n    \"profile\": {\n      \"firstName\": \"Logan\",\n      \"lastName\": \"Roy\",\n      \"email\": \"admin@example.com\",\n      \"phone\": \"123-456-7890\"\n    },\n    \"admin\": true\n  },\n  \"newTeammate\": {\n    \"credentials\": {\n      \"username\": \"mrsiobhanroy\",\n      \"password\": \"idontwanttogotojail\"\n    },\n    \"profile\": {\n      \"firstName\": \"New\",\n      \"lastName\": \"Teammate\",\n      \"email\": \"new.teammate@example.com\",\n      \"phone\": \"098-765-4321\"\n    },\n    \"admin\": false\n  }\n}",
+                    "raw": "{\n  \"admin\": {\n    \"credentials\": {\n      \"username\": \"thisismycompany\",\n      \"password\": \"getyourowncompany\"\n    },\n    \"profile\": {\n      \"firstName\": \"Logan\",\n      \"lastName\": \"Roy\",\n      \"email\": \"admin@example.com\",\n      \"phone\": \"123-456-7890\"\n    },\n    \"admin\": true\n  },\n  \"newTeammate\": {\n    \"id\": 8, \n    \"profile\": {\n      \"firstName\": \"New\",\n      \"lastName\": \"Teammate\",\n      \"email\": \"new.teammate@example.com\",\n      \"phone\": \"098-765-4321\"\n    },\n    \"admin\": false,\n    \"active\": true,\n    \"status\": \"active\"\n  }\n}",
                     "options": {
                         "raw": {
                             "language": "json"
