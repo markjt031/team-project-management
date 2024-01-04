@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CompanySelectComponent } from './company-select/company-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
+import { PostModalComponent } from './announcements/post-modal/post-modal.component';
 import { UsersComponent } from './users/users.component';
 
 @NgModule({
@@ -15,14 +18,12 @@ import { UsersComponent } from './users/users.component';
     CompanySelectComponent,
     NavbarComponent,
     UsersComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
     LoginComponent,
+    AnnouncementsComponent,
+    AnnouncementComponent,
+    PostModalComponent,
   ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
