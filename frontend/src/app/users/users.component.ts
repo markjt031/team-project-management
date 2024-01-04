@@ -26,6 +26,39 @@ export class UsersComponent {
     confirmPassword: new FormControl<string>('')
   })
 
+  ngOnInit() {
+    this.getData()
+  }
+
+  async getData() {
+    let res = await fetch('http://localhost:8080/company/2')
+    let company = await res.json()
+
+    let employeeArr = []
+    for(const emp of company.employees) {
+      employeeArr.push({
+        name: emp.profile.firstName + " " + emp.profile.lastName,
+        email: emp.profile.email,
+        team: this.findTeam(emp.profile.firstName, emp.profile.lastName, company.teams),
+        admin: emp.admin,
+        active: emp.active,
+        status: emp.status
+      })
+
+      this.data = employeeArr
+    }
+  }
+
+  findTeam(fname: string, lname: string, teamList: any[]) {
+    for(const team of teamList) {
+      for(const emp of team.teammates) {
+        if(emp.profile.firstName === fname && emp.profile.lastName === lname) return team.name;
+      }
+    }
+
+    return ''
+  }
+
   openCloseCard() {
     this.cardOpen = !this.cardOpen
   }
