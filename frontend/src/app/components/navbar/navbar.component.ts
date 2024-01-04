@@ -10,12 +10,14 @@ import { UserService } from 'src/app/user.service';
 export class NavbarComponent {
   open: boolean = false;
   isUserAdmin: boolean = false;
+  name: string = ""
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.userService.currentUser.subscribe((user) => {
       this.isUserAdmin = user.admin;
+      this.name=`${user.profile.firstName} ${user.profile.lastName.charAt(0)}.`
     });
   }
 

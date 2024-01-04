@@ -40,6 +40,10 @@ export class UserService {
     if (user) {
       this.updateUser(JSON.parse(user));
     }
+    const credentials = localStorage.getItem('credentials')
+    if (credentials){
+      this.updateCredentials(JSON.parse(credentials))
+    }
   }
 
   updateUser = (user: User) => {

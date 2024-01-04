@@ -6,5 +6,5 @@ export interface BasicUser{
     profile: Profile,
     admin: boolean,
     active: boolean,
-    status: boolean
+    status: string
 }

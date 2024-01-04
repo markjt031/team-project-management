@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { User } from '../models';
+import { CompanyService } from '../company.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   hasAttemptedLogin: boolean = false;
   user: User | undefined = undefined;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private companyService: CompanyService, private router: Router) {}
 
   ngOnInit() {
     this.userService.currentUser.subscribe((user) => {
@@ -35,16 +36,24 @@ export class LoginComponent {
 
   login = async () => {
     this.hasAttemptedLogin = true;
-    await this.userService.logInUser({
+    this.userService.logInUser({
       username: this.username,
       password: this.password,
-    });
-
-    if (!this.isInvalidLogin) {
-      this.user?.admin
-        ? this.router.navigate(['/company'])
-        : this.router.navigate(['/announcements']);
-    }
+    }).then(()=>{
+      if (!this.isInvalidLogin) {
+        if (this.user?.admin){
+          this.router.navigate(['/company'])
+        }
+        else{
+          if (this.user){
+            this.companyService.updateCompany(this.user.companies[0])
+            this.router.navigate(['/announcements']);
+          }
+        }
+      }
+    })
+    
+    
   };
 
   logout = () => {

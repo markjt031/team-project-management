@@ -16,8 +16,14 @@ export class CompanyService {
     })
 
     currentCompany = this.company.asObservable();
-
+    constructor() {
+        const company = localStorage.getItem('company');
+        if (company) {
+          this.updateCompany(JSON.parse(company));
+        }
+    }
     updateCompany(company: Company) {
         this.company.next(company)
+        localStorage.setItem('company', JSON.stringify(company))
     }
 }

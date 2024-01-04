@@ -28,16 +28,8 @@ constructor(private router: Router, private userService: UserService, private co
 ngOnInit(){
   this.userService.currentUser.subscribe((user: User)=>{
     this.currentUser=user
-    //assuming non-admins only have one company
-    if (!user.admin){
-      this.company=this.currentUser.companies[0]
-    }
-    else{
-      //set companyID from companyService
-      //temporarily setting this manually for now. 
-      this.companyService.currentCompany.subscribe((company)=>this.company=company)
-    }
   })
+  this.companyService.currentCompany.subscribe((company)=>this.company=company)
   this.getProjects()
 }
 

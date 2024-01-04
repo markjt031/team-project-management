@@ -26,19 +26,7 @@ export class TeamsComponent {
         this.router.navigateByUrl('login')
       }
     })
-    
-    //assuming non-admins only have one company
-    if (this.currentUser){
-      if (!this.currentUser?.admin){
-        this.company=this.currentUser.companies[0]
-        if (this.company){
-          this.companyService.updateCompany(this.company)
-        }
-      }
-      else{
-        this.companyService.currentCompany.subscribe((company)=>this.company=company)
-       }
-    }
+    this.companyService.currentCompany.subscribe((company)=>this.company=company)
     if (this.company){
       this.teamService.fetchTeams(this.company.id, this.currentUser).subscribe((teams) => {
         this.teamService.updateTeam(teams)
