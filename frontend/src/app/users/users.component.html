@@ -1,0 +1,61 @@
+<div *ngIf="!cardOpen" class="card-backdrop"></div>
+<app-navbar></app-navbar>
+<div class="title">
+    <h1>User Registry</h1>
+    <p>A general view of all your members in your organization</p>
+</div>
+<div class="table-holder">
+    <div class="table">
+        <div class="table-row header-row">
+            <h1>Name</h1>
+            <h1>Email</h1>
+            <h1>Team</h1> 
+            <h1></h1>
+            <h1>Active</h1>
+            <h1>Admin</h1>
+            <h1>Status</h1>
+        </div>
+        <div class="table-row data-row" *ngFor="let user of data">
+            <p class="name-col">{{user.name}}</p>
+            <p class="email">{{user.email}}</p>
+            <p>{{user.team}}</p>
+            <p></p>
+            <p [class]="user.active ? 'affirmative': 'negative'">{{user.active ? 'YES': 'NO'}}</p>
+            <p [class]="user.admin ? 'affirmative': 'negative'">{{user.admin ? 'YES': 'NO'}}</p>
+            <p>{{user.status}}</p>
+        </div>
+        <br>
+        <br>
+        <button class="user-button" (click)="openCloseCard()">ADD USER</button>
+    </div>
+</div>
+<div class="add-user-card" [style]="{'transform': cardOpen ? 'translateY(100vh)' : 'translateY(0%)'}">
+    <div class="button-holder">
+        <div class="exit-button" (click)="closeCard()">X</div>
+    </div>
+    <form class="inner-info-holder" [formGroup]="userForm">
+        <div class="inner-info">
+            <input class="text-input" placeholder="first name" formControlName="firstName">
+            <input class="text-input" placeholder="last name" formControlName="lastName">
+            <br>
+            <input class="text-input email-input" placeholder="email" formControlName="email">
+            <br>
+            <input class="text-input" placeholder="password" formControlName="password">
+            <input class="text-input" placeholder="confirm password" formControlName="confirmPassword">
+            <br>
+            <br>
+            <br>
+            <div class="admin-select">
+                <p>Make user an admin role?</p>
+                <div class="admin-selection">
+                    <p (click)="updateMakeUserAdmin('NO')" [class]="makeUserAdmin === 'NO' ? 'underline negative' : ''">NO</p>
+                    <p (click)="updateMakeUserAdmin('YES')" [class]="makeUserAdmin === 'YES' ? 'underline affirmative' : ''">YES</p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="submit-holder">
+        <button class="user-button" (click)="handleSubmit()">Submit</button>
+    </div>
+</div>
+

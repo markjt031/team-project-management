@@ -1,0 +1,41 @@
+<div class="backdrop"></div>
+<div class="modal-container">
+  <button class="close-button" (click)="close()">
+    <img src="/assets/close.svg" alt="close-icon" />
+  </button>
+  <h3 class="modal-header">Announcement</h3>
+  <div class="modal-input-container">
+    <div>
+      <input
+        class="modal-input"
+        type="text"
+        [(ngModel)]="title"
+        name="title"
+        (keyup)="checkIfSubmitDisabled()"
+        placeholder="Title"
+        [style.height.px]="32"
+      />
+      <div class="input-bottom-border"></div>
+    </div>
+    <div>
+      <textarea
+        class="modal-input"
+        #textarea
+        (input)="autoResize($event)"
+        type="text"
+        [(ngModel)]="message"
+        (keyup)="checkIfSubmitDisabled()"
+        name="message"
+        placeholder="Enter your announcement here"
+      ></textarea>
+      <div class="input-bottom-border"></div>
+    </div>
+  </div>
+  <button
+    class="modal-button"
+    (click)="postAnnouncement()"
+    [disabled]="isSubmitDisabled"
+  >
+    Submit
+  </button>
+</div>
