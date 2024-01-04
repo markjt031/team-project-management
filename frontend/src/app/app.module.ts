@@ -33,7 +33,7 @@ import { UsersComponent } from './users/users.component';
     AddTeamModalComponent,
     ProjectsDisplayComponent,
     AddProjectModalComponent,
-    EditProjectModalComponent
+    EditProjectModalComponent,
     AnnouncementsComponent,
     AnnouncementComponent,
     PostModalComponent,
