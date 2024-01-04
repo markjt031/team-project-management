@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from 'src/app/models';
 import { UserService } from 'src/app/user.service';
 
 @Component({
@@ -8,8 +9,15 @@ import { UserService } from 'src/app/user.service';
 })
 export class NavbarComponent {
   open: boolean = false;
+  isUserAdmin: boolean = false;
 
   constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.currentUser.subscribe((user) => {
+      this.isUserAdmin = user.admin;
+    });
+  }
 
   menuClick() {
     this.open = !this.open;
