@@ -35,6 +35,11 @@ public class TeamController {
 		return teamService.deleteUserByTeam(teamId, userId);
 	}
 
+	@DeleteMapping("/{teamId}/projects/{projectId}")
+	public ProjectDto deleteProjectByTeam(@PathVariable Long teamId, @PathVariable Long projectId) {
+		return teamService.deleteProjectByTeam(teamId, projectId);
+	}
+
 	@PostMapping("/{teamId}/users")
 	public TeamDto addUserToTeam(@PathVariable Long teamId, @RequestBody UserTeamRequestDto userTeamRequestDto){
 		return teamService.addUserToTeam(userTeamRequestDto, teamId);

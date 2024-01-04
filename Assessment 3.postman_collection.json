@@ -295,6 +295,25 @@
             "response": []
         },
         {
+            "name": "DELETE /teams/{teamId}/projects/{projectId}",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8080/teams/2/projects/2",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "2", "projects", "2"]
+                }
+            },
+            "response": []
+        },
+        {
             "name": "DELETE /users/delete/id",
             "request": {
                 "method": "DELETE",
