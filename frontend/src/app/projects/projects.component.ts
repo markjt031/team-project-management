@@ -14,6 +14,7 @@ import { UserService } from '../user.service'
 })
 export class ProjectsComponent {
   @Output() updateProjectsList = new EventEmitter<void>()
+  @Output() passUpdateProjectEvent = new EventEmitter<void>()
   id: number = 0
   projects: Project[]=[]
   name: string | null=''
@@ -55,6 +56,9 @@ export class ProjectsComponent {
       this.id = this.route.snapshot.params['id']
     })
     this.updateProjectsList.subscribe(() => {
+      this.getProjects()
+    })
+    this.passUpdateProjectEvent.subscribe(() => {
       this.getProjects()
     })
   }
