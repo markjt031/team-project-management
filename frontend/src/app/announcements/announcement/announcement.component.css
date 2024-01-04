@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.announcement-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  width: 80%;
+  margin-left: 10%;
+  padding: 20px;
+  background-color: var(--background-card);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.announcement-author {
+  color: #fff;
+  margin: 0;
+}
+
+.announcement-date {
+  color: #fff;
+  opacity: 0.75;
+  margin: 0;
+}
+
+.announcement-title {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  font-style: italic;
+  text-align: left;
+  margin: 0;
+  width: 100%;
+}
+
+.announcement-message {
+  color: #fff;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  margin: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .announcement-container {
+    width: 90%;
+    margin-left: 5%;
+  }
+}

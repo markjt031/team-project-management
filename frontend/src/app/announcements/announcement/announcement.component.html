@@ -1,0 +1,15 @@
+<div class="announcement-container">
+  <div class="announcement-header">
+    <h3 class="announcement-author">
+      {{ announcement?.author?.profile?.lastName }},
+      {{ announcement?.author?.profile?.firstName }}
+    </h3>
+    <h3 class="announcement-date">
+      {{ announcement?.date | date : "longDate" }}
+    </h3>
+  </div>
+  <h3 class="announcement-title">{{ announcement?.title }}</h3>
+  <p class="announcement-message">
+    {{ announcement?.message }}
+  </p>
+</div>

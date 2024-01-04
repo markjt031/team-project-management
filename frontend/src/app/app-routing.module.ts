@@ -5,16 +5,17 @@ import { AppComponent } from './app.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { LoginComponent } from './login/login.component';
 import { CompanySelectComponent } from './company-select/company-select.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+  { path: 'announcements', component: AnnouncementsComponent },
   { path: 'company', component: CompanySelectComponent },
   {path: 'teams', component: TeamsComponent},
   {path: 'teams/:id/projects', component: ProjectsComponent}
+  { path: 'users', component: UsersComponent },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

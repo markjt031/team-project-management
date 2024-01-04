@@ -14,12 +14,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectsDisplayComponent } from './projects/projects-display/projects-display.component';
 import { AddProjectModalComponent } from './projects/add-project-modal/add-project-modal.component';
 import { EditProjectModalComponent } from './projects/edit-project-modal/edit-project-modal.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
+import { PostModalComponent } from './announcements/post-modal/post-modal.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CompanySelectComponent,
     NavbarComponent,
+    UsersComponent,
     LoginComponent,
     TeamsComponent,
     TeamCardComponent,
@@ -29,10 +34,13 @@ import { EditProjectModalComponent } from './projects/edit-project-modal/edit-pr
     ProjectsDisplayComponent,
     AddProjectModalComponent,
     EditProjectModalComponent
+    AnnouncementsComponent,
+    AnnouncementComponent,
+    PostModalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule, FormsModule],
+    ReactiveFormsModule, ReactiveFormsModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
