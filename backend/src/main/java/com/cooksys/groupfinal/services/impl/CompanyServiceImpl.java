@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.cooksys.groupfinal.dtos.*;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.mappers.*;
 import com.cooksys.groupfinal.repositories.*;
 import com.cooksys.groupfinal.services.AuthorizationService;
@@ -216,6 +217,29 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		teamRepository.deleteById(teamId);
 		return companyMapper.entityTeamResponseDto(company);
+	}
+
+	@Override
+	@Transactional
+	public FullUserDto addUserToCompany(Long companyId, UserCompanyRequestDto userCompanyRequestDto) {
+		// Find the company using the provided ID
+		Company company = findCompany(companyId);
+
+		authorizationService.userIsAdmin(userCompanyRequestDto.getAdmin());
+
+		Long employeeId = userCompanyRequestDto.getNewEmployeeId();
+		Optional<User> newEmployee = userRepository.findById(employeeId);
+		if(newEmployee.isEmpty()){throw new BadRequestException("Employee with this id not found.");}
+		// Check if the user is already part of the company
+		if (company.getEmployees().contains(newEmployee.get())) { //This needs modification to find the user based on Id.
+			throw new BadRequestException("User already part of the company.");
+		}
+
+
+		company.getEmployees().add(newEmployee.get());
+		companyRepository.saveAndFlush(company);
+		Optional<User> addedEmployee = userRepository.findById(employeeId);
+		return fullUserMapper.entityToFullUserDto(addedEmployee.get());
 	}
 
 
