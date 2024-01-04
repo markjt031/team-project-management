@@ -6,6 +6,7 @@ import { AnnouncementsComponent } from './announcements/announcements.component'
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/announcements', pathMatch: 'full' },
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'company', component: CompanySelectComponent },
   { path: 'users', component: UsersComponent },

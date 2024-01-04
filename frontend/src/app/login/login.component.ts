@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { User } from '../models';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,13 @@ export class LoginComponent {
   isLoginButtonDisabled: boolean = true;
   isInvalidLogin: boolean = false;
   hasAttemptedLogin: boolean = false;
+  user: User | undefined = undefined;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.userService.currentUser.subscribe((user) => {
+      this.user = user;
       this.isInvalidLogin = user.id === -1 ? true : false;
     });
   }
@@ -38,7 +41,13 @@ export class LoginComponent {
     });
 
     if (!this.isInvalidLogin) {
-      this.router.navigate(['/']);
+      this.user?.admin
+        ? this.router.navigate(['/company'])
+        : this.router.navigate(['/announcements']);
     }
+  };
+
+  logout = () => {
+    this.userService.logOutUser();
   };
 }
