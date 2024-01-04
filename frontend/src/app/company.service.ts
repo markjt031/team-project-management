@@ -1,21 +1,27 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 interface company {
-    id: number,
-    name: string
+  id: number;
+  name: string;
 }
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-
 export class CompanyService {
-    private company = new BehaviorSubject<company>({id: -1, name: 'null'})
+  private company = new BehaviorSubject<company>({ id: -1, name: 'null' });
+  currentCompany = this.company.asObservable();
 
-    currentCompany = this.company.asObservable();
-
-    updateCompany(company: company) {
-        this.company.next(company)
+  constructor() {
+    const company = localStorage.getItem('company');
+    if (company) {
+      this.updateCompany(JSON.parse(company));
     }
+  }
+
+  updateCompany(company: company) {
+    this.company.next(company);
+    localStorage.setItem('company', JSON.stringify(company));
+  }
 }

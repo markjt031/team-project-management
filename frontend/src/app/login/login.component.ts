@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { User } from '../models';
+import { CompanyService } from '../company.service';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +17,21 @@ export class LoginComponent {
   hasAttemptedLogin: boolean = false;
   user: User | undefined = undefined;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private companyService: CompanyService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userService.currentUser.subscribe((user) => {
       this.user = user;
-      this.isInvalidLogin = user.id === -1 ? true : false;
+      this.isInvalidLogin = user.id === -1;
     });
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.redirectIfLoggedIn();
+    }
   }
 
   checkLoginButtonDisabled = () => {
@@ -41,13 +50,22 @@ export class LoginComponent {
     });
 
     if (!this.isInvalidLogin) {
-      this.user?.admin
-        ? this.router.navigate(['/company'])
-        : this.router.navigate(['/announcements']);
+      this.redirectIfLoggedIn();
     }
   };
 
   logout = () => {
     this.userService.logOutUser();
+  };
+
+  redirectIfLoggedIn = () => {
+    if (this.user?.admin) {
+      this.router.navigate(['/company']);
+    } else {
+      this.companyService.updateCompany(
+        this.user?.companies[0] || { id: -1, name: 'null' }
+      );
+      this.router.navigate(['/announcements']);
+    }
   };
 }
