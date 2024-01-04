@@ -30,6 +30,11 @@ public class TeamController {
 		return teamService.getProjectByTeamId(teamId, projectId);
 	}
 
+	@PutMapping("/{teamId}/projects/{projectId}")
+	public ProjectDto updateProjectById(@PathVariable Long teamId, @PathVariable Long projectId, @RequestBody ProjectRequestDto projectRequestDto){
+		return teamService.updateProjectById(teamId, projectId, projectRequestDto);
+	}
+
 	@DeleteMapping("/{teamId}/users/{userId}")
 	public FullUserDto deleteUserByTeam(@PathVariable Long teamId, @PathVariable Long userId) {
 		return teamService.deleteUserByTeam(teamId, userId);
