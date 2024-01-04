@@ -1,13 +1,13 @@
-<div class="project" *ngFor="let project of projects" (updateProjectList)="passUpdateProjectEvent()">
+<div class="project" *ngFor="let project of projects">
     <div class="container">
         <h2 class="project-name">{{project.name}}</h2>
         <span class="active" [ngClass]="project.active ? 'green' : 'red'">{{project.active ? 'Active' : 'Inactive'}}</span>
     </div>
     <div class="flex">
         <p class="description">{{project.description}}</p>
-        <button class="button-yellow" (click)="toggleEditModal()">Edit</button>
+        <button class="button-yellow" (click)="toggleEditModal(project)">Edit</button>
     </div>
-    <app-edit-project-modal *ngIf="editModalShown" (close)="toggleEditModal()" [project]="project"></app-edit-project-modal>
+    <app-edit-project-modal *ngIf="editModalShown" (close)="toggleEditModal()" [project]="projectBeingEdited" [team]=team></app-edit-project-modal>
 </div>
 <div *ngIf="!projects || projects.length===0" class="project">
     <h2>No Projects for this team</h2>

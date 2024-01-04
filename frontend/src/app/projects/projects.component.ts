@@ -2,8 +2,10 @@ import { Component, EventEmitter, Output } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { LocationStrategy } from '@angular/common'
 import { fetchData } from '../services/api'
-import { User, Project, Team } from '../models/'
+import { User, Project, Team, Company } from '../models/'
 import { UserService } from '../user.service'
+import { CompanyService } from '../company.service'
+import { ProjectService } from '../services/projectService'
 
 @Component({
   selector: 'app-projects',
@@ -12,12 +14,10 @@ import { UserService } from '../user.service'
 })
 export class ProjectsComponent {
   @Output() updateProjectsList = new EventEmitter<void>()
-  @Output() passUpdateProjectEvent = new EventEmitter<void>()
   id: number = 0
   projects: Project[]=[]
-  name: string | null=''
   team: any
-  companyId: number = 0
+  company: Company | undefined= undefined
   addModalShown= false
   currentUser: User | undefined = undefined
 
@@ -25,7 +25,9 @@ export class ProjectsComponent {
     private router: Router,
     private route: ActivatedRoute,
     private location: LocationStrategy,
-    private userService: UserService){}
+    private userService: UserService,
+    private projectService: ProjectService,
+    private companyService: CompanyService){}
 
 
   ngOnInit(){
@@ -37,26 +39,21 @@ export class ProjectsComponent {
     })
     const state= this.location.getState()
     if (state && typeof state=== 'object'){
-      if ('name' in state && typeof state.name==='string'){
-        this.name=state.name
-      }
-      if ('projects' in state && state.projects instanceof Array){
-        this.projects=state.projects
-      }
+      //this can be replaced if a get team by id endpoint is implemented
+      //data won't persist on refresh until I can remove this state object
+      // if ('name' in state && typeof state.name==='string'){
+      //   this.name=state.name
+      // }
       if ('team' in state && typeof state.team==='object'){
         this.team=state.team
-      }
-      if ('companyId' in state && typeof state.companyId==='number'){
-        this.companyId=state.companyId
       }
     }
     this.route.queryParams.subscribe(params => {
       this.id = this.route.snapshot.params['id']
     })
+    this.projectService.currentProjectsList.subscribe((projects)=>this.projects=projects)
+    this.companyService.currentCompany.subscribe((company)=>this.company=company)
     this.updateProjectsList.subscribe(() => {
-      this.getProjects()
-    })
-    this.passUpdateProjectEvent.subscribe(() => {
       this.getProjects()
     })
   }
@@ -64,12 +61,6 @@ export class ProjectsComponent {
     this.addModalShown=!this.addModalShown
   }
   getProjects=async()=>{
-    try {
-      const projects = await fetchData(`company/${this.companyId}/teams/${this.team.id}/projects`)
-      this.projects = projects
-    } 
-    catch (error) {
-      console.error('Error fetching projects:', error)
-    }
+    this.projectService.getProjects(this.team.id)
   }
 }

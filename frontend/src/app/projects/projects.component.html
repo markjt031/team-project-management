@@ -1,8 +1,8 @@
 <app-navbar></app-navbar>
 <a routerLink="/teams" class="back">&#60; Back</a>
-<h1 class="title">Projects for {{name}}</h1>
+<h1 class="title">Projects for {{team.name}}</h1>
 <div class="button-container">
     <button *ngIf="currentUser?.admin" class="button" (click)="toggleModal()">New</button>
 </div>
-<app-projects-display [projects]=projects (passUpdateProjectEvent)="getProjects()"></app-projects-display>
+<app-projects-display [team]=team></app-projects-display>
 <app-add-project-modal *ngIf="addModalShown" [team]=team (close)="toggleModal()" (updateProjectsList)="getProjects()"></app-add-project-modal>

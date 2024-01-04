@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User, Project } from 'src/app/models/';
+import { User, Project, Credentials, Team } from 'src/app/models/';
+import { fetchData } from 'src/app/services/api';
 import { UserService } from 'src/app/user.service';
 
 interface Option{
@@ -16,10 +17,12 @@ interface Option{
 
 export class EditProjectModalComponent {
   @Output() close= new EventEmitter<void>()
-  @Output() updateProjectsList= new EventEmitter<void>()
 
   @Input() project: Project | undefined = undefined
+  @Input() team: Team | undefined = undefined
+
   currentUser: User | undefined = undefined
+  credentials: Credentials | undefined = undefined
   
   isDropdownOpen: boolean= false
   selectOptions=[
@@ -39,7 +42,20 @@ export class EditProjectModalComponent {
     this.userService.currentUser.subscribe((user)=>{
       this.currentUser=user
     })
-    this.formData.setValue({name: this.project?.name, description: this.project?.description })
+    this.userService.currentUserCredentials.subscribe((credentials)=>{
+      this.credentials=credentials
+    })
+    this.initializeFormValues()
+  }
+  
+  initializeFormValues() {
+    console.log("here")
+    if (this.project) {
+      this.formData.patchValue({
+        name: this.project.name,
+        description: this.project.description,
+      });
+    }
   }
 
   selectOption(option: Option){
@@ -53,20 +69,45 @@ export class EditProjectModalComponent {
   onModalClose(){
     this.close.emit()
   }
-
+  updateProject=async(project: any, team: Team, projectId: number)=>{
+      const options = {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(project),
+      };
+      try{
+        const updatedTeamProject = await fetchData(`teams/${team.id}/projects/${projectId}`, options);
+        this.project=updatedTeamProject
+      }
+      catch (error) {
+        console.error('Error updating team:', error);
+      } 
+    }
   onSubmit(){
-    if (this.formData.valid && this.selectedOption.value!=undefined){
+    if (this.formData.valid && this.selectedOption.value!=undefined && this.currentUser && this.project && this.team && this.project.id){
       this.isError=false
       let project={
-        name: this.formData.controls['name'].value,
-        description: this.formData.controls['description'].value,
-        active: this.selectedOption.value,
-        team: this.project?.team
+        projectDto: {
+          name: this.formData.controls['name'].value,
+          description: this.formData.controls['description'].value,
+          active: this.selectedOption.value,
+          team: this.project.team
+        },
+        admin: {
+          credentials: this.credentials,
+          profile: this.currentUser.profile,
+          admin: this.currentUser.admin
+        }
       }
       console.log(project)
       //add code to submit project to api
-      this.updateProjectsList.emit()
-      this.close.emit()
+      this.updateProject(project, this.team, this.project.id).then(()=>{
+        this.close.emit()
+      })
+      
     }
     else this.isError=true
   }
