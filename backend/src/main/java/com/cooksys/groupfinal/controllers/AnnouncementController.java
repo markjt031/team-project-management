@@ -21,4 +21,10 @@ public class AnnouncementController {
 		return announcementService.createAnnouncement(announcementRequestDto);
 	}
 
+	@DeleteMapping("/{announcementId}")
+	@CrossOrigin(origins="*")
+	public AnnouncementResponseDto deleteAnnouncementById(@PathVariable Long announcementId, @RequestBody UserRequestDto userRequestDto){
+		return announcementService.deleteAnnouncementById(announcementId, userRequestDto);
+	}
+
 }

@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
 import com.cooksys.groupfinal.dtos.AnnouncementResponseDto;
+import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.User;
@@ -44,5 +45,27 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         newAnnouncement.setMessage(announcementRequestDto.getMessage());
         newAnnouncement.setDate(Timestamp.from(Instant.now()));
         return announcementMapper.entityToResponseDto( announcementRepository.saveAndFlush(newAnnouncement));
+    }
+
+    @Override
+    public AnnouncementResponseDto deleteAnnouncementById(Long announcementId, UserRequestDto userRequestDto) {
+        // Check if the user is an admin
+        User requestingUser = authorizationService.userIsAdmin(userRequestDto);
+
+        // Fetch the announcement
+        Announcement announcementToDelete = announcementRepository.findById(announcementId)
+                .orElseThrow(() -> new NotFoundException("Announcement with ID " + announcementId + " not found."));
+
+        // Check if the requesting user is part of the company of the announcement
+        if (!announcementToDelete.getCompany().getEmployees().contains(requestingUser)) {
+            throw new NotFoundException("User is not part of the company associated with this announcement.");
+        }
+
+        // Delete the announcement
+        announcementRepository.delete(announcementToDelete);
+        announcementRepository.flush();
+
+        // Return the details of the deleted announcement
+        return announcementMapper.entityToResponseDto(announcementToDelete);
     }
 }

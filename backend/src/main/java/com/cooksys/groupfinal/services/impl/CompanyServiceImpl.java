@@ -219,4 +219,26 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 
+	@Override
+	@Transactional
+	public FullUserDto addUserToCompany(Long companyId, UserCompanyRequestDto userCompanyRequestDto) {
+		Company company = findCompany(companyId);
+		authorizationService.userIsAdmin(userCompanyRequestDto.getAdmin());
+		Long employeeId = userCompanyRequestDto.getNewEmployeeId();
+		Optional<User> newEmployee = userRepository.findById(employeeId);
+		if(newEmployee.isEmpty()){throw new BadRequestException("Employee with this id not found.");}
+		// Check if the user is already part of the company
+		if (company.getEmployees().contains(newEmployee.get())) { //This needs modification to find the user based on Id.
+			throw new BadRequestException("User already part of the company.");
+		}
+
+
+		company.getEmployees().add(newEmployee.get());
+		companyRepository.saveAndFlush(company);
+		Optional<User> addedEmployee = userRepository.findById(employeeId);
+		return fullUserMapper.entityToFullUserDto(addedEmployee.get());
+	}
+
+
+
 }
