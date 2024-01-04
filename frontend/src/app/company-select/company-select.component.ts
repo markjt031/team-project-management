@@ -1,20 +1,38 @@
 import { Component } from '@angular/core';
 import { CompanyService } from '../company.service';
+import { UserService } from '../user.service';
+import { Company, User } from '../models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-company-select',
   templateUrl: './company-select.component.html',
-  styleUrls: ['./company-select.component.css']
+  styleUrls: ['./company-select.component.css'],
 })
 export class CompanySelectComponent {
-  constructor(private companyData: CompanyService) {}
   open: boolean = false;
+  user: User | undefined = undefined;
+  companies: Company[] = [];
 
-  openSelect() {
-    this.open = !this.open
+  constructor(
+    private companyService: CompanyService,
+    private userService: UserService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.userService.currentUser.subscribe((user) => {
+      this.user = user;
+      this.companies = user.companies;
+    });
   }
 
-  selectCompany() {
-    console.log(this.companyData.currentCompany)
+  openSelect() {
+    this.open = !this.open;
+  }
+
+  selectCompany(company: Company) {
+    this.companyService.updateCompany(company);
+    this.router.navigate(['/announcements']);
   }
 }
