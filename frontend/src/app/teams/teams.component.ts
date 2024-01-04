@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import Team from '../models/Team';
 import { fetchData } from '../services/api';
 import { User } from '../models/User';
@@ -7,6 +7,7 @@ import BasicUser from '../models/BasicUser';
 import { CompanySelectComponent } from '../company-select/company-select.component';
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
+import { TeamService } from '../services/teamsService';
 
 @Component({
   selector: 'app-teams',
@@ -21,7 +22,7 @@ export class TeamsComponent {
   showModal: boolean = false
   currentUser: User | undefined = undefined
 
-  constructor(private router: Router, private userService: UserService, private companyService: CompanyService){}
+  constructor(private router: Router, private userService: UserService, private companyService: CompanyService, private teamService: TeamService){}
   ngOnInit(){
     this.userService.currentUser.subscribe((user: User)=>{
       this.currentUser=user
@@ -29,6 +30,7 @@ export class TeamsComponent {
         this.router.navigateByUrl('login')
       }
     })
+    
     //assuming non-admins only have one company
     if (!this.currentUser?.admin){
       this.companyId=this.currentUser?.companies[0]?.id
@@ -39,35 +41,15 @@ export class TeamsComponent {
     //  this.companyService.currentCompany.subscribe((company)=>this.companyId=company.id)
       this.companyId=this.currentUser.companies[0].id
     }
-    this.fetchTeams()
+    this.teamService.fetchTeams(this.companyId, this.currentUser).subscribe((teams) => {
+      this.teamService.updateTeam(teams)
+    })
+    // this.teamService.fetchTeams(this.companyId, this.currentUser)
+    this.teamService.currentTeamList.subscribe((teams)=>{
+      this.teams=teams
+      
+    })
   }
-
-  fetchTeams= async()=>{
-    let response =await fetchData(`company/${this.companyId}/teams`)
-      .then((teams: any)=>{
-        console.log(this.currentUser)
-        console.log(teams)
-        if (this.currentUser && this.currentUser.admin){
-          this.teams=teams
-        }
-        else if(this.currentUser && !this.currentUser.admin){
-          //this is to filter out teams based on if the user belongs to it
-          //can be removed if an endpoint for fetching all teams a user belongs
-          //to is added
-          for (let team of teams){
-            let containsUser=false
-            for (let teammate of team.teammates){
-              if (teammate.id===this.currentUser.id){
-                containsUser=true
-              }
-            }
-            containsUser && this.teams?.push(team)
-          }
-        }
-        console.log(this.teams)
-      })
-    }
-
     toggleCreateModal(){
       this.showModal=!this.showModal
       console.log(this.showModal)
