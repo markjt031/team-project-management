@@ -267,6 +267,34 @@
             "response": []
         },
         {
+            "name": "DELETE /teams/{teamId}/users/{userId}",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"credentials\": {\n    \"username\": \"newUser123\",\n    \"password\": \"password123\"\n  },\n  \"admin\": true\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/teams/{teamId}/users/{userId}",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "2", "users", "2"]
+                }
+            },
+            "response": []
+        },
+        {
             "name": "DELETE /users/delete/id",
             "request": {
                 "method": "DELETE",
