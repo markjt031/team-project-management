@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class CompanyTeamResponseDto {
 	
+	private Long id;
     
     private String name;
     
-    
-    private Set<TeamDto> teams;
+
     
 }

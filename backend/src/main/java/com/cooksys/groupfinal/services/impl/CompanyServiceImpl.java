@@ -159,21 +159,22 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyTeamResponseDto createTeam(Long companyId, TeamRequestDto teamRequestDto) {
-		Company company = companyRepository.getById(companyId);
-		Team newTeam = teamMapper.requestToEntityDto(teamRequestDto);
-		User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
-		if(!user.isAdmin()){
-			throw new NotAuthorizedException("Restricted action, contact administraor.");
-		}
-		
-		newTeam.setCompany(company);
-		teamRepository.saveAndFlush(newTeam);
-		company.getTeams().add(newTeam);
-		Company updatedCompany = companyRepository.saveAndFlush(company);
-		
-		
-		
-		return companyMapper.entityTeamResponseDto(updatedCompany);
+	    Company company = companyRepository.getById(companyId);
+	    User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
+	    
+	    if (!user.isAdmin()) {
+	        throw new NotAuthorizedException("Restricted action, contact administrator.");
+	    }
+	    
+	    Team newTeam = teamMapper.requestToEntityDto(teamRequestDto);
+	    newTeam.setCompany(company);
+	    teamRepository.saveAndFlush(newTeam);
+	    
+	    CompanyTeamResponseDto responseDto = new CompanyTeamResponseDto();
+	    responseDto.setId(newTeam.getId());
+	    responseDto.setName(newTeam.getName());
+	    
+	    return responseDto;
 	}
 
 	@Override
