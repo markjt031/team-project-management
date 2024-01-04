@@ -21,10 +21,7 @@ public class AnnouncementController {
 	@PostMapping
 	@CrossOrigin(origins="*")
 	public AnnouncementDto createAnnouncement(@RequestBody AnnouncementRequestDto announcementRequestDto) {
-		Long companyId = announcementRequestDto.getCompanyId();
-		UserRequestDto userRequest = announcementRequestDto.getUserRequest();
-		AnnouncementDto announcementDto = announcementRequestDto.getAnnouncement();
-		return announcementService.createAnnouncement(userRequest, announcementDto, companyId);
+		return announcementService.createAnnouncement(announcementRequestDto.getUserRequest(), announcementRequestDto.getAnnouncement(), announcementRequestDto.getCompanyId());
 	}
 
 }

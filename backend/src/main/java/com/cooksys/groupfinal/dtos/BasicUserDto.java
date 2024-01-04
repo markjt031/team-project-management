@@ -16,5 +16,4 @@ public class BasicUserDto {
     private boolean active;
     
     private String status;
-
 }

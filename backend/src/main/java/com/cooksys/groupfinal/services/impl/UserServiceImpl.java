@@ -98,9 +98,8 @@ public class UserServiceImpl implements UserService {
 		if (!checkCredentials(userRequestDto.getCredentials().getUsername())) {
 	        throw new NotAuthorizedException("Invalid credentials provided for the user.");
 	    }
-		
-		if(userRequestDto.isAdmin() == false) {
-			throw new NotAuthorizedException("Restricted action, contact administraor.");
+		if(!user.isAdmin()) {
+			throw new NotAuthorizedException("Restricted action, contact administrator.");
 		}
 	    
 		user.setActive(false);
