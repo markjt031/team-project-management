@@ -10,7 +10,5 @@ public class UserRequestDto {
 	private CredentialsDto credentials;
 
     private ProfileDto profile;
-    
-    private boolean admin;
 
 }

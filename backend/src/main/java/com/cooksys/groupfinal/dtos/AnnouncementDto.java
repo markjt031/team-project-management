@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AnnouncementDto {
-	
-	private Long id;
-    
-    private Timestamp date;
-    
+
     private String title;
     
     private String message;
