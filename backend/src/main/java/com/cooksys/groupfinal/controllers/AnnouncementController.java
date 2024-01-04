@@ -1,9 +1,6 @@
 package com.cooksys.groupfinal.controllers;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.dtos.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.services.AnnouncementService;
@@ -20,8 +17,8 @@ public class AnnouncementController {
 
 	@PostMapping
 	@CrossOrigin(origins="*")
-	public AnnouncementDto createAnnouncement(@RequestBody AnnouncementRequestDto announcementRequestDto) {
-		return announcementService.createAnnouncement(announcementRequestDto.getUserRequest(), announcementRequestDto.getAnnouncement(), announcementRequestDto.getCompanyId());
+	public AnnouncementResponseDto createAnnouncement(@RequestBody AnnouncementRequestDto announcementRequestDto) {
+		return announcementService.createAnnouncement(announcementRequestDto);
 	}
 
 }

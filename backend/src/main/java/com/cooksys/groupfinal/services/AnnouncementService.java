@@ -1,11 +1,9 @@
 package com.cooksys.groupfinal.services;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
-import com.cooksys.groupfinal.entities.Announcement;
+import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
+import com.cooksys.groupfinal.dtos.AnnouncementResponseDto;
 
 public interface AnnouncementService {
 
-
-    AnnouncementDto createAnnouncement(UserRequestDto userRequestDto, AnnouncementDto announcementDto, Long companyId);
+    AnnouncementResponseDto createAnnouncement(AnnouncementRequestDto announcementRequestDto);
 }

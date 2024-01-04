@@ -36,4 +36,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
         throw new NotAuthorizedException("You are not an admin.");
     }
+
+    public User userIdIsAdmin(Long userId){
+        Optional<User> potentialAdmin = userRepository.findById(userId);
+        if(potentialAdmin.isEmpty()){throw new NotFoundException("Admin by that ID can't be located.");}
+        if(!potentialAdmin.get().isAdmin()){throw new NotAuthorizedException("You are not an admin.");}
+        return potentialAdmin.get();
+    }
 }

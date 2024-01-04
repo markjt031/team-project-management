@@ -306,7 +306,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n  \"userRequest\": {\n    \"credentials\": {\n      \"username\": \"temporaryceoofwaystar\",\n      \"password\": \"idontgetpaidenoughforthis\"\n    },\n    \"admin\": true\n  },\n  \"announcement\": {\n    \"title\": \"New Office Opening\",\n    \"message\": \"We are excited to announce the opening of our new office!\",\n    \"date\": \"2024-01-03T08:00:00Z\",\n    \"author\": {\n      \"id\": 9\n    }\n  },\n  \"companyId\": 1\n}",
+                    "raw": "{\n  \"authorId\": 9,\n  \"companyId\": 1,\n  \"title\": \"New Office Opening\",\n  \"message\": \"We are excited to announce the opening of our new office!\"\n}",
                     "options": {
                         "raw": {
                             "language": "json"

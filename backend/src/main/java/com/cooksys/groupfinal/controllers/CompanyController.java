@@ -1,6 +1,5 @@
 package com.cooksys.groupfinal.controllers;
 
-import java.util.List;
 import java.util.Set;
 
 import com.cooksys.groupfinal.dtos.*;
@@ -25,7 +24,7 @@ public class CompanyController {
 	
 	@GetMapping("/{id}/announcements")
     @CrossOrigin(origins="*")
-    public Set<AnnouncementDto> getAllAnnouncements(@PathVariable Long id) {
+    public Set<AnnouncementResponseDto> getAllAnnouncements(@PathVariable Long id) {
         return companyService.getAllAnnouncements(id);
     }
 	
@@ -86,6 +85,6 @@ public class CompanyController {
     @DeleteMapping("{companyId}/teams/{teamId}")
     @CrossOrigin(origins = "*")
     public CompanyTeamResponseDto deleteTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody UserRequestDto userRequestDto) {
-    	return companyService.deletTeam(companyId, teamId, userRequestDto);
+    	return companyService.deleteTeam(companyId, teamId, userRequestDto);
     }
 }

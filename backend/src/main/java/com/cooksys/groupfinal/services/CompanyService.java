@@ -9,7 +9,7 @@ public interface CompanyService {
 
 	Set<FullUserDto> getAllUsers(Long id);
 
-	Set<AnnouncementDto> getAllAnnouncements(Long id);
+	Set<AnnouncementResponseDto> getAllAnnouncements(Long id);
 
 	Set<TeamDto> getAllTeams(Long id);
 
@@ -29,6 +29,6 @@ public interface CompanyService {
 
 	CompanyTeamResponseDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto);
 
-	CompanyTeamResponseDto deletTeam(Long companyId, Long teamId, UserRequestDto userRequestDto);
+	CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId, UserRequestDto userRequestDto);
 
 }
