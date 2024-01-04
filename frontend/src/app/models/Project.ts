@@ -1,6 +1,6 @@
-import Team from "./Team";
+import { Team } from "./Team";
 
-export default interface Project{
+export interface Project{
     id?: number,
     name: string,
     description: string,

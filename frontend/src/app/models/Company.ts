@@ -1,7 +1,7 @@
-import BasicUser from "./BasicUser";
-import Team from "./Team";
+import {BasicUser} from "./BasicUser";
+import {Team} from "./Team";
 
-export default interface Company{
+export interface Company{
     id?: number,
     name: string,
     description: string,

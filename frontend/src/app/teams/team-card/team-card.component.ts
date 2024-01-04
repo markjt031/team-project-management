@@ -1,9 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models';
-import Project from 'src/app/models/Project';
-import Team from 'src/app/models/Team';
+import { User, Project, Team } from 'src/app/models';
 import { fetchData } from 'src/app/services/api';
 import { UserService } from 'src/app/user.service';
 

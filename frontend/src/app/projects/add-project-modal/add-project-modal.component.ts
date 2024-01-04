@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Credentials } from 'src/app/models/Credentials';
-import Project from 'src/app/models/Project';
-import Team from 'src/app/models/Team';
-import { User } from 'src/app/models/User';
+import { Router } from '@angular/router';;
 import { fetchData } from 'src/app/services/api';
 import { UserService } from 'src/app/user.service';
+import { User, Credentials, Team, Project} from '../../models'
 
 @Component({
   selector: 'app-add-project-modal',

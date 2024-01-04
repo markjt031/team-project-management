@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Credentials } from 'src/app/models/Credentials';
-import FullUser from 'src/app/models/FullUser';
-import Team from 'src/app/models/Team';
-import { User } from 'src/app/models/User';
+import { User, Credentials } from 'src/app/models/';
 import { fetchData } from 'src/app/services/api';
 import { TeamService } from 'src/app/services/teamsService';
 import { UserService } from 'src/app/user.service';
@@ -77,58 +74,7 @@ export class AddTeamModalComponent {
       this.availableUserList=users
     })
   }
-  // postTeammate=async(user: User, teamId: number)=>{
-  //   if (this.currentUser){
-  //   let body={
-  //     admin: {
-  //       credentials: this.credentials,
-  //       profile: this.currentUser.profile,
-  //       admin: this.currentUser.admin
-  //     },
-  //     newTeammate: user
-  //   }
-  //   const options = {
-  //     method: 'POST',
-  //     mode: 'cors',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(body),
-  //   };
-  //   await fetchData(`teams/${teamId}/users`, options).then(()=>{
-  //   })
-  //   }
-  // }
-  // createTeam = async (team: any) => {
-  //   try {
-  //     const options = {
-  //       method: 'POST',
-  //       mode: 'cors',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(team),
-  //     }
   
-  //     const createdTeam = await fetchData(`company/${this.companyId}/teams`, options)
-  
-  //     if (createdTeam && createdTeam.id) {
-  //       // Individually add all the team mates
-  //       for (let teammate of this.selectedOptions) {
-  //         await this.teamService.postTeammate(teammate, this.currentUser, this.credentials, createdTeam.id)
-  //       }
-  
-  //       // Fetch teams and update
-  //       const teams = await this.teamService.fetchTeams(this.companyId, this.currentUser)
-  //       this.teamService.updateTeam(teams);
-
-  //     } else {
-  //       console.error('Error creating team: Team ID is undefined')
-  //     }
-  //   } catch (error) {
-  //     console.error('Error creating team:', error)
-  //   } 
-  // }
   resetForm(){
      //add the users back into the list and clear out form
      this.fetchUsers()

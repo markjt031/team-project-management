@@ -1,4 +1,4 @@
-import BasicUser from "./BasicUser";
+import {BasicUser} from "./BasicUser";
 
 
 export interface Announcement {

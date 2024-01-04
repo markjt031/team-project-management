@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import Team from "../models/Team";
 import { fetchData } from "./api";
-import { User } from "../models/User";
-import FullUser from "../models/FullUser";
-import { Credentials } from "../models/Credentials";
+import { Credentials, User, Team } from "../models/";
 
 
 @Injectable({

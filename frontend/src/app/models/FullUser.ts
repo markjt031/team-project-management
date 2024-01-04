@@ -1,9 +1,9 @@
-import Company from "./Company";
-import Profile from "./Profile";
-import Team from "./Team";
+import {Company} from "./Company";
+import {Profile} from "./Profile";
+import {Team} from "./Team";
 
 //model to match basic user DTO
-export default interface FullUser{
+export interface FullUser{
     id?: number,
     profile: Profile,
     isAdmin: boolean,

@@ -3,6 +3,7 @@
     border-bottom: 2px solid var(--highlight);
     display: flex;
     z-index: 2;
+    position: relative;
 }
 
 .icon {
@@ -33,10 +34,10 @@
 
 .menu {
     background-color: #0d3b59d7;
-    height: 360px;
+    height: 440px;
     overflow: hidden;
     width: 99.5%;
-    top: -360px;
+    /* top: -360px; */
     position: absolute;
     display: flex;
     align-items: center;

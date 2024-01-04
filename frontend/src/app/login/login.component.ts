@@ -38,7 +38,7 @@ export class LoginComponent {
     });
 
     if (!this.isInvalidLogin) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/announcements']);
     }
   };
 }

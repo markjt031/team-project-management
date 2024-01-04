@@ -1,5 +1,5 @@
 //model to match profile dto
-export default interface Profile{
+export interface Profile{
     firstName: string,
     lastName: string,
     email: string,

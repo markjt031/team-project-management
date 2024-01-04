@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import Project from '../models/Project'
 import { LocationStrategy } from '@angular/common'
-import Team from '../models/Team'
 import { fetchData } from '../services/api'
-import { User } from '../models/User'
+import { User, Project, Team } from '../models/'
 import { UserService } from '../user.service'
 
 @Component({

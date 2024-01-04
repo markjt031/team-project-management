@@ -1,10 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import Team from '../models/Team';
 import { fetchData } from '../services/api';
-import { User } from '../models/User';
+import { User, BasicUser, Team } from '../models/';
 import { UserService } from '../user.service';
-import BasicUser from '../models/BasicUser';
-import { CompanySelectComponent } from '../company-select/company-select.component';
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
 import { TeamService } from '../services/teamsService';

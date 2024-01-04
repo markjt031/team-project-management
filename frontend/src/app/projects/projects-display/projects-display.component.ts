@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import Project from 'src/app/models/Project';
+import {Project} from 'src/app/models/Project';
 
 @Component({
   selector: 'app-projects-display',

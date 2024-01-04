@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AnnouncementService } from '../announcement.service';
 import { CompanyService } from '../company.service';
-import { Announcement, Company } from '../models';
+import { Announcement, Company} from '../models';
+
 
 @Component({
   selector: 'app-announcements',

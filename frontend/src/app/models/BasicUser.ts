@@ -1,7 +1,7 @@
-import Profile from "./Profile";
+import {Profile} from "./Profile";
 
 //model to match basic user DTO
-export default interface BasicUser{
+export interface BasicUser{
     id?: number,
     profile: Profile,
     admin: boolean,

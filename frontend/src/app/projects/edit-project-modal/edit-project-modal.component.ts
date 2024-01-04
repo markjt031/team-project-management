@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import Project from 'src/app/models/Project';
-import { User } from 'src/app/models/User';
+import { User, Project } from 'src/app/models/';
 import { UserService } from 'src/app/user.service';
 
 interface Option{

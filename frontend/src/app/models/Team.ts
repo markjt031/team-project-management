@@ -1,7 +1,7 @@
-import BasicUser from "./BasicUser";
+import { BasicUser } from "./BasicUser";
 
 //matches the team dto
-export default interface Team{
+export interface Team{
     id?: number,
     name: string,
     description: string,
