@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<div class="announcements-container">
+  <h1 class="announcements-header">Announcements</h1>
+  <div class="button-container">
+    <button *ngIf="isAdmin" (click)="openPostModal()">New Post</button>
+  </div>
+  <hr />
+  <div class="announcement-cards">
+    <app-announcement
+      *ngFor="let announcement of announcements"
+      [announcement]="announcement"
+    ></app-announcement>
+  </div>
+</div>
+<app-post-modal *ngIf="showPostModal" [close]="closePostModal"></app-post-modal>

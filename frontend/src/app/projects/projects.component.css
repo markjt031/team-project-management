@@ -1,0 +1,35 @@
+.title{
+    color: var(--off);
+    text-align: center;
+    font-size: 48px;
+}
+.back{
+    color: var(--off);
+    text-decoration: none;
+}
+.button{
+    background-color: var(--off);
+    border-radius: 10px;
+    color: rgba(255,255,255, .75);
+    border: none;
+    padding: 8px;
+    width: 100px;
+    cursor: pointer;
+    
+}
+.button-container{
+    width: 90%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+@media screen and (max-width: 500px){
+    .title{
+        font-size: 32px;
+    }
+    .button-container{
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+}

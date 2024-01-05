@@ -1,0 +1,86 @@
+label{
+    color: var(--highlight);
+    font-size: 16px;
+    width: 100%;
+}
+input[type=text]{
+    background: none;
+    border: none;
+    border-bottom: solid 1px var(--highlight);
+    margin: 20px 0 20px 0;
+    color: white;
+    width: 100%;
+    
+}
+input[type=text]:focus{
+    outline: none;
+}
+
+.background{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.30);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.x{
+    border-radius: 50px;
+    color: red;
+    border: solid 2px red;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+.error{
+    color: red;
+    margin-bottom: 5px;
+}
+.modal-container{
+    position: relative;
+    width: 488px;
+    
+    background-color: var(--background-card);
+    border-radius: 20px;
+}
+.dropdown-label{
+    font-size: 26px;
+    text-align: center;
+    margin: 15px 0px;
+    color: var(--highlight);
+    
+}
+.select-section{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 313px;
+    margin: 80px auto;
+}
+.button{
+    background-color: var(--off);
+    border-radius: 10px;
+    color: rgba(255,255,255, .75);
+    border: none;
+    padding: 15px;
+    width: 200px;
+    cursor: pointer;
+    margin-top: 20px;
+    align-self: center;
+}

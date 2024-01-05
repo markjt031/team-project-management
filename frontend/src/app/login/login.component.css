@@ -1,0 +1,151 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-wrap: wrap;
+}
+
+.header,
+.sub-header {
+  color: var(--off);
+  font-weight: 400;
+  line-height: 0;
+}
+
+.header {
+  font-size: 72px;
+}
+
+.sub-header {
+  font-size: 48px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  width: 550px;
+  height: 100%;
+  padding: 5% 0;
+
+  border: 5px solid var(--highlight);
+  border-radius: 15px;
+  box-shadow: 4px 4px 10px 5px #cbcbcb7d;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--off);
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.input-field::placeholder {
+  color: var(--off);
+  opacity: 0.75;
+}
+
+.username-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 35px;
+  width: 50%;
+}
+
+.password-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  width: 50%;
+}
+
+.input-underline {
+  width: 100%;
+  border: 2.5px solid #fff;
+  border-radius: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.button-container > p {
+  color: red;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.login-button {
+  width: 160px;
+  height: 50px;
+  text-align: center;
+  background: none;
+  color: #fff;
+  border: 2px solid var(--off);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.login-button:disabled {
+  border: 2px solid #cbcbcb;
+  color: #cbcbcb;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    height: 100vh;
+    width: 100vw;
+    justify-content: space-around;
+  }
+
+  .header {
+    font-size: 48px;
+  }
+
+  .sub-header {
+    font-size: 32px;
+  }
+
+  .form-container {
+    width: 80vw;
+    height: 100%;
+  }
+
+  .username-input {
+    padding-top: 25px;
+  }
+
+  .password-input {
+    padding-top: 35px;
+  }
+}
