@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UserService } from '../user.service';
 import { CompanyService } from '../company.service';
+import { User } from '../models';
 
 @Component({
   selector: 'app-users',
@@ -11,12 +12,12 @@ import { CompanyService } from '../company.service';
 export class UsersComponent {
   constructor(private userData: UserService, private companyData: CompanyService) {}
 
-  companyId: number = 2;
-  data = [
-    {name: 'Chris Purnell', email: 'yocrizzle@gmail.com', team: 'Chic-Fila', active: true, admin: true, status: 'JOINED'},
-    {name: 'Frank Fournier', email: 'foshizzle@gmail.com', team: 'PopEyes', active: true, admin: true, status: 'JOINED'},
-    {name: 'Will Marttala', email: 'wamizzle@gmail.com', team: '', active: false, admin: false, status: 'PENDING'},
-    {name: 'Helena Makendengue', email: 'hmasizzle@gmail.com', team: '', active: false, admin: false, status: 'PENDING'}
+  companyId: number | undefined = undefined;
+  data : User[] = [
+    // {name: 'Chris Purnell', email: 'yocrizzle@gmail.com', team: 'Chic-Fila', active: true, admin: true, status: 'JOINED'},
+    // {name: 'Frank Fournier', email: 'foshizzle@gmail.com', team: 'PopEyes', active: true, admin: true, status: 'JOINED'},
+    // {name: 'Will Marttala', email: 'wamizzle@gmail.com', team: '', active: false, admin: false, status: 'PENDING'},
+    // {name: 'Helena Makendengue', email: 'hmasizzle@gmail.com', team: '', active: false, admin: false, status: 'PENDING'}
   ]
 
   cardOpen: boolean = true;
@@ -31,8 +32,9 @@ export class UsersComponent {
   })
 
   ngOnInit() {
-    this.getData()
     this.companyData.currentCompany.subscribe(company => this.companyId = company.id)
+    this.getData()
+    
   }
 
   async getData() {
@@ -40,18 +42,17 @@ export class UsersComponent {
     let company = await res.json()
 
     let employeeArr = []
-    for(const emp of company.employees) {
-      employeeArr.push({
-        name: emp.profile.firstName + " " + emp.profile.lastName,
-        email: emp.profile.email,
-        team: this.findTeam(emp.profile.firstName, emp.profile.lastName, company.teams),
-        admin: emp.admin,
-        active: emp.active,
-        status: emp.status
-      })
+    // for(const emp of company.employees) {
+    //   employeeArr.push({
+    //     name: emp.profile.firstName + " " + emp.profile.lastName,
+    //     email: emp.profile.email,
+    //     team: this.findTeam(emp.profile.firstName, emp.profile.lastName, company.teams),
+    //     admin: emp.admin,
+    //     active: emp.active,
+    //     status: emp.status
+    //   })
 
-      this.data = employeeArr
-    }
+      this.data = [...company.employees]
   }
 
   findTeam(fname: string, lname: string, teamList: any[]) {
@@ -139,8 +140,11 @@ export class UsersComponent {
       })
       let success = await res.json()
       console.log(success)
-      if(success.id) window.location.reload()
-    }, 2000)
+      if(success.id) {
+        this.cardOpen=false
+        window.location.reload()
+      }
+    }, 1000)
 
   }
 }
