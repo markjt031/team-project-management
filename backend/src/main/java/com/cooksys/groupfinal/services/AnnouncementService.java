@@ -8,4 +8,6 @@ public interface AnnouncementService {
 
     AnnouncementResponseDto createAnnouncement(AnnouncementRequestDto announcementRequestDto);
     AnnouncementResponseDto deleteAnnouncementById(Long announcementId, UserRequestDto userRequestDto);
+
+    AnnouncementResponseDto updateAnnouncementById(Long announcementId, UserRequestDto userRequestDto);
 }
