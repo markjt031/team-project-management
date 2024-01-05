@@ -72,6 +72,7 @@ export class UserService {
       teams: [],
     });
     localStorage.removeItem('user');
+    localStorage.removeItem('credentials');
     this.router.navigate(['/login']);
   };
 }
