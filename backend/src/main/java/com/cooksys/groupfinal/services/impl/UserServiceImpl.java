@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = fullUserMapper.requestDtoToEntity(userRequestDto);
         user.setActive(true);
+		if(userRequestDto.isAdmin()){user.setAdmin(true);}
         User savedUser = userRepository.saveAndFlush(user);
         return fullUserMapper.entityToFullUserDto(savedUser);
     }
