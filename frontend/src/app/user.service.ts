@@ -50,6 +50,7 @@ export class UserService {
       const userData: User = await fetchData(`users/login`, options);
       this.updateUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('credentials', JSON.stringify(credentials));
     } catch (error) {
       console.error(error);
     }
