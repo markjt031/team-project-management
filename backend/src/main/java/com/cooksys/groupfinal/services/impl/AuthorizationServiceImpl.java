@@ -27,7 +27,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         Optional<User> existingUser = userRepository.findByCredentialsUsernameAndActiveTrue(requestingUser.getCredentials().getUsername());
         if(existingUser.isEmpty()){
-            throw new NotFoundException("User by that id does not exist.");}
+            throw new NotFoundException("Admin by that id does not exist.");}
 
         if(existingUser.get().getCredentials().getPassword().equals(requestingUser.getCredentials().getPassword())){
             if (existingUser.get().isAdmin()){
