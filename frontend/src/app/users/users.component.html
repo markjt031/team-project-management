@@ -55,7 +55,7 @@
         </div>
     </form>
     <div class="submit-holder">
-        <button class="user-button" (click)="handleSubmit()">Submit</button>
+        <button class="user-button" (click)="handleSubmit()" [disabled]="userForm.value.password !== userForm.value.confirmPassword || userForm.value.password === ''">Submit</button>
     </div>
 </div>
 
