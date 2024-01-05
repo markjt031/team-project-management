@@ -68,4 +68,17 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         // Return the details of the deleted announcement
         return announcementMapper.entityToResponseDto(announcementToDelete);
     }
+
+    @Override
+    public AnnouncementResponseDto updateAnnouncementById(Long announcementId, UserRequestDto userRequestDto) {
+        User requestingUser = authorizationService.userIsAdmin(userRequestDto);
+
+        Announcement announcementToUpdate = announcementRepository.findById(announcementId)
+                .orElseThrow(() -> new NotFoundException("Announcement with ID " + announcementId + " not found."));
+
+        if (!announcementToUpdate.getCompany().getEmployees().contains(requestingUser)) {
+            throw new NotFoundException("User is not part of the company associated with this announcement.");
+        }
+        return announcementMapper.entityToResponseDto( announcementRepository.saveAndFlush(announcementToUpdate));
+    }
 }
