@@ -1,8 +1,9 @@
 .bar {
-  height: 90px;
-  border-bottom: 2px solid var(--highlight);
-  display: flex;
-  z-index: 2;
+    height: 90px;
+    border-bottom: 2px solid var(--highlight);
+    display: flex;
+    z-index: 2;
+    position: relative;
 }
 
 .icon {
@@ -32,16 +33,16 @@
 }
 
 .menu {
-  background-color: #0d3b59d7;
-  overflow: hidden;
-  width: 99.5%;
-  top: -360px;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  z-index: 999;
-  transition: 1s;
+    background-color: #0d3b59d7;
+    overflow: hidden;
+    width: 99.5%;
+    /* top: -360px; */
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+    transition: 1s;
 }
 
 .menu-option {

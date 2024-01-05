@@ -30,7 +30,7 @@ export class AnnouncementService {
       this.updateAnnouncements(
         announcements.sort((a, b) =>
           new Date(a.date) > new Date(b.date) ? -1 : 1
-        )
+      )
       );
     } catch (error) {
       console.error(error);

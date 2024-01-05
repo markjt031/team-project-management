@@ -1,9 +1,10 @@
-import { Profile } from './Profile';
+import {Profile} from "./Profile";
 
-export interface BasicUser {
-  id: number;
-  profile: Profile;
-  admin: boolean;
-  active: boolean;
-  status: string;
+//model to match basic user DTO
+export interface BasicUser{
+    id?: number,
+    profile: Profile,
+    admin: boolean,
+    active: boolean,
+    status: string
 }

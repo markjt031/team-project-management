@@ -63,7 +63,13 @@ export class LoginComponent {
       this.router.navigate(['/company']);
     } else {
       this.companyService.updateCompany(
-        this.user?.companies[0] || { id: -1, name: 'null' }
+          this.user?.companies[0] || 
+          {id: -1, 
+          name: '',
+          description:'',
+          users: [],
+          teams: [],
+        }
       );
       this.router.navigate(['/announcements']);
     }

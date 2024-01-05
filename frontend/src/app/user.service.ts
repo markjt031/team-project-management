@@ -19,13 +19,14 @@ const initialUser: User = {
   teams: [],
 };
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private user = new BehaviorSubject<User>(initialUser);
   currentUser = this.user.asObservable();
-
+  
   constructor(private router: Router) {
     const user = localStorage.getItem('user');
     if (user) {
@@ -36,7 +37,6 @@ export class UserService {
   updateUser = (user: User) => {
     this.user.next(user);
   };
-
   logInUser = async (credentials: Credentials) => {
     try {
       const options = {
@@ -46,7 +46,6 @@ export class UserService {
         },
         body: JSON.stringify(credentials),
       };
-
       const userData: User = await fetchData(`users/login`, options);
       this.updateUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -72,7 +71,7 @@ export class UserService {
       teams: [],
     });
     localStorage.removeItem('user');
-    localStorage.removeItem('credentials');
+    localStorage.removeItem('credentials')
     this.router.navigate(['/login']);
   };
 }

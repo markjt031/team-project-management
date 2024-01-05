@@ -1,0 +1,41 @@
+<div class="background">
+    <div class="modal-container">
+        <div class="x" (click)="onModalClose()">
+            X
+        </div>
+        <form (ngSubmit)="onSubmit()" [formGroup]="formData" autocomplete="off" class=form>>
+            <label for="name">Team Name</label>
+            <input type="text" name="name" formControlName="name">
+            <div *ngIf="isError && formData.controls['name'].errors">
+                <div *ngIf="formData.controls['name'].errors['required']" class="error">Name is a required field</div>
+            </div>
+            <label for="description" >Description</label>
+            
+            <input type="text" formControlName="description" name="description">
+            <div *ngIf="isError && formData.controls['description'].errors">
+                <div *ngIf="formData.controls['description'].errors['required']" class="error">Description is a required field</div>
+            </div>
+            <div class="select-section">
+                    <h2 class="dropdown-label">Select Members</h2>
+                    <div class="dropdown">
+                        
+                        <button type="button" class="dropdown-button" (click)="toggleDropdown()">
+                        Pick an option <img class="icon" src="../../../assets/down.svg" [style]="{'transform': isDropdownOpen ? 'rotateX(0deg)': 'rotateX(180deg)'}">
+                        </button>
+                        <div *ngIf="isDropdownOpen" class="dropdown-menu">
+                        <div *ngFor="let user of availableUserList" class="option" (click)="addUser(user)">
+                            {{ user.profile.firstName }} {{user.profile.lastName.charAt(0)}}.
+                        </div>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedOptions.length > 0" class="selected-options">
+                        <div *ngFor="let user of selectedOptions" class="selected-name-container">
+                            <div  class="selected-user">{{ user.profile.firstName }} {{user.profile.lastName.charAt(0)}}.</div>
+                            <div class="smaller-x" (click)="removeUser(user)">X</div>
+                        </div>  
+                    </div>
+                    <button type="submit" class="button">Submit</button>
+                </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="background">
+    <div class="modal-container">
+        <div class="x" (click)="onModalClose()">
+            X
+        </div>
+        <form class="form" (ngSubmit)="onSubmit()" [formGroup]="formData">
+            <label for="name">Project Name</label>
+            <input type="text" name="name" [value]="project?.name" formControlName="name">
+            <div *ngIf="isError && formData.controls['name'].errors">
+                <div *ngIf="formData.controls['name'].errors['required']" class="error">Name is a required field</div>
+            </div>
+            <label>Description</label>
+            <input type="text" name="description" [value]="project?.description" formControlName="description">
+            <div *ngIf="isError && formData.controls['description'].errors">
+                <div *ngIf="formData.controls['description'].errors['required']" class="error">Description is a required field</div>
+            </div>
+            <div class="select-section">
+                <div *ngIf="currentUser?.admin">
+                    <h2 class="dropdown-label">Active?</h2>
+                    <div class="dropdown">
+                        <button type="button" class="dropdown-button" (click)="toggleDropdown()">
+                            {{selectedOption.label}} <img class="icon" src="../../../assets/down.svg"  [style]="{'transform': isDropdownOpen ? 'rotateX(0deg)': 'rotateX(180deg)'}">
+                        </button>
+                        <div *ngIf="isDropdownOpen" class="dropdown-menu">
+                            <div *ngFor="let option of selectOptions" class="option" (click)="selectOption(option)">
+                                {{option.label}}
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                <button type="submit" class="button">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

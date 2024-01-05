@@ -1,6 +1,7 @@
-export interface Profile {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
+//model to match profile dto
+export interface Profile{
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string
 }

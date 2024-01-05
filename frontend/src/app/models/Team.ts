@@ -1,8 +1,9 @@
-import { BasicUser } from './BasicUser';
+import { BasicUser } from "./BasicUser";
 
-export interface Team {
-  id: number;
-  name: string;
-  description: string;
-  teammates: BasicUser[];
+//matches the team dto
+export interface Team{
+    id?: number,
+    name: string,
+    description: string,
+    teammates: BasicUser[]
 }

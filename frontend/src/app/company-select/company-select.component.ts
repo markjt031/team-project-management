@@ -10,23 +10,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./company-select.component.css'],
 })
 export class CompanySelectComponent {
-  open: boolean = false;
-  user: User | undefined = undefined;
-  companies: Company[] = [];
-
   constructor(
     private companyService: CompanyService,
     private userService: UserService,
     private router: Router
   ) {}
+  open: boolean = false;
+  companies: Company[] = [];
+  
+  currentUser: User | undefined = undefined
 
-  ngOnInit() {
-    this.userService.currentUser.subscribe((user) => {
-      this.user = user;
-      this.companies = user.companies;
-    });
+  ngOnInit(){
+    this.userService.currentUser.subscribe((user)=>this.currentUser=user)
+    if(this.currentUser){
+      this.companies=this.currentUser.companies
+    }
   }
-
   openSelect() {
     this.open = !this.open;
   }
@@ -35,4 +34,5 @@ export class CompanySelectComponent {
     this.companyService.updateCompany(company);
     this.router.navigate(['/announcements']);
   }
+  
 }
