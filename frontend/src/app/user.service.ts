@@ -65,7 +65,7 @@ export class UserService {
       this.updateUser(userData);
       this.updateCredentials(credentials)
       localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('credentials', JSON.stringify(credentials))
+      localStorage.setItem('credentials', JSON.stringify(credentials));
     } catch (error) {
       console.error(error);
     }

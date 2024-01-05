@@ -43,17 +43,15 @@ export class LoginComponent {
   };
 
   login = async () => {
-    this.hasAttemptedLogin = true;
-    this.userService.logInUser({
+    await this.userService.logInUser({
       username: this.username,
       password: this.password,
-    }).then(()=>{
-      if (!this.isInvalidLogin) {
-        this.redirectIfLoggedIn()
-      }
-    })
-    
-    
+    });
+
+    if (!this.isInvalidLogin) {
+      this.redirectIfLoggedIn();
+    }
+    this.hasAttemptedLogin = true;
   };
 
   logout = () => {
