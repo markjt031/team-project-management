@@ -2,15 +2,9 @@ package com.cooksys.groupfinal.controllers;
 
 import java.util.Set;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cooksys.groupfinal.dtos.*;
+import org.springframework.web.bind.annotation.*;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
-import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.ProjectDto;
-import com.cooksys.groupfinal.dtos.TeamDto;
 import com.cooksys.groupfinal.services.CompanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,23 +17,82 @@ public class CompanyController {
 	private final CompanyService companyService;
 	
 	@GetMapping("/{id}/users")
+    @CrossOrigin(origins="*")
     public Set<FullUserDto> getAllUsers(@PathVariable Long id) {
         return companyService.getAllUsers(id);
     }
 	
 	@GetMapping("/{id}/announcements")
-    public Set<AnnouncementDto> getAllAnnouncements(@PathVariable Long id) {
+    @CrossOrigin(origins="*")
+    public Set<AnnouncementResponseDto> getAllAnnouncements(@PathVariable Long id) {
         return companyService.getAllAnnouncements(id);
     }
 	
 	@GetMapping("/{id}/teams")
+    @CrossOrigin(origins="*")
     public Set<TeamDto> getAllTeams(@PathVariable Long id) {
         return companyService.getAllTeams(id);
     }
 	
-	@GetMapping("/{companyId}/teams/{teamId}/projects") 
+	@GetMapping("/{companyId}/teams/{teamId}/projects")
+    @CrossOrigin(origins="*")
 	public Set<ProjectDto> getAllProjects(@PathVariable Long companyId, @PathVariable Long teamId) {
 		return companyService.getAllProjects(companyId, teamId);
 	}
+
+    @DeleteMapping("/{companyId}")
+    @CrossOrigin(origins="*")
+    public void deleteCompanyById(@PathVariable Long companyId, @RequestBody UserRequestDto userRequestDto){
+       companyService.deleteCompanyById(companyId, userRequestDto);
+    }
+    
+    @GetMapping
+    @CrossOrigin(origins = "*")
+    public Set<CompanyDto> getAllCompanies(){
+    	return companyService.getAllCompanies();
+    }
+
+    @PostMapping
+    @CrossOrigin(origins="*")
+    public CompanyDto createCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+    	return companyService.createCompany(companyRequestDto);
+    }
+    
+    @GetMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyDto getCompanyById(@PathVariable Long companyId) {
+    	return companyService.getCompanyById(companyId);
+    }
+    
+    @PutMapping("/{companyId}")
+    @CrossOrigin(origins = "*")
+    public CompanyResponseDto updateCompany(@PathVariable Long companyId, @RequestBody CompanyRequestDto companyRequestDto) {
+    	return companyService.updateCompany(companyId, companyRequestDto);
+    }
+    
+    @PostMapping("/{companyId}/teams")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto createTeam(@PathVariable Long companyId, @RequestBody TeamRequestDto teamRequestDto) {
+    	return companyService.createTeam(companyId, teamRequestDto);
+    }
+    
+    @PutMapping("/{companyId}/teams/{teamId}")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto updateTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody TeamRequestDto teamRequestDto) {
+    	return companyService.updateTeam(companyId, teamId, teamRequestDto);
+    }
+    
+    @DeleteMapping("{companyId}/teams/{teamId}")
+    @CrossOrigin(origins = "*")
+    public CompanyTeamResponseDto deleteTeam(@PathVariable Long companyId, @PathVariable Long teamId, @RequestBody UserRequestDto userRequestDto) {
+    	return companyService.deleteTeam(companyId, teamId, userRequestDto);
+    }
+
+    @PostMapping("/{companyId}/users")
+    @CrossOrigin(origins="*")
+    public FullUserDto addUserToCompany(@PathVariable Long companyId, @RequestBody UserCompanyRequestDto userCompanyRequestDto) {
+        return companyService.addUserToCompany(companyId, userCompanyRequestDto);
+    }
+
 
 }

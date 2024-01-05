@@ -1,119 +1,431 @@
 {
-	"info": {
-		"_postman_id": "908250d6-1613-4474-99ae-a32909e9c36a",
-		"name": "Assessment 3",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "POST /users/login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"cousingreg\",\n    \"password\": \"mosteligiblebachelor\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/users/login",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/id/users",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/id/announcements",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/announcements",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"announcements"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/id/teams",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/teams",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"teams"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /company/companyId/teams/teamId/projects",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/company/6/teams/11/projects",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"company",
-						"6",
-						"teams",
-						"11",
-						"projects"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+    "info": {
+        "_postman_id": "908250d6-1613-4474-99ae-a32909e9c36a",
+        "name": "Assessment 3",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "POST /users/login",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"cousingreg\",\n    \"password\": \"mosteligiblebachelor\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "localhost:8080/users/login",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        "login"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /company/id/users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/company/6/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "company",
+                        "6",
+                        "users"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": "users"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /users/{userId}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/users/13",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        "13"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /company/id/announcements",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/company/6/announcements",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "company",
+                        "6",
+                        "announcements"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /teams/{teamId}/users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/teams/7/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "teams",
+                        "7",
+                        "users"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /teams/{teamId}/projects",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/teams/7/projects",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "teams",
+                        "7",
+                        "projects"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /teams/{teamId}/projects/{projectId}",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/teams/7/projects/7",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "teams",
+                        "7",
+                        "projects",
+                        "7"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /company/id/teams",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/company/6/teams",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "company",
+                        "6",
+                        "teams"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET /company/companyId/teams/teamId/projects",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:8080/company/6/teams/11/projects",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "company",
+                        "6",
+                        "teams",
+                        "11",
+                        "projects"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "POST /users/register",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"credentials\": {\n    \"username\": \"newUser123\",\n    \"password\": \"password123\"\n  },\n  \"profile\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"johndoe@example.com\",\n    \"phone\": \"123-456-7890\"\n  },\n  \"admin\": false\n}"
+                },
+                "url": {
+                    "raw": "localhost:8080/users/register",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users/register"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "PUT /users/update/id",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"credentials\": {\n        \"username\": \"cousingreg\",\n        \"password\": \"mosteligiblebachelor\"\n    },\n    \"profile\": {\n        \"email\": \"newemail@example.com\",\n        \"firstName\": \"Geralt\",\n        \"lastName\": \"of Rivia\",\n        \"phone\": \"+1234567890\"\n    }\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/users/update/1",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["users", "update", "2"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "DELETE /teams/{teamId}/users/{userId}",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"credentials\": {\n    \"username\": \"newUser123\",\n    \"password\": \"password123\"\n  },\n  \"admin\": true\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/teams/{teamId}/users/{userId}",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "2", "users", "2"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "DELETE /teams/{teamId}/projects/{projectId}",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8080/teams/2/projects/2",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "2", "projects", "2"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "DELETE /users/delete/id",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"credentials\": {\n    \"username\": \"newUser123\",\n    \"password\": \"password123\"\n  },\n  \"admin\": true\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/users/delete/2",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["users", "delete", "2"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "POST /announcements",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"authorId\": 9,\n  \"companyId\": 1,\n  \"title\": \"New Office Opening\",\n  \"message\": \"We are excited to announce the opening of our new office!\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/announcements",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["announcements"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "POST /teams/7/users",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"admin\": {\n    \"credentials\": {\n      \"username\": \"thisismycompany\",\n      \"password\": \"getyourowncompany\"\n    },\n    \"profile\": {\n      \"firstName\": \"Logan\",\n      \"lastName\": \"Roy\",\n      \"email\": \"admin@example.com\",\n      \"phone\": \"123-456-7890\"\n    },\n    \"admin\": true\n  },\n  \"newTeammate\": {\n    \"id\": 8, \n    \"profile\": {\n      \"firstName\": \"New\",\n      \"lastName\": \"Teammate\",\n      \"email\": \"new.teammate@example.com\",\n      \"phone\": \"098-765-4321\"\n    },\n    \"admin\": false,\n    \"active\": true,\n    \"status\": \"active\"\n  }\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/team/7/users",
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "7", "users"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "POST /teams/7projects",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"projectDto\": {\n    \"name\": \"A New Project To Add\",\n    \"description\": \"Description of the new project\",\n    \"active\": true,\n    \"team\": {\n      \"id\": 7, \n      \"name\": \"Team Name\"\n    }\n  },\n  \"admin\": {\n    \"credentials\": {\n      \"username\": \"thisismycompany\", \n      \"password\": \"getyourowncompany\"\n    },\n    \"profile\": {\n      \"firstName\": \"Admin\",\n      \"lastName\": \"User\",\n      \"email\": \"admin@example.com\",\n      \"phone\": \"123-456-7890\"\n    },\n    \"admin\": true\n  }\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8080/teams/7/projects", 
+                    "host": ["localhost"],
+                    "port": "8080",
+                    "path": ["teams", "7", "projects"] 
+                }
+            },
+            "response": []
+        }
+        
+        
+    ]
 }

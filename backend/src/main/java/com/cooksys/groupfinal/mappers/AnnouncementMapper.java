@@ -2,16 +2,21 @@ package com.cooksys.groupfinal.mappers;
 
 import java.util.Set;
 
+import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
+import com.cooksys.groupfinal.dtos.AnnouncementResponseDto;
 import org.mapstruct.Mapper;
 
-import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.entities.Announcement;
 
 @Mapper(componentModel = "spring", uses = { BasicUserMapper.class })
 public interface AnnouncementMapper {
-	
-	AnnouncementDto entityToDto(Announcement announcement);
 
-  Set<AnnouncementDto> entitiesToDtos(Set<Announcement> announcement);
+    AnnouncementResponseDto entityToResponseDto(Announcement announcement);
+
+  Set<AnnouncementResponseDto> entitiesToResponseDtos(Set<Announcement> announcement);
+
+
+
+  Announcement requestDtoToEntity(AnnouncementRequestDto announcementRequestDto);
     
 }

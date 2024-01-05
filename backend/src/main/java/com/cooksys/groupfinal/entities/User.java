@@ -3,13 +3,14 @@ package com.cooksys.groupfinal.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,7 +46,7 @@ public class User {
 	@EqualsAndHashCode.Exclude
 	private Set<Company> companies = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "teammates")
+	@ManyToMany(fetch = FetchType.EAGER,mappedBy = "teammates")
 	@EqualsAndHashCode.Exclude
 	private Set<Team> teams = new HashSet<>();
 

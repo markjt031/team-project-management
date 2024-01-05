@@ -1,9 +1,10 @@
 package com.cooksys.groupfinal.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Project {
 	
 	private boolean active;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Team team;
 
 }
