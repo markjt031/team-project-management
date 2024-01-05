@@ -29,9 +29,10 @@ export class AddProjectModalComponent {
     this.userService.currentUser.subscribe((user: User)=>{
       this.currentUser=user
     })
-    this.userService.currentUserCredentials.subscribe((credentials : Credentials)=>{
-      this.credentials=credentials
-    })
+    const credentials = localStorage.getItem('credentials')
+    if (credentials){
+      this.credentials=(JSON.parse(credentials))
+    }
   }
   onModalClose(){
     this.close.emit()

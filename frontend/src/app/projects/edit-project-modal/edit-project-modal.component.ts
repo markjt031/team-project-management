@@ -42,9 +42,10 @@ export class EditProjectModalComponent {
     this.userService.currentUser.subscribe((user)=>{
       this.currentUser=user
     })
-    this.userService.currentUserCredentials.subscribe((credentials)=>{
-      this.credentials=credentials
-    })
+    const credentials = localStorage.getItem('credentials')
+    if (credentials){
+      this.credentials=(JSON.parse(credentials))
+    }
     this.initializeFormValues()
   }
   

@@ -41,9 +41,10 @@ export class AddTeamModalComponent {
     this.userService.currentUser.subscribe((user: User)=>{
       this.currentUser=user
     })
-    this.userService.currentUserCredentials.subscribe((credentials : Credentials)=>{
-      this.credentials=credentials
-    })
+    const credentials = localStorage.getItem('credentials')
+    if (credentials){
+      this.credentials=(JSON.parse(credentials))
+    }
     this.companyService.currentCompany.subscribe((company)=>{
       this.company=company
     })
