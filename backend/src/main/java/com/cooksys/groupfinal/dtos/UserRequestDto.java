@@ -11,4 +11,6 @@ public class UserRequestDto {
 
     private ProfileDto profile;
 
+    private boolean admin;
+
 }
