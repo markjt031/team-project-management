@@ -121,16 +121,15 @@
       stroke-linecap="round"
     />
   </svg>
-</div>
 <div
-  class="menu"
+  class="menu-fullscreen"
   [style]="{
     top: open ? '0px' : isUserAdmin ? '-450px' : '-300px',
     height: isUserAdmin ? '450px' : '300px'
-  }"
+  }" 
 >
   <div class="menu-option">
-    <button routerLink="/"><h1>Home</h1></button>
+    <button routerLink="/announcements"><h1>Home</h1></button>
   </div>
   <div *ngIf="isUserAdmin" class="menu-option">
     <button routerLink="/company"><h1>Company</h1></button>
@@ -146,3 +145,30 @@
   </div>
 </div>
 <div *ngIf="open" class="click-off" (click)="menuClick()"></div>
+</div>
+<div
+  class="menu"
+  [style]="{
+    top: open ? '0px' : isUserAdmin ? '-450px' : '-300px',
+    height: isUserAdmin ? '450px' : '300px'
+  }"
+>
+  <div class="menu-option">
+    <button routerLink="/announcements"><h1>Home</h1></button>
+  </div>
+  <div *ngIf="isUserAdmin" class="menu-option">
+    <button routerLink="/company"><h1>Company</h1></button>
+  </div>
+  <div class="menu-option">
+    <button routerLink="/teams"><h1>Teams</h1></button>
+  </div>
+  <div *ngIf="isUserAdmin" class="menu-option">
+    <button routerLink="/users"><h1>Users</h1></button>
+  </div>
+  <div class="menu-option">
+    <button (click)="logout()"><h1>Logout</h1></button>
+  </div>
+</div>
+
+
+  

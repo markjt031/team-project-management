@@ -8,17 +8,15 @@
     <div class="table">
         <div class="table-row header-row">
             <h1>Name</h1>
-            <h1>Email</h1>
-            <h1>Team</h1> 
+            <h1>Email</h1> 
             <h1></h1>
             <h1>Active</h1>
             <h1>Admin</h1>
             <h1>Status</h1>
         </div>
         <div class="table-row data-row" *ngFor="let user of data">
-            <p class="name-col">{{user.name}}</p>
-            <p class="email">{{user.email}}</p>
-            <p>{{user.team}}</p>
+            <p class="name-col">{{user.profile.firstName}} {{user.profile.lastName}}</p>
+            <p class="email">{{user.profile.email}}</p>
             <p></p>
             <p [class]="user.active ? 'affirmative': 'negative'">{{user.active ? 'YES': 'NO'}}</p>
             <p [class]="user.admin ? 'affirmative': 'negative'">{{user.admin ? 'YES': 'NO'}}</p>
@@ -40,8 +38,8 @@
             <br>
             <input class="text-input email-input" placeholder="email" formControlName="email">
             <br>
-            <input class="text-input" placeholder="password" formControlName="password">
-            <input class="text-input" placeholder="confirm password" formControlName="confirmPassword">
+            <input class="text-input" type="password" placeholder="password" formControlName="password">
+            <input class="text-input" type="password" placeholder="confirm password" formControlName="confirmPassword">
             <br>
             <br>
             <br>
