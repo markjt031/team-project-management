@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class TeamRequestDto {
     
-    private String name;
-    
-    private String description;
+    private NewTeamRequestDto team;
     
     private UserRequestDto validation; 
 }
