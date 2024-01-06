@@ -72,8 +72,8 @@ public class CompanyController {
     
     @PostMapping("/{companyId}/teams")
     @CrossOrigin(origins = "*")
-    public CompanyTeamResponseDto createTeam(@PathVariable Long companyId, @RequestBody TeamRequestDto teamRequestDto) {
-    	return companyService.createTeam(companyId, teamRequestDto);
+    public CompanyTeamResponseDto createTeam(@PathVariable Long companyId, @RequestBody TeamRequestDto teamDto) {
+    	return companyService.createTeam(companyId, teamDto);
     }
     
     @PutMapping("/{companyId}/teams/{teamId}")
