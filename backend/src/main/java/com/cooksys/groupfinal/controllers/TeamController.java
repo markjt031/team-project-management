@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/teams")
 @RequiredArgsConstructor
@@ -18,6 +18,11 @@ public class TeamController {
 	@GetMapping("/{teamId}/users")
 	public Set<FullUserDto> getTeamUsers(@PathVariable Long teamId) {
 		return teamService.getTeamUsers(teamId);
+	}
+
+	@GetMapping("/{teamId}")
+	public TeamDto getTeam(@PathVariable Long teamId){
+		return teamService.getTeam(teamId);
 	}
 
 	@GetMapping("/{teamId}/projects")
