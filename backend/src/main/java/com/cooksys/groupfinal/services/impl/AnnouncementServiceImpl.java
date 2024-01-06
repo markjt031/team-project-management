@@ -6,6 +6,7 @@ import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.User;
+import com.cooksys.groupfinal.exceptions.BadRequestException;
 import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.AnnouncementMapper;
 import com.cooksys.groupfinal.repositories.AnnouncementRepository;
@@ -33,6 +34,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public AnnouncementResponseDto createAnnouncement(AnnouncementRequestDto announcementRequestDto) {
+        if (announcementRequestDto==null ||announcementRequestDto.getAuthorId()==null || announcementRequestDto.getCompanyId()==null || announcementRequestDto.getMessage()==null || announcementRequestDto.getTitle()==null){
+            throw new BadRequestException("please proved announcement title and message, company id, and posting user");
+        }
         User requestingUser = authorizationService.userIdIsAdmin(announcementRequestDto.getAuthorId());
         Optional<Company> requestedCompany = companyRepository.findById(announcementRequestDto.getCompanyId());
         if(requestedCompany.isEmpty()){
@@ -71,6 +75,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public AnnouncementResponseDto updateAnnouncementById(Long announcementId, UserRequestDto userRequestDto) {
+        if (userRequestDto==null || userRequestDto.getCredentials()==null || userRequestDto.getProfile()==null){
+            throw new BadRequestException("please provide credentials");
+        }
         User requestingUser = authorizationService.userIsAdmin(userRequestDto);
 
         Announcement announcementToUpdate = announcementRepository.findById(announcementId)
