@@ -1,7 +1,6 @@
 package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.*;
-import com.cooksys.groupfinal.dtos.ProjectDto;
 import com.cooksys.groupfinal.entities.Project;
 
 import com.cooksys.groupfinal.entities.Team;
@@ -70,6 +69,7 @@ public class TeamServiceImpl implements TeamService {
                 }
             }
         }
+        else throw new NotFoundException("The team with this id was not found");
         return null;
     }
 
@@ -90,11 +90,14 @@ public class TeamServiceImpl implements TeamService {
 
             return fullUserMapper.entityToFullUserDto(user);
         }
-        return null;
+        else throw new NotFoundException("The team or user was not found");
     }
 
     @Override
     public ProjectDto updateProjectById(Long teamId, Long projectId, ProjectRequestDto projectRequestDto) {
+        if (projectRequestDto==null || projectRequestDto.getAdmin()==null || projectRequestDto.getProjectDto()==null){
+            throw new BadRequestException("Provide user credentials and a project");
+        }
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new NotFoundException("Team with ID " + teamId + " not found."));
 
@@ -140,13 +143,17 @@ public class TeamServiceImpl implements TeamService {
 
                 return projectMapper.entityToDto(projectToRemove);
             }
+            else throw new NotFoundException("The project requested was not found");
         }
-        return null;
+        else throw new NotFoundException("The team requested was not found.");
     }
 
     @Transactional
     @Override
     public TeamDto addUserToTeam(UserTeamRequestDto userTeamRequestDto, Long teamId) {
+        if (userTeamRequestDto==null || userTeamRequestDto.getAdmin()==null || userTeamRequestDto.getNewTeammate()==null){
+            throw new BadRequestException("Must provide validation and new teammate");
+        }
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new NotFoundException("Team by this ID can't be found."));
 
@@ -177,6 +184,13 @@ public class TeamServiceImpl implements TeamService {
         );
         newProject.setTeam(teamToUpdate.get());
         return projectMapper.entityToDto(projectRepository.saveAndFlush(newProject));
+    }
+
+    @Override
+    public TeamDto getTeam(Long teamId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new NotFoundException("Team by this ID can't be found."));
+        return teamMapper.entityToDto(team);
     }
 
 }
