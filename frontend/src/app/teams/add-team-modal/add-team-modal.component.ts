@@ -98,8 +98,11 @@ export class AddTeamModalComponent {
     if (this.formData.valid && this.currentUser){
       this.isError=false
       let team={
-        name: this.formData.controls['name'].value,
-        description: this.formData.controls['description'].value,
+        team:{
+          name: this.formData.controls['name'].value,
+          description: this.formData.controls['description'].value,
+          teammates: this.selectedOptions,
+      },
         validation: {
           credentials: this.credentials,
           profile: this.currentUser.profile,
@@ -114,10 +117,8 @@ export class AddTeamModalComponent {
       //emit events to parent
       this.close.emit()
 
-      //reload page without a window reload
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigateByUrl('/teams')
-      });
+      //reload
+      window.location.reload()
     }
     else{
       this.isError=true;

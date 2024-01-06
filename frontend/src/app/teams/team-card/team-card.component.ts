@@ -44,11 +44,7 @@ getProjects=async()=>{
 } 
 navigateToProjects(){
   if (this.company){
-    this.router.navigate(['teams', this.team.id, 'projects'], {
-      state: {
-        team: this.team,
-      }
-    })
+    this.router.navigate(['teams', this.team.id, 'projects'])
   }
 }
 }
