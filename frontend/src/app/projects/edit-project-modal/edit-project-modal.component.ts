@@ -50,7 +50,6 @@ export class EditProjectModalComponent {
   }
   
   initializeFormValues() {
-    console.log("here")
     if (this.project) {
       this.formData.patchValue({
         name: this.project.name,
@@ -104,7 +103,6 @@ export class EditProjectModalComponent {
         }
       }
       console.log(project)
-      //add code to submit project to api
       this.updateProject(project, this.team, this.project.id).then(()=>{
         this.close.emit()
       })

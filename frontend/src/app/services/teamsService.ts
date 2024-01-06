@@ -13,6 +13,12 @@ import { Credentials, User, Team, BasicUser } from "../models/";
 
       currentTeamList=this.teamList.asObservable()
 
+      private currentTeamSubject=new BehaviorSubject<Team | undefined>(undefined)
+      currentTeam=this.currentTeamSubject.asObservable()
+
+      updateCurrentTeam(team: Team){
+        this.currentTeamSubject.next(team)
+      }
       updateTeam(teams: Team[] | Observable<Team[]>){
         if (teams instanceof Observable){
           teams.subscribe(updatedTeams=>{
@@ -80,6 +86,15 @@ import { Credentials, User, Team, BasicUser } from "../models/";
         })
         }
       }
+      getTeamById = async (id: number)=>{
+        try{
+          let team=await fetchData(`teams/${id}`)
+          this.updateCurrentTeam(team)
+        }
+        catch(error){
+          console.log(error)
+        }
+      }
 
       createTeam = async (team: any, companyId: number, selectedOptions: BasicUser[], currentUser: User, credentials: Credentials) => {
         try {
@@ -93,20 +108,6 @@ import { Credentials, User, Team, BasicUser } from "../models/";
           }
       
         const createdTeam = await fetchData(`company/${companyId}/teams`, options)
-      
-        if (createdTeam && createdTeam.id) {
-            // Individually add all the team mates
-            for (let teammate of selectedOptions) {
-              await this.postTeammate(teammate, currentUser, credentials, createdTeam.id)
-            }
-      
-            // Fetch teams and update
-            const teams = await this.fetchTeams(companyId, currentUser)
-            this.updateTeam(teams);
-    
-          } else {
-            console.error('Error creating team: Team ID is undefined')
-          }
         } catch (error) {
           console.error('Error creating team:', error)
         } 

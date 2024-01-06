@@ -6,6 +6,7 @@ import { User, Project, Team, Company } from '../models/'
 import { UserService } from '../user.service'
 import { CompanyService } from '../company.service'
 import { ProjectService } from '../services/projectService'
+import { TeamService } from '../services/teamsService'
 
 @Component({
   selector: 'app-projects',
@@ -27,7 +28,8 @@ export class ProjectsComponent {
     private location: LocationStrategy,
     private userService: UserService,
     private projectService: ProjectService,
-    private companyService: CompanyService){}
+    private companyService: CompanyService,
+    private teamService: TeamService){}
 
 
   ngOnInit(){
@@ -37,20 +39,12 @@ export class ProjectsComponent {
         this.router.navigateByUrl('login')
       }
     })
-    const state= this.location.getState()
-    if (state && typeof state=== 'object'){
-      //this can be replaced if a get team by id endpoint is implemented
-      //data won't persist on refresh until I can remove this state object
-      // if ('name' in state && typeof state.name==='string'){
-      //   this.name=state.name
-      // }
-      if ('team' in state && typeof state.team==='object'){
-        this.team=state.team
-      }
-    }
+    
     this.route.queryParams.subscribe(params => {
       this.id = this.route.snapshot.params['id']
     })
+    this.teamService.getTeamById(this.id)
+    this.teamService.currentTeam.subscribe((team)=>this.team=team)
     this.projectService.currentProjectsList.subscribe((projects)=>this.projects=projects)
     this.companyService.currentCompany.subscribe((company)=>this.company=company)
     this.updateProjectsList.subscribe(() => {
@@ -62,5 +56,8 @@ export class ProjectsComponent {
   }
   getProjects=async()=>{
     this.projectService.getProjects(this.team.id)
+  }
+  getTeam=async()=>{
+    this.teamService.getTeamById(this.id)
   }
 }
