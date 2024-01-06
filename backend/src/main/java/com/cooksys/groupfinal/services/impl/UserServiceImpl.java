@@ -81,6 +81,9 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("User request data is incomplete.");
         }
         User user = fullUserMapper.requestDtoToEntity(userRequestDto);
+		if (userRepository.findByCredentialsUsername(user.getCredentials().getUsername()).isPresent() ||userRepository.findByProfileEmail(user.getProfile().getEmail()).isPresent() ){
+			throw new BadRequestException("user with specified username or password already exists");
+		}
         user.setActive(true);
 		if(userRequestDto.isAdmin()){user.setAdmin(true);}
         User savedUser = userRepository.saveAndFlush(user);
@@ -89,7 +92,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public BasicUserDto deleteUser(Long id, UserRequestDto userRequestDto) {
-		@SuppressWarnings("deprecation")
+		if (userRequestDto==null || userRequestDto.getCredentials()==null || userRequestDto.getProfile()==null){
+			throw new BadRequestException("must provide credentials and profile of requesting user");
+		}
 		User user = userRepository.getById(id);
 		System.out.println(userRequestDto);
 		if (user == null) {
@@ -109,6 +114,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ProfileDto updateUser(UserRequestDto userRequestDto, Long id) {
+		if (userRequestDto==null || userRequestDto.getCredentials()==null || userRequestDto.getProfile()==null){
+			throw new BadRequestException("please provide a user to update");
+		}
+
 		@SuppressWarnings("deprecation")
 		User foundUser = userRepository.getById(id);
 		
@@ -146,7 +155,7 @@ public class UserServiceImpl implements UserService {
 			User user = userOptional.get();
 			return fullUserMapper.entityToFullUserDto(user).getProfile();
 		} else {
-			return null;
+			throw new NotFoundException("User not found");
 		}
 	}
 
