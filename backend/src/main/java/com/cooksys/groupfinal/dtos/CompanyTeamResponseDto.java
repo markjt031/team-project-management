@@ -13,6 +13,8 @@ public class CompanyTeamResponseDto {
     
     private String name;
     
+    private String description;
 
+    private Set<BasicUserDto> teammates;
     
 }
