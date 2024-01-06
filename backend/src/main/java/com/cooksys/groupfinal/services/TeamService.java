@@ -25,4 +25,7 @@ public interface TeamService {
 
 
     ProjectDto deleteProjectByTeam(Long teamId, Long projectId);
+
+
+    TeamDto getTeam(Long teamId);
 }
