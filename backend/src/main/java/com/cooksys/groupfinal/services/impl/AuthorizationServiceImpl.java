@@ -20,6 +20,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final UserRepository userRepository;
     @Override
     public User userIsAdmin(UserRequestDto userRequestDto) {
+        if (userRequestDto==null){
+            throw new BadRequestException("please provide credentials");
+        }
         User requestingUser = basicUserMapper.requestDtoToEntity(userRequestDto);
         if(requestingUser.getCredentials() == null || requestingUser.getCredentials().getUsername() == null || requestingUser.getCredentials().getPassword() == null){
             throw new BadRequestException("Credentials must be supplied.");
