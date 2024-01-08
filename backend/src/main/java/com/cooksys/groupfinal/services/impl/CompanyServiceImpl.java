@@ -102,12 +102,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	@Transactional
-	public void deleteCompanyById(Long companyId, UserRequestDto userRequestDto) {
-		if (userRequestDto==null || userRequestDto.getCredentials()==null|| userRequestDto.getProfile()==null){
-			throw new BadRequestException("Pleas provide user credentials");
-		}
+	public void deleteCompanyById(Long companyId) {
+		
 		Company companyToDelete = findCompany(companyId);
-		User requestingUser = authorizationService.userIsAdmin(userRequestDto);
 		announcementRepository.deleteAnnouncementsByCompanyId(companyId);
 		List<Long> teamIds = companyToDelete.getTeams().stream()
 				.map(Team::getId)
@@ -130,14 +127,10 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyDto createCompany(CompanyRequestDto companyRequestDto) {
-		if (companyRequestDto==null || companyRequestDto.getValidation().getCredentials()==null || companyRequestDto.getValidation().getProfile()==null || companyRequestDto.getName()==null || companyRequestDto.getDescription()==null){
-			throw new BadRequestException("please provide credentials and company name and description");
+		if (companyRequestDto==null){
+			throw new BadRequestException("The company request is null");
 		}
 		Company newCompany = companyMapper.requestDtoToEntity(companyRequestDto);
-		User user = authorizationService.userIsAdmin(companyRequestDto.getValidation());
-		if(!user.isAdmin()){
-			throw new NotAuthorizedException("Restricted action, contact administraor.");
-		}
 		Company company = companyRepository.saveAndFlush(newCompany);
 		return companyMapper.entityToDto(company);
 		
@@ -151,15 +144,12 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyResponseDto updateCompany(Long companyId, CompanyRequestDto companyRequestDto) {
-		if (companyRequestDto==null || companyRequestDto.getValidation()==null || companyRequestDto.getValidation().getCredentials()==null || companyRequestDto.getValidation().getProfile()==null){
-			throw new BadRequestException("Please proved credentials");
+		if (companyRequestDto==null){
+			throw new BadRequestException("Please provide a company to update");
 		}
 		Company company = findCompany(companyId);
 		Company updateCompany = companyMapper.requestDtoToEntity(companyRequestDto);
-		User user = authorizationService.userIsAdmin(companyRequestDto.getValidation());
-		if(!user.isAdmin()){
-			throw new NotAuthorizedException("Restricted action, contact administraor.");
-		}
+		
 		company.setName(updateCompany.getName());
 		company.setDescription(updateCompany.getDescription());
 		return companyMapper.entityResponseToDto(companyRepository.saveAndFlush(company));
@@ -167,15 +157,10 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyTeamResponseDto createTeam(Long companyId, TeamRequestDto teamRequestDto) {
-		if (teamRequestDto.getValidation()==null || teamRequestDto.getValidation().getCredentials()==null || teamRequestDto.getValidation().getProfile()==null || teamRequestDto.getTeam()==null){
-			throw new BadRequestException("please provide credentials and a team to add");
+		if (teamRequestDto.getTeam()==null){
+			throw new BadRequestException("Please provide a team to add");
 		}
 	    Company company = findCompany(companyId);
-	    User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
-	    
-	    if (!user.isAdmin()) {
-	        throw new NotAuthorizedException("Restricted action, contact administrator.");
-	    }
 	    Team newTeam = teamMapper.dtoToEntity(teamRequestDto.getTeam());
 	    newTeam.setCompany(company);
 		
@@ -196,7 +181,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public CompanyTeamResponseDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto) {
+	public TeamDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto) {
 		Company company = findCompany(companyId);
 		Team team = findTeam(teamId);
 		Team newTeam = teamMapper.requestToEntityDto(teamRequestDto);
@@ -205,31 +190,28 @@ public class CompanyServiceImpl implements CompanyService {
 			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
 		}
 		
-		User user = authorizationService.userIsAdmin(teamRequestDto.getValidation());
-		if(!user.isAdmin()){
-			throw new NotAuthorizedException("Restricted action, contact administraor.");
-		}
-		
 		team.setName(newTeam.getName());
 		team.setDescription(newTeam.getDescription());
+
+		for (User teamUser: newTeam.getTeammates() ){
+			System.out.println(teamUser.getProfile());
+			userRepository.findById(teamUser.getId())
+			.orElseThrow(()->new NotFoundException("User not found"));
+		}
+
 		teamRepository.saveAndFlush(team);
 		
-		return companyMapper.entityTeamResponseDto(company);
+		return teamMapper.entityToDto(team);
 		
 	}
 
 	@Override
-	public CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId, UserRequestDto userRequestDto) {
+	public CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId) {
 		Company company = findCompany(companyId);
 		Team team = findTeam(teamId);
 
 		if (!company.getTeams().contains(team)) {
 			throw new NotFoundException("A team with id " + teamId + " does not exist at company with id " + companyId + ".");
-		}
-		
-		User user = authorizationService.userIsAdmin(userRequestDto);
-		if(!user.isAdmin()){
-			throw new NotAuthorizedException("Restricted action, contact administraor.");
 		}
 		
 		teamRepository.deleteById(teamId);
@@ -239,14 +221,11 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	@Transactional
 	public FullUserDto addUserToCompany(Long companyId, UserCompanyRequestDto userCompanyRequestDto) {
-		if (userCompanyRequestDto==null || userCompanyRequestDto.getAdmin()==null || userCompanyRequestDto.getAdmin().getCredentials()==null || userCompanyRequestDto.getAdmin().getProfile()==null ||userCompanyRequestDto.getNewEmployeeId()==null){
+		if (userCompanyRequestDto==null || userCompanyRequestDto.getNewEmployeeId()==null){
 			throw new BadRequestException("Please provide credentials and a user to add");
 		}
 		// Find the company using the provided ID
 		Company company = findCompany(companyId);
-
-		authorizationService.userIsAdmin(userCompanyRequestDto.getAdmin());
-
 		Long employeeId = userCompanyRequestDto.getNewEmployeeId();
 		Optional<User> newEmployee = userRepository.findById(employeeId);
 		if(newEmployee.isEmpty()){throw new NotFoundException("Employee with this id not found.");}

@@ -4,11 +4,13 @@ import com.cooksys.groupfinal.dtos.*;
 
 import java.util.Set;
 
+import org.springframework.http.ResponseEntity;
+
 public interface UserService {
 
     Set<FullUserDto> getAllUsers();
 
-	FullUserDto login(CredentialsDto credentialsDto);
+	ResponseEntity<?> login(CredentialsDto credentialsDto);
 
     FullUserDto create(UserRequestDto userRequestDto);
 

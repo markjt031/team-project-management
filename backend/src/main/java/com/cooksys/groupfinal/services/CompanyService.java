@@ -16,7 +16,7 @@ public interface CompanyService {
 
 	Set<ProjectDto> getAllProjects(Long companyId, Long teamId);
 
-    void deleteCompanyById(Long companyId, UserRequestDto userRequestDto);
+    void deleteCompanyById(Long companyId);
 
 	Set<CompanyDto> getAllCompanies();
 
@@ -28,9 +28,9 @@ public interface CompanyService {
 
 	CompanyTeamResponseDto createTeam(Long companyId, TeamRequestDto teamRequestDto);
 
-	CompanyTeamResponseDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto);
+	TeamDto updateTeam(Long companyId, Long teamId, TeamRequestDto teamRequestDto);
 
-	CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId, UserRequestDto userRequestDto);
+	CompanyTeamResponseDto deleteTeam(Long companyId, Long teamId);
 
 	@Transactional
 	FullUserDto addUserToCompany(Long companyId, UserCompanyRequestDto userCompanyRequestDto);

@@ -95,8 +95,8 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ProjectDto updateProjectById(Long teamId, Long projectId, ProjectRequestDto projectRequestDto) {
-        if (projectRequestDto==null || projectRequestDto.getAdmin()==null || projectRequestDto.getProjectDto()==null){
-            throw new BadRequestException("Provide user credentials and a project");
+        if (projectRequestDto==null || projectRequestDto.getProjectDto()==null){
+            throw new BadRequestException("Provide a project to update");
         }
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new NotFoundException("Team with ID " + teamId + " not found."));
@@ -105,8 +105,6 @@ public class TeamServiceImpl implements TeamService {
                 .filter(project -> project.getId().equals(projectId))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Project with ID " + projectId + " not found in team " + teamId));
-
-        authorizationService.userIsAdmin(projectRequestDto.getAdmin());
 
         // Update project details here
         ProjectDto projectDto = projectRequestDto.getProjectDto();
@@ -151,13 +149,11 @@ public class TeamServiceImpl implements TeamService {
     @Transactional
     @Override
     public TeamDto addUserToTeam(UserTeamRequestDto userTeamRequestDto, Long teamId) {
-        if (userTeamRequestDto==null || userTeamRequestDto.getAdmin()==null || userTeamRequestDto.getNewTeammate()==null){
+        if (userTeamRequestDto==null || userTeamRequestDto.getNewTeammate()==null){
             throw new BadRequestException("Must provide validation and new teammate");
         }
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new NotFoundException("Team by this ID can't be found."));
-
-        authorizationService.userIsAdmin(userTeamRequestDto.getAdmin());
 
         // Assuming you have a method to check if the user exists or fetches the user from the database
         User newTeammate = userRepository.findById(userTeamRequestDto.getNewTeammate().getId())
@@ -178,7 +174,6 @@ public class TeamServiceImpl implements TeamService {
         if(teamToUpdate.isEmpty()){
             throw new NotFoundException("Team with this ID can't be found.");
         }
-        authorizationService.userIsAdmin(projectRequestDto.getAdmin());
         Project newProject = projectMapper.DtoToEntity(
                 projectRequestDto.getProjectDto()
         );

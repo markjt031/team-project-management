@@ -2,6 +2,9 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
 import com.cooksys.groupfinal.dtos.AnnouncementResponseDto;
+import com.cooksys.groupfinal.dtos.AnnouncementUpdateDto;
+import com.cooksys.groupfinal.dtos.BasicUserDto;
+import com.cooksys.groupfinal.dtos.UserIdRequestDto;
 import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
@@ -11,6 +14,7 @@ import com.cooksys.groupfinal.exceptions.NotFoundException;
 import com.cooksys.groupfinal.mappers.AnnouncementMapper;
 import com.cooksys.groupfinal.repositories.AnnouncementRepository;
 import com.cooksys.groupfinal.repositories.CompanyRepository;
+import com.cooksys.groupfinal.repositories.UserRepository;
 import com.cooksys.groupfinal.services.AuthorizationService;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +32,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     private final AuthorizationService authorizationService;
     private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
 
     private final AnnouncementRepository announcementRepository;
     private final AnnouncementMapper announcementMapper;
@@ -37,7 +42,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         if (announcementRequestDto==null ||announcementRequestDto.getAuthorId()==null || announcementRequestDto.getCompanyId()==null || announcementRequestDto.getMessage()==null || announcementRequestDto.getTitle()==null){
             throw new BadRequestException("please proved announcement title and message, company id, and posting user");
         }
-        User requestingUser = authorizationService.userIdIsAdmin(announcementRequestDto.getAuthorId());
+        User requestingUser = userRepository.getById(announcementRequestDto.getAuthorId());
         Optional<Company> requestedCompany = companyRepository.findById(announcementRequestDto.getCompanyId());
         if(requestedCompany.isEmpty()){
             throw new NotFoundException("Company with the requested id was not found.");
@@ -52,17 +57,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public AnnouncementResponseDto deleteAnnouncementById(Long announcementId, UserRequestDto userRequestDto) {
+    public AnnouncementResponseDto deleteAnnouncementById(Long announcementId, UserIdRequestDto userId) {
         // Check if the user is an admin
-        User requestingUser = authorizationService.userIsAdmin(userRequestDto);
+        // User requestingUser = authorizationService.userIsAdmin(userRequestDto);
 
+        if (userId==null){
+            throw new BadRequestException("Please provide the requesting user's id");
+        }
         // Fetch the announcement
         Announcement announcementToDelete = announcementRepository.findById(announcementId)
                 .orElseThrow(() -> new NotFoundException("Announcement with ID " + announcementId + " not found."));
 
-        // Check if the requesting user is part of the company of the announcement
-        if (!announcementToDelete.getCompany().getEmployees().contains(requestingUser)) {
-            throw new NotFoundException("User is not part of the company associated with this announcement.");
+        if (announcementToDelete.getAuthor().getId()!=userId.getUserId()){
+            throw new BadRequestException("Attempting to delete post not authored by the requesting user");
         }
 
         // Delete the announcement
@@ -74,18 +81,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public AnnouncementResponseDto updateAnnouncementById(Long announcementId, UserRequestDto userRequestDto) {
-        if (userRequestDto==null || userRequestDto.getCredentials()==null || userRequestDto.getProfile()==null){
-            throw new BadRequestException("please provide credentials");
+    public AnnouncementResponseDto updateAnnouncementById(Long announcementId, AnnouncementRequestDto announcementToUpdate) {
+        //check if dto is null
+        if (announcementToUpdate==null){
+            throw new BadRequestException("The announcement to update is null");
         }
-        User requestingUser = authorizationService.userIsAdmin(userRequestDto);
-
-        Announcement announcementToUpdate = announcementRepository.findById(announcementId)
+        //find the announcement by id
+        Announcement announcement = announcementRepository.findById(announcementId)
                 .orElseThrow(() -> new NotFoundException("Announcement with ID " + announcementId + " not found."));
 
-        if (!announcementToUpdate.getCompany().getEmployees().contains(requestingUser)) {
-            throw new NotFoundException("User is not part of the company associated with this announcement.");
+        //Check if the original post's author matches the author of the request body
+        if (announcement.getAuthor().getId()!=announcementToUpdate.getAuthorId()){
+            throw new BadRequestException("User id provided does not match the post's author");
         }
-        return announcementMapper.entityToResponseDto( announcementRepository.saveAndFlush(announcementToUpdate));
+        return announcementMapper.entityToResponseDto( announcementRepository.saveAndFlush(announcementMapper.requestDtoToEntity(announcementToUpdate)));
     }
 }
