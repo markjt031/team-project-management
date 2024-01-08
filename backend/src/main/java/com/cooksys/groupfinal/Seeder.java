@@ -3,7 +3,9 @@ package com.cooksys.groupfinal;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.cooksys.groupfinal.entities.Announcement;
@@ -30,6 +32,9 @@ public class Seeder implements CommandLineRunner {
   private final ProjectRepository projectRepository;
   private final TeamRepository teamRepository;
   private final UserRepository userRepository;
+  
+  @Autowired
+  PasswordEncoder encoder;
   
   @Override
   public void run(String... args) throws Exception {
@@ -58,7 +63,7 @@ public class Seeder implements CommandLineRunner {
 	  User user1 = new User();
 	  Credentials creds1 = new Credentials();
 	  creds1.setUsername("cousingreg");
-	  creds1.setPassword("mosteligiblebachelor");
+	  creds1.setPassword(encoder.encode("mosteligiblebachelor"));
 	  user1.setCredentials(creds1);
 	  Profile profile1 = new Profile();
 	  profile1.setFirstName("Greg");
@@ -71,7 +76,7 @@ public class Seeder implements CommandLineRunner {
 	  User user2 = new User();
 	  Credentials creds2 = new Credentials();
 	  creds2.setUsername("mrsiobhanroy");
-	  creds2.setPassword("idontwanttogotojail");
+	  creds2.setPassword(encoder.encode("idontwanttogotojail"));
 	  user2.setCredentials(creds2);
 	  Profile profile2 = new Profile();
 	  profile2.setFirstName("Tom");
@@ -84,7 +89,7 @@ public class Seeder implements CommandLineRunner {
 	  User user3 = new User();
 	  Credentials creds3 = new Credentials();
 	  creds3.setUsername("homeboykroy");
-	  creds3.setPassword("ltotheog");
+	  creds3.setPassword(encoder.encode("ltotheog"));
 	  user3.setCredentials(creds3);
 	  Profile profile3 = new Profile();
 	  profile3.setFirstName("Kendall");
@@ -96,7 +101,7 @@ public class Seeder implements CommandLineRunner {
 	  User user4 = new User();
 	  Credentials creds4 = new Credentials();
 	  creds4.setUsername("romulusroy");
-	  creds4.setPassword("iknownothingaboutsoccer");
+	  creds4.setPassword(encoder.encode("iknownothingaboutsoccer"));
 	  user4.setCredentials(creds4);
 	  Profile profile4 = new Profile();
 	  profile4.setFirstName("Roman");
@@ -109,7 +114,7 @@ public class Seeder implements CommandLineRunner {
 	  User user5 = new User();
 	  Credentials creds5 = new Credentials();
 	  creds5.setUsername("pinky");
-	  creds5.setPassword("futureceoofwaystar");
+	  creds5.setPassword(encoder.encode("futureceoofwaystar"));
 	  user5.setCredentials(creds5);
 	  Profile profile5 = new Profile();
 	  profile5.setFirstName("Siobhan");
@@ -122,7 +127,7 @@ public class Seeder implements CommandLineRunner {
 	  User user6 = new User();
 	  Credentials creds6 = new Credentials();
 	  creds6.setUsername("thisismycompany");
-	  creds6.setPassword("getyourowncompany");
+	  creds6.setPassword(encoder.encode("getyourowncompany"));
 	  user6.setCredentials(creds6);
 	  Profile profile6 = new Profile();
 	  profile6.setFirstName("Logan");
@@ -136,7 +141,7 @@ public class Seeder implements CommandLineRunner {
 	  User user7 = new User();
 	  Credentials creds7 = new Credentials();
 	  creds7.setUsername("iamtheeldestson");
-	  creds7.setPassword("interestedinpoliticsataveryyoungage");
+	  creds7.setPassword(encoder.encode("interestedinpoliticsataveryyoungage"));
 	  user7.setCredentials(creds7);
 	  Profile profile7 = new Profile();
 	  profile7.setFirstName("Connor");
@@ -148,7 +153,7 @@ public class Seeder implements CommandLineRunner {
 	  User user8 = new User();
 	  Credentials creds8 = new Credentials();
 	  creds8.setUsername("marciaroy");
-	  creds8.setPassword("amir");
+	  creds8.setPassword(encoder.encode("amir"));
 	  user8.setCredentials(creds8);
 	  Profile profile8 = new Profile();
 	  profile8.setFirstName("Marcia");
@@ -160,7 +165,7 @@ public class Seeder implements CommandLineRunner {
 	  User user9 = new User();
 	  Credentials creds9 = new Credentials();
 	  creds9.setUsername("temporaryceoofwaystar");
-	  creds9.setPassword("idontgetpaidenoughforthis");
+	  creds9.setPassword(encoder.encode("idontgetpaidenoughforthis"));
 	  user9.setCredentials(creds9);
 	  Profile profile9 = new Profile();
 	  profile9.setFirstName("Gerri");
@@ -174,7 +179,7 @@ public class Seeder implements CommandLineRunner {
 	  User user10 = new User();
 	  Credentials creds10 = new Credentials();
 	  creds10.setUsername("helenaspassword");
-	  creds10.setPassword("helenasusername");
+	  creds10.setPassword(encoder.encode("helenasusername"));
 	  user10.setCredentials(creds10);
 	  Profile profile10 = new Profile();
 	  profile10.setFirstName("Helena");
@@ -187,7 +192,7 @@ public class Seeder implements CommandLineRunner {
 	  User user11 = new User();
 	  Credentials creds11 = new Credentials();
 	  creds11.setUsername("kennysusername");
-	  creds11.setPassword("kennyspassword");
+	  creds11.setPassword(encoder.encode("kennyspassword"));
 	  user11.setCredentials(creds11);
 	  Profile profile11 = new Profile();
 	  profile11.setFirstName("Kenny");
@@ -200,7 +205,7 @@ public class Seeder implements CommandLineRunner {
 	  User user12 = new User();
 	  Credentials creds12 = new Credentials();
 	  creds12.setUsername("willsusername");
-	  creds12.setPassword("willspassword");
+	  creds12.setPassword(encoder.encode("willspassword"));
 	  user12.setCredentials(creds12);
 	  Profile profile12 = new Profile();
 	  profile12.setFirstName("Will");
