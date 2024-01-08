@@ -34,12 +34,21 @@ ngOnInit(){
 }
 
 getProjects=async()=>{
-  if (this.company){
-  let response = await fetchData(`teams/${this.team.id}/projects`)
-    .then((projects)=>{
-      this.projects=projects
-      this.numberOfProjects=this.projects.length
-    })
+  const token = localStorage.getItem('token')
+  if (this.company && token){
+    let parsedToken=JSON.parse(token)
+    let options={
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': parsedToken
+        }
+    }
+    let response = await fetchData(`teams/${this.team.id}/projects`, options)
+      .then((projects)=>{
+        this.projects=projects
+        this.numberOfProjects=this.projects.length
+      })
   }
 } 
 navigateToProjects(){

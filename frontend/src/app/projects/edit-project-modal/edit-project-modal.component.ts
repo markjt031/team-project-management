@@ -22,7 +22,7 @@ export class EditProjectModalComponent {
   @Input() team: Team | undefined = undefined
 
   currentUser: User | undefined = undefined
-  credentials: Credentials | undefined = undefined
+  
   
   isDropdownOpen: boolean= false
   selectOptions=[
@@ -42,10 +42,6 @@ export class EditProjectModalComponent {
     this.userService.currentUser.subscribe((user)=>{
       this.currentUser=user
     })
-    const credentials = localStorage.getItem('credentials')
-    if (credentials){
-      this.credentials=(JSON.parse(credentials))
-    }
     this.initializeFormValues()
   }
   
@@ -70,21 +66,27 @@ export class EditProjectModalComponent {
     this.close.emit()
   }
   updateProject=async(project: any, team: Team, projectId: number)=>{
-      const options = {
-        method: 'PUT',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(project),
-      };
-      try{
-        const updatedTeamProject = await fetchData(`teams/${team.id}/projects/${projectId}`, options);
-        this.project=updatedTeamProject
+      const token=localStorage.getItem('token')
+      if (token){
+        let parsedToken=JSON.parse(token)
+        const options = {
+          method: 'PUT',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': parsedToken
+          },
+          body: JSON.stringify(project),
+        };
+        try{
+          const updatedTeamProject = await fetchData(`teams/${team.id}/projects/${projectId}`, options);
+          this.project=updatedTeamProject
+        }
+        catch (error) {
+          console.error('Error updating team:', error);
+        } 
       }
-      catch (error) {
-        console.error('Error updating team:', error);
-      } 
+      
     }
   onSubmit(){
     if (this.formData.valid && this.selectedOption.value!=undefined && this.currentUser && this.project && this.team && this.project.id){
@@ -95,11 +97,6 @@ export class EditProjectModalComponent {
           description: this.formData.controls['description'].value,
           active: this.selectedOption.value,
           team: this.project.team
-        },
-        admin: {
-          credentials: this.credentials,
-          profile: this.currentUser.profile,
-          admin: this.currentUser.admin
         }
       }
       console.log(project)

@@ -15,9 +15,22 @@ export class ProjectService{
     }
 
     getProjects=async(teamId: number)=>{
-    try {
-      const projects = await fetchData(`teams/${teamId}/projects`)
-      this.updateProjects(projects)
+      console.log("getProjects")
+      try {
+      const token = localStorage.getItem('token')
+      if (token){
+        let parsedToken=JSON.parse(token)
+        const options = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': parsedToken
+            }
+          }
+        const projects = await fetchData(`teams/${teamId}/projects`, options).then((projects)=>{
+          this.updateProjects(projects)
+        })
+      }
     } 
     catch (error) {
       console.error('Error fetching projects:', error)

@@ -17,7 +17,7 @@ export class ProjectsComponent {
   @Output() updateProjectsList = new EventEmitter<void>()
   id: number = 0
   projects: Project[]=[]
-  team: any
+  team: Team | undefined= undefined
   company: Company | undefined= undefined
   addModalShown= false
   currentUser: User | undefined = undefined
@@ -39,12 +39,17 @@ export class ProjectsComponent {
         this.router.navigateByUrl('login')
       }
     })
-    
     this.route.queryParams.subscribe(params => {
       this.id = this.route.snapshot.params['id']
     })
     this.teamService.getTeamById(this.id)
-    this.teamService.currentTeam.subscribe((team)=>this.team=team)
+    this.teamService.currentTeam.subscribe((team)=>{
+      console.log(team)
+      this.team=team
+      if (this.team && this.team.id){
+        this.getProjects()
+      }
+    })
     this.projectService.currentProjectsList.subscribe((projects)=>this.projects=projects)
     this.companyService.currentCompany.subscribe((company)=>this.company=company)
     this.updateProjectsList.subscribe(() => {
@@ -55,7 +60,9 @@ export class ProjectsComponent {
     this.addModalShown=!this.addModalShown
   }
   getProjects=async()=>{
-    this.projectService.getProjects(this.team.id)
+    if (this.team && this.team.id){
+      this.projectService.getProjects(this.team.id)
+    }
   }
   getTeam=async()=>{
     this.teamService.getTeamById(this.id)

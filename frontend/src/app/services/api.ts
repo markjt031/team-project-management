@@ -1,5 +1,5 @@
 //root url for fetches from proxy server. Use npm start instead of ng serve to run it
-const rootUrl = 'api/';
+const rootUrl = 'http://localhost:8080/';
 
 const checkStatus = (response: any) => {
   if (response.status >= 200 && response.status < 300) {
@@ -14,6 +14,7 @@ const checkStatus = (response: any) => {
 //auth headers or other options become necessary
 export const fetchData = (endpoint: string, options?: any) => {
   let url = rootUrl + endpoint;
+  console.log(options)
   return fetch(url, options)
     .then(checkStatus)
     .then((response) => response.json());

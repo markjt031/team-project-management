@@ -33,8 +33,17 @@ import { Credentials, User, Team, BasicUser } from "../models/";
       fetchTeams(companyId: number | undefined, currentUser: User | undefined): Observable<Team[]> {
         // Assuming fetchData returns a Promise that resolves to Team[]
         return new Observable<Team[]>((observer) => {
-          console.log("team service is fetching")
-          fetchData(`company/${companyId}/teams`)
+          const token = localStorage.getItem('token')
+          if (token){
+            let parsedToken=JSON.parse(token)
+            const options = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': parsedToken
+                }
+              }
+            fetchData(`company/${companyId}/teams`, options)
             .then((teams) => {
               if (currentUser && currentUser.admin){
                 observer.next(teams)
@@ -61,6 +70,7 @@ import { Credentials, User, Team, BasicUser } from "../models/";
             .catch((error) => {
               observer.error(error)
             });
+          }
         });
       }
 
@@ -88,26 +98,44 @@ import { Credentials, User, Team, BasicUser } from "../models/";
       }
       getTeamById = async (id: number)=>{
         try{
-          let team=await fetchData(`teams/${id}`)
-          this.updateCurrentTeam(team)
+          const token=localStorage.getItem('token')
+          if (token){
+            let parsedToken=JSON.parse(token)
+            const options = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': parsedToken
+                }
+              }
+            let team=await fetchData(`teams/${id}`, options).then((team)=>{
+              this.updateCurrentTeam(team)
+            })
+          }
+          
         }
         catch(error){
           console.log(error)
         }
       }
 
-      createTeam = async (team: any, companyId: number, selectedOptions: BasicUser[], currentUser: User, credentials: Credentials) => {
+      createTeam = async (team: any, companyId: number) => {
         try {
-          const options = {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(team),
+          const token = localStorage.getItem('token')
+          if (token){
+            let parsedToken=JSON.parse(token)
+            const options = {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': parsedToken
+              },
+              body: JSON.stringify(team),
+            }
+        
+          const createdTeam = await fetchData(`company/${companyId}/teams`, options)
           }
-      
-        const createdTeam = await fetchData(`company/${companyId}/teams`, options)
         } catch (error) {
           console.error('Error creating team:', error)
         } 

@@ -16,7 +16,7 @@ export class AddProjectModalComponent {
   @Input() team: Team | undefined = undefined
 
   currentUser: User | undefined = undefined
-  credentials: Credentials | undefined = undefined
+  
 
   formData: FormGroup = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
@@ -30,28 +30,30 @@ export class AddProjectModalComponent {
       this.currentUser=user
     })
     const credentials = localStorage.getItem('credentials')
-    if (credentials){
-      this.credentials=(JSON.parse(credentials))
-    }
   }
   onModalClose(){
     this.close.emit()
   }
   postProject=async(project: any)=>{
-    const options = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(project),
-    };
-    try{
-      const createdProject = await fetchData(`teams/${this.team?.id}/projects`, options);
+    const token=localStorage.getItem('token')
+    if (token){
+      let parsedToken=JSON.parse(token)
+      const options = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': parsedToken
+        },
+        body: JSON.stringify(project),
+      };
+      try{
+        const createdProject = await fetchData(`teams/${this.team?.id}/projects`, options);
+      }
+      catch (error) {
+        console.error('Error creating team:', error);
+      } 
     }
-    catch (error) {
-      console.error('Error creating team:', error);
-    } 
   }
   onSubmit(){
     if (this.formData.valid && this.currentUser){
@@ -62,11 +64,6 @@ export class AddProjectModalComponent {
           description: this.formData.controls['description'].value,
           active: true,
           team: this.team
-        },
-        admin: {
-          credentials: this.credentials,
-          profile: this.currentUser.profile,
-          admin: this.currentUser.admin
         }
       }
       console.log(project)

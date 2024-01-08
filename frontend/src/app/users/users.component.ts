@@ -38,21 +38,21 @@ export class UsersComponent {
   }
 
   async getData() {
-    let res = await fetch('http://localhost:8080/company/' + this.companyId)
-    let company = await res.json()
-
-    let employeeArr = []
-    // for(const emp of company.employees) {
-    //   employeeArr.push({
-    //     name: emp.profile.firstName + " " + emp.profile.lastName,
-    //     email: emp.profile.email,
-    //     team: this.findTeam(emp.profile.firstName, emp.profile.lastName, company.teams),
-    //     admin: emp.admin,
-    //     active: emp.active,
-    //     status: emp.status
-    //   })
-
+    const token = localStorage.getItem('token')
+    if (token){
+      let parsedToken=JSON.parse(token)
+      const options={
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': parsedToken
+        }
+      }
+      let res = await fetch('http://localhost:8080/company/' + this.companyId, options)
+      let company = await res.json()
       this.data = [...company.employees]
+    }
+    
   }
 
   findTeam(fname: string, lname: string, teamList: any[]) {
@@ -87,64 +87,53 @@ export class UsersComponent {
 
   async handleSubmit() {
     const form = this.userForm.value
-
-    let currentUserCredentials = localStorage.getItem('credentials')
-    if(currentUserCredentials == null) currentUserCredentials = JSON.stringify({username: 'hi', password: 'hi'})
-
-    const userRequestDto = {
-      credentials: { 
-        username: form.firstName.charAt(0) + form.lastName,
-        password: form.password
-      },
-      profile: {
-        firstName: form.firstName,
-        lastName: form.lastName,
-        email: form.email,
-        phone: '0000000000'
-      },
-      admin: this.makeUserAdmin === "YES" ? true : false
-    }
-
-    const currentUserRequestDto = {
-      credentials: JSON.parse(currentUserCredentials),
-      profile: {},
-      admin: false
-    }
-
-    this.userData.currentUser.subscribe(user => {
-      currentUserRequestDto.profile = user.profile
-      currentUserRequestDto.admin = user.admin
-    })
-
-    let res = await fetch('http://localhost:8080/users/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userRequestDto)
-    }) 
-    
-    let jsonres = await res.json()
-    console.log(jsonres)
-
-    setTimeout( async () => {
-      res = await fetch('http://localhost:8080/company/' + this.companyId + '/users', {
+    const token= localStorage.getItem('token')
+    if (token){
+      let parsedToken=JSON.parse(token)
+      const userRequestDto = {
+        credentials: { 
+          username: form.firstName.charAt(0) + form.lastName,
+          password: form.password
+        },
+        profile: {
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: '0000000000'
+        },
+        admin: this.makeUserAdmin === "YES" ? true : false
+      }
+  
+      let res = await fetch('http://localhost:8080/users/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': parsedToken
         },
-        body: JSON.stringify({
-          admin: currentUserRequestDto,
-          newEmployeeId: jsonres.id
+        body: JSON.stringify(userRequestDto)
+      }) 
+      
+      let jsonres = await res.json()
+      setTimeout( async () => {
+        res = await fetch('http://localhost:8080/company/' + this.companyId + '/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': parsedToken
+          },
+          body: JSON.stringify({
+            newEmployeeId: jsonres.id
+          })
         })
-      })
-      let success = await res.json()
-      console.log(success)
-      if(success.id) {
-        this.cardOpen=false
-        window.location.reload()
-      }
-    }, 1000)
+        let success = await res.json()
+        console.log(success)
+        if(success.id) {
+          this.cardOpen=false
+          window.location.reload()
+        }
+      }, 500)
+    }
+    
 
   }
 }

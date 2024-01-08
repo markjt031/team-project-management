@@ -79,8 +79,17 @@ export class AddTeamModalComponent {
 
   //this can be moved to a service
   fetchUsers=async()=>{
-    if (this.company){
-      let response=await fetchData(`company/${this.company.id}/users`)
+    const token = localStorage.getItem('token')
+    if (this.company && token){
+      let parsedToken=JSON.parse(token)
+      const options={
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': parsedToken
+          }
+        }
+      let response=await fetchData(`company/${this.company.id}/users`, options)
       .then((users)=>{
         console.log(users)
         this.availableUserList=users
@@ -102,15 +111,10 @@ export class AddTeamModalComponent {
           name: this.formData.controls['name'].value,
           description: this.formData.controls['description'].value,
           teammates: this.selectedOptions,
-      },
-        validation: {
-          credentials: this.credentials,
-          profile: this.currentUser.profile,
-          admin: this.currentUser.admin
-        }
       }
-      if (this.credentials && this.company && this.company.id){
-        this.teamService.createTeam(team, this.company.id, this.selectedOptions,this.currentUser, this.credentials).then((response)=>{
+      }
+      if (this.company && this.company.id){
+        this.teamService.createTeam(team, this.company.id).then((response)=>{
           this.resetForm()
         })
       }

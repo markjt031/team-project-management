@@ -46,10 +46,19 @@ export class UserService {
         },
         body: JSON.stringify(credentials),
       };
-      const userData: User = await fetchData(`users/login`, options);
-      this.updateUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('credentials', JSON.stringify(credentials));
+      const userData = await fetchData(`users/login`, options);
+      console.log(userData);
+      //The double quotes from the JSON response cause issues with the token
+      let token=`${userData.tokenType} ${userData.accessToken}`;
+      const sanitizedToken = token.replace(/^"(.*)"$/, '$1');
+      let user: User=userData
+      if (userData.roles.includes('ROLE_ADMIN')){
+        user.admin=true;
+      }
+      
+      this.updateUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', JSON.stringify(sanitizedToken));
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +80,7 @@ export class UserService {
       teams: [],
     });
     localStorage.removeItem('user');
-    localStorage.removeItem('credentials')
+    localStorage.removeItem('token')
     this.router.navigate(['/login']);
   };
 }
