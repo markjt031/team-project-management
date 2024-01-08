@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserCompanyRequestDto {
 
-    private UserRequestDto admin;
+    // private UserRequestDto admin;
     private Long newEmployeeId;
 }

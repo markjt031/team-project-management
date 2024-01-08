@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class ProjectRequestDto {
-    private ProjectDto projectDto;
-    // private UserRequestDto admin;
+public class UserIdRequestDto {
+    private Long userId;
 }

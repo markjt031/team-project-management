@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserTeamRequestDto {
 
-    private UserRequestDto admin;
+    // private UserRequestDto admin;
     private BasicUserDto newTeammate;
 }

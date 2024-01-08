@@ -9,5 +9,5 @@ public class TeamRequestDto {
     
     private NewTeamRequestDto team;
     
-    private UserRequestDto validation; 
+    // private UserRequestDto validation; 
 }
