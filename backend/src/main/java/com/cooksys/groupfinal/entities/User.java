@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -37,6 +37,13 @@ public class User {
 	private boolean admin;
 	
 	private String status = "PENDING";
+
+	public User(Credentials credentials, Profile profile, boolean active, boolean admin){
+		this.credentials=credentials;
+		this.profile=profile;
+		this.active=active;
+		this.admin=admin;
+	}
 	
 	@OneToMany(mappedBy = "author")
 	@EqualsAndHashCode.Exclude
