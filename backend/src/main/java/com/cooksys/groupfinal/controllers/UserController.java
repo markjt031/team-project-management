@@ -12,7 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins="http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(origins="*")
 @RequiredArgsConstructor
 public class UserController {
 	

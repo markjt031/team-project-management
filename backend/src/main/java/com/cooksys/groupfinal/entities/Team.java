@@ -37,7 +37,7 @@ public class Team {
 	@EqualsAndHashCode.Exclude
 	private Set<User> teammates = new HashSet<>();
 	
-	@OneToMany(mappedBy = "team",cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "team",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@EqualsAndHashCode.Exclude
 	private Set<Project> projects = new HashSet<>();
 
