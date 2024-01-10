@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
@@ -21,11 +25,14 @@ import com.cooksys.groupfinal.repositories.ProjectRepository;
 import com.cooksys.groupfinal.repositories.TeamRepository;
 import com.cooksys.groupfinal.repositories.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
+@RestController
 @RequiredArgsConstructor
-public class Seeder implements CommandLineRunner {
+@RequestMapping("/api")
+public class Seeder{
 
   private final AnnouncementRepository announcementRepository;
   private final CompanyRepository companyRepository;
@@ -35,9 +42,10 @@ public class Seeder implements CommandLineRunner {
   
   @Autowired
   PasswordEncoder encoder;
-  
-  @Override
-  public void run(String... args) throws Exception {
+
+  @Transactional
+@PostMapping("/init")
+  public void seedDatabase() {
 	  
 	  Announcement announcement1 = new Announcement();
 	  Announcement announcement2 = new Announcement();
