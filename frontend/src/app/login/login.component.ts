@@ -16,6 +16,8 @@ export class LoginComponent {
   isInvalidLogin: boolean = false;
   hasAttemptedLogin: boolean = false;
   user: User | undefined = undefined;
+  expired: Boolean = true;
+  showPopup: Boolean = false;
 
   constructor(
     private userService: UserService,
@@ -31,6 +33,12 @@ export class LoginComponent {
     const user = localStorage.getItem('user');
     if (user) {
       this.redirectIfLoggedIn();
+    }
+    this.userService.sessionExpired.subscribe((expired)=>{
+      this.expired=expired
+    })
+    if (this.expired){
+      this.triggerPopup()
     }
   }
 
@@ -74,4 +82,7 @@ export class LoginComponent {
       this.router.navigate(['/announcements']);
     }
   };
+  triggerPopup(){
+    this.showPopup=!this.showPopup
+  }
 }
